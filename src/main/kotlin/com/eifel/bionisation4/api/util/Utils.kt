@@ -4,5 +4,5 @@ import com.eifel.bionisation4.Info
 
 object Utils {
 
-    fun getModIDString(input : String) = "${Info.MOD_ID}_$input"
+    fun getModIDString(input : String) = "${Info.MOD_ID}:$input"
 }

@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.potion.*
 
-class GenePotionEffect constructor(id: Int, name: String, isActive: Boolean) : Gene(id, name, isActive), IGenePotion {
+open class GenePotionEffect constructor(id: Int, name: String, isActive: Boolean) : Gene(id, name, isActive), IGenePotion {
 
     var potion = 0
     var duration = 100

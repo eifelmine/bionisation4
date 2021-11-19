@@ -10,6 +10,8 @@ class BioPlayer(): IBioPlayer {
         val PROP = ResourceLocation("${Info.MOD_ID}_modplayerdata")
     }
 
+
+
     override fun writeToNBT(): CompoundNBT {
         val nbtData = CompoundNBT()
 

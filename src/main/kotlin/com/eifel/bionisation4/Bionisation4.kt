@@ -1,8 +1,10 @@
 package com.eifel.bionisation4
 
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
+import com.eifel.bionisation4.api.laboratory.registry.LocalizationRegistry
 import com.eifel.bionisation4.common.config.Config
 import com.eifel.bionisation4.common.event.CommonEvents
+import com.eifel.bionisation4.common.network.NetworkManager
 import com.eifel.bionisation4.common.storage.capability.entity.BioMob
 import com.eifel.bionisation4.common.storage.capability.entity.BioMobStorage
 import com.eifel.bionisation4.common.storage.capability.entity.IBioMob
@@ -34,10 +36,16 @@ object Bionisation4 {
     }
 
     fun onCommonSetup(event: FMLCommonSetupEvent) {
+        //network
+        NetworkManager.init()
         //init capability
         CapabilityManager.INSTANCE.register(IBioPlayer::class.java, BioPlayerStorage(), ::BioPlayer)
         CapabilityManager.INSTANCE.register(IBioMob::class.java, BioMobStorage(), ::BioMob)
         //events
         MinecraftForge.EVENT_BUS.register(CommonEvents.javaClass)
+
+        //loca-loca
+        LocalizationRegistry.loadDefaultGeneDescs()
+        LocalizationRegistry.loadDefaultEffectDescs()
     }
 }

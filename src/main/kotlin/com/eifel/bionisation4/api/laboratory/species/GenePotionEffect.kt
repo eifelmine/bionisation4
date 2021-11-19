@@ -2,11 +2,12 @@ package com.eifel.bionisation4.api.laboratory.species
 
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.util.IGenePotion
-import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.CompoundNBT
-import net.minecraft.potion.*
+import net.minecraft.potion.Effect
+import net.minecraft.potion.EffectInstance
 
-open class GenePotionEffect constructor(id: Int, name: String, isActive: Boolean) : Gene(id, name, isActive), IGenePotion {
+open class GenePotionEffect(id: Int, name: String, isActive: Boolean) : Gene(id, name, isActive), IGenePotion {
 
     var potion = 0
     var duration = 100
@@ -20,11 +21,10 @@ open class GenePotionEffect constructor(id: Int, name: String, isActive: Boolean
         this.power = power
     }
 
-    override fun perform(player: PlayerEntity) {
-        if(!player.level.isClientSide) {
-            val effect = Effect.byId(this.potion)
-            effect?.let {
-                player.addEffect(EffectInstance(it, this.duration, this.power))
+    override fun perform(entity: LivingEntity) {
+        if(!entity.level.isClientSide) {
+            Effect.byId(this.potion)?.let {
+                entity.addEffect(EffectInstance(it, this.duration, this.power))
             }
         }
     }
@@ -44,12 +44,11 @@ open class GenePotionEffect constructor(id: Int, name: String, isActive: Boolean
         this.power = nbtData.getInt(InternalConstants.GENE_POT_POW_KEY)
     }
 
-    override fun clear(player: PlayerEntity) {
-        if(!player.level.isClientSide) {
-            val effect = Effect.byId(this.potion)
-            effect?.let {
-                if (player.hasEffect(it))
-                    player.removeEffect(it)
+    override fun clear(entity: LivingEntity) {
+        if(!entity.level.isClientSide) {
+            Effect.byId(this.potion)?.let {
+                if (entity.hasEffect(it))
+                    entity.removeEffect(it)
             }
         }
     }

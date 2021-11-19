@@ -1,12 +1,11 @@
 package com.eifel.bionisation4.api.laboratory.util
 
-import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.LivingEntity
 
 interface IGene : INBTSerializable {
 
     fun getID() : Int
     fun getName() : String
-    //todo add capability
-    fun perform(player : PlayerEntity)
+    fun perform(entity : LivingEntity)
     fun isActive() : Boolean
 }

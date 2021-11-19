@@ -1,10 +1,10 @@
 package com.eifel.bionisation4.api.laboratory.util
 
-import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.LivingEntity
 
 interface IGenePotion : IGene {
 
-    fun clear(player: PlayerEntity)
+    fun clear(entity: LivingEntity)
 
     fun getPotionID() : Int
     fun getPotionDuration() : Int

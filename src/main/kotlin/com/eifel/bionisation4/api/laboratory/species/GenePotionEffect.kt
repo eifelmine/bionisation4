@@ -7,19 +7,9 @@ import net.minecraft.nbt.CompoundNBT
 import net.minecraft.potion.Effect
 import net.minecraft.potion.EffectInstance
 
-open class GenePotionEffect(id: Int, name: String, isActive: Boolean) : Gene(id, name, isActive), IGenePotion {
-
-    var potion = 0
-    var duration = 100
-    var power = 1
+class GenePotionEffect(var potion: Int, var duration: Int, var power: Int): IGenePotion {
 
     constructor() : this(0, 100, 1)
-
-    constructor(potion : Int, duration : Int, power : Int) : this(0, "Unknown Gene", true) {
-        this.potion = potion
-        this.duration = duration
-        this.power = power
-    }
 
     override fun perform(entity: LivingEntity) {
         if(!entity.level.isClientSide) {
@@ -30,7 +20,7 @@ open class GenePotionEffect(id: Int, name: String, isActive: Boolean) : Gene(id,
     }
 
     override fun toNBT(): CompoundNBT {
-        val baseData = super.toNBT()
+        val baseData = CompoundNBT()
         baseData.putInt(InternalConstants.GENE_POT_ID_KEY, this.potion)
         baseData.putInt(InternalConstants.GENE_POT_DUR_KEY, this.duration)
         baseData.putInt(InternalConstants.GENE_POT_POW_KEY, this.power)
@@ -38,7 +28,6 @@ open class GenePotionEffect(id: Int, name: String, isActive: Boolean) : Gene(id,
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {
-        super.fromNBT(nbtData)
         this.potion = nbtData.getInt(InternalConstants.GENE_POT_ID_KEY)
         this.duration = nbtData.getInt(InternalConstants.GENE_POT_DUR_KEY)
         this.power = nbtData.getInt(InternalConstants.GENE_POT_POW_KEY)

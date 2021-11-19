@@ -22,7 +22,12 @@ open class Gene() : IGene {
     }
 
     override fun perform(entity: LivingEntity) {
-        potions.forEach { it.perform(entity) }
+        if(!entity.level.isClientSide) {
+            if (isActive())
+                potions.forEach { it.perform(entity) }
+            else
+                potions.forEach { it.clear(entity) }
+        }
     }
 
     override fun toNBT(): CompoundNBT {
@@ -43,6 +48,10 @@ open class Gene() : IGene {
 
     override fun getID() = id
     override fun getName() = geneName
-
     override fun isActive() = isGeneActive
+    override fun clear(entity: LivingEntity) {
+        if(!entity.level.isClientSide) {
+            potions.forEach { it.clear(entity) }
+        }
+    }
 }

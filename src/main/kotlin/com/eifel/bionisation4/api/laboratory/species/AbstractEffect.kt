@@ -5,7 +5,12 @@ import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.api.laboratory.util.IGene
 import com.eifel.bionisation4.api.laboratory.util.INBTSerializable
 import com.eifel.bionisation4.common.config.ConfigProperties
+import com.eifel.bionisation4.common.extensions.doWithCap
+import com.eifel.bionisation4.common.storage.capability.entity.BioMob
+import com.eifel.bionisation4.common.storage.capability.player.BioPlayer
 import com.eifel.bionisation4.util.nbt.NBTUtils
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
 
 abstract class AbstractEffect(var effectID: Int, var effectName: String = "Default Effect", var effectType: EffectType = EffectType.COMMON) : INBTSerializable {
@@ -16,8 +21,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     val effectGenes = mutableListOf<IGene>()
 
     var isCure = false
-    var isInfinite = true
-    var isHidden = false
+    var isInfinite = true//+
+    var isHidden = false//+
 
     var isExpired = false
 
@@ -29,7 +34,6 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     var antibioticResistancePercent = 0.0
 
     var isSyncable = false
-    var needSync = false
 
     constructor() : this(0)
 
@@ -59,7 +63,6 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         nbtData.putDouble(InternalConstants.EFFECT_ANTIBIOTIC_RESISTANCE_KEY, antibioticResistancePercent)
 
         nbtData.putBoolean(InternalConstants.EFFECT_SYNCABLE_KEY, isSyncable)
-        nbtData.putBoolean(InternalConstants.EFFECT_NEED_SYNC_KEY, needSync)
 
         return nbtData
     }
@@ -89,12 +92,64 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         antibioticResistancePercent = nbtData.getDouble(InternalConstants.EFFECT_ANTIBIOTIC_RESISTANCE_KEY)
 
         isSyncable = nbtData.getBoolean(InternalConstants.EFFECT_SYNCABLE_KEY)
-        needSync = nbtData.getBoolean(InternalConstants.EFFECT_NEED_SYNC_KEY)
     }
 
-    fun recalculatePower() {}
-    fun mutate() {}
+    fun recalculatePower(entity: LivingEntity) {
+        when(entity){
+            is PlayerEntity -> {
+                entity.doWithCap<BioPlayer> { cap ->
+
+                }
+            }
+            else -> {
+                entity.doWithCap<BioMob> { cap ->
+
+                }
+            }
+        }
+        //todo recalculate based on immunity system
+    }
+
+    fun mutate() {
+        if(canMutate){
+            //todo add mutation mechanic
+        }
+    }
+
     fun getDNA() = effectGenes.joinToString("-", "[", "]", -1, "") { gene -> "${gene.getID()}" }
 
-    //todo add utility methods and expired predicate
+    fun onExpired(entity: LivingEntity) {
+        effectGenes.forEach { gene ->
+            gene.clear(entity)
+        }
+    }
+
+    fun onTick(entity: LivingEntity, isLastTick: Boolean) {
+        recalculatePower(entity)
+        effectGenes.forEach { gene ->
+            gene.perform(entity)
+        }
+    }
+
+    fun onAttack(victim: LivingEntity, attacker: LivingEntity) {}
+
+    fun onDeath(entity: LivingEntity) {}
+
+    fun perform(entity: LivingEntity){
+        if(!entity.level.isClientSide) {
+            if (!isInfinite) {
+                this.effectDuration--
+                if (this.effectDuration <= 0) {
+                    onExpired(entity)
+                    isExpired = true
+                }
+            }
+            if (!isHidden) {
+                if (!isExpired)
+                    onTick(entity, false)
+                else
+                    onTick(entity, true)
+            }
+        }
+    }
 }

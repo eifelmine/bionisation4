@@ -8,4 +8,5 @@ interface IGene : INBTSerializable {
     fun getName() : String
     fun perform(entity : LivingEntity)
     fun isActive() : Boolean
+    fun clear(entity: LivingEntity)
 }

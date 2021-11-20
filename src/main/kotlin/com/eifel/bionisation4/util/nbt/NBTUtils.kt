@@ -2,6 +2,8 @@ package com.eifel.bionisation4.util.nbt
 
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
+import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
+import com.eifel.bionisation4.api.laboratory.util.IGene
 import com.eifel.bionisation4.api.laboratory.util.INBTSerializable
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.nbt.ListNBT
@@ -46,7 +48,7 @@ object NBTUtils {
         }
     }
 
-    fun <T: INBTSerializable> nbtToGenes(compound: CompoundNBT, list: MutableCollection<T>, key: String) {
+    fun <T: IGene> nbtToGenes(compound: CompoundNBT, list: MutableCollection<T>, key: String) {
         val tags = compound.getList(key, 9)
         tags.map { it as CompoundNBT }.mapTo(list){ tag ->
             val obj = EffectRegistry.getGeneClassById(tag.getInt(InternalConstants.GENE_ID_KEY)).newInstance()
@@ -55,7 +57,7 @@ object NBTUtils {
         }
     }
 
-    fun <T: INBTSerializable> nbtToEffects(compound: CompoundNBT, list: MutableCollection<T>, key: String) {
+    fun <T: AbstractEffect> nbtToEffects(compound: CompoundNBT, list: MutableCollection<T>, key: String) {
         val tags = compound.getList(key, 9)
         tags.map { it as CompoundNBT }.mapTo(list){ tag ->
             val obj = EffectRegistry.getEffectClassById(tag.getInt(InternalConstants.EFFECT_ID_KEY)).newInstance()
@@ -71,6 +73,20 @@ object NBTUtils {
         return obj
     }
 
+    fun <T: AbstractEffect> nbtToEffect(compound: CompoundNBT, key: String): T {
+        val nbt = compound.getCompound(key)
+        val obj = EffectRegistry.getEffectClassById(nbt.getInt(InternalConstants.EFFECT_ID_KEY)).newInstance()
+        obj.fromNBT(nbt)
+        return obj as T
+    }
+
+    fun <T: IGene> nbtToGene(compound: CompoundNBT, key: String): T {
+        val nbt = compound.getCompound(key)
+        val obj = EffectRegistry.getGeneClassById(nbt.getInt(InternalConstants.GENE_ID_KEY)).newInstance()
+        obj.fromNBT(nbt)
+        return obj as T
+    }
+
     fun enumToNBT(compound: CompoundNBT, enum: Enum<*>, key: String) {
         compound.putString(key, enum.name)
     }
@@ -83,6 +99,16 @@ object NBTUtils {
             nbt
         }
         compound.put(key, tags)
+    }
+
+    fun packToNBT(list: Collection<INBTSerializable>, key: String): CompoundNBT {
+        val compound = CompoundNBT()
+        val tags = ListNBT()
+        list.mapTo(tags){ ser ->
+            ser.toNBT()
+        }
+        compound.put(key, tags)
+        return compound
     }
 
     inline fun <reified T: Enum<*>> nbtToEnum(compound: CompoundNBT, key: String): T? = enumValueOrNull(compound.getString(key))

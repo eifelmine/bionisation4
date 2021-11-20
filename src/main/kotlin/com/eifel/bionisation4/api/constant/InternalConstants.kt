@@ -36,4 +36,10 @@ object InternalConstants {
 
     val EFFECT_SYNCABLE_KEY = getModIDString("eff_syncable")
     val EFFECT_NEED_SYNC_KEY = getModIDString("eff_need_sync")
+
+    val PROP_IMMUNITY_KEY = getModIDString("prop_immunity")
+    val PROP_BLOOD_KEY = getModIDString("prop_blood")
+    val PROP_EFFECT_KEY = getModIDString("prop_effects")
+
+    val PROP_EFFECT_LIST_KEY = getModIDString("prop_effect_list")
 }

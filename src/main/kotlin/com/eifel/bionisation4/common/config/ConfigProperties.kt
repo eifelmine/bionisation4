@@ -4,7 +4,9 @@ import net.minecraftforge.common.ForgeConfigSpec
 
 object ConfigProperties {
 
-    var defaultMutationPeriod : ForgeConfigSpec.ConfigValue<Int>? = null
+    lateinit var defaultMutationPeriod : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var defaultEffectSyncPeriod : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var saveAfterDeath : ForgeConfigSpec.ConfigValue<Boolean>
 
     fun loadData() : ForgeConfigSpec {
         val builder = ForgeConfigSpec.Builder()
@@ -14,6 +16,15 @@ object ConfigProperties {
         builder.comment("Time Settings").push("timings")
         builder.comment("Default mutation period for every B4 effect (ticks)")
         defaultMutationPeriod = builder.define("defaultMutationPeriod", 12000)
+        builder.comment("Default Bionisation effect sync period (only for specific effects) (ticks)")
+        defaultEffectSyncPeriod = builder.define("defaultEffectSyncPeriod", 20)
+        builder.pop()
+
+        //general
+        builder.comment("General Settings").push("death")
+        builder.comment("Save Bionisation effects and stats after player death")
+        saveAfterDeath = builder.define("saveAfterDeath", true)
+
         builder.pop()
 
         return builder.build()

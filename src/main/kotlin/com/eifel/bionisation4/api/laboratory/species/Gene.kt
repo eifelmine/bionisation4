@@ -3,6 +3,7 @@ package com.eifel.bionisation4.api.laboratory.species
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.util.IGene
 import com.eifel.bionisation4.util.nbt.NBTUtils
+import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.CompoundNBT
 import kotlin.random.Random
@@ -48,6 +49,12 @@ open class Gene() : IGene {
 
     override fun getID() = id
     override fun getName() = geneName
+    override fun getTranslationName() = TranslationUtils.getTranslatedText("gene", geneName, "name")
+
+    fun isSame(gene: IGene) = gene.getID() == id
+    fun isSame(id: Int) = id == id
+    fun isSame(name: String) = name == geneName
+
     override fun isActive() = isGeneActive
     override fun clear(entity: LivingEntity) {
         if(!entity.level.isClientSide) {

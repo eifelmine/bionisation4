@@ -6,6 +6,7 @@ interface IGene : INBTSerializable {
 
     fun getID() : Int
     fun getName() : String
+    fun getTranslationName() : String
     fun perform(entity : LivingEntity)
     fun isActive() : Boolean
     fun clear(entity: LivingEntity)

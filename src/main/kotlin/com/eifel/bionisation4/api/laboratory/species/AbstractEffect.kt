@@ -9,6 +9,7 @@ import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.common.storage.capability.entity.BioMob
 import com.eifel.bionisation4.common.storage.capability.player.BioPlayer
 import com.eifel.bionisation4.util.nbt.NBTUtils
+import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
@@ -27,7 +28,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     var isExpired = false
 
     var canMutate = false
-    var mutationPeriod = ConfigProperties.defaultMutationPeriod!!.get()
+    var mutationPeriod = ConfigProperties.defaultMutationPeriod.get()
 
     var canInfectItems = false
     var isAntibioticVulnerable = effectType == EffectType.BACTERIA
@@ -152,4 +153,10 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
             }
         }
     }
+
+    fun isSame(effect: AbstractEffect) = effect.effectID == effectID
+    fun isSame(id: Int) = id == effectID
+    fun isSame(name: String) = name == effectName
+
+    fun getTranslationName() = TranslationUtils.getTranslatedText("effect", effectName, "name")
 }

@@ -1,13 +1,13 @@
 package com.eifel.bionisation4.api.laboratory.species
 
 import com.eifel.bionisation4.api.constant.InternalConstants
+import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.util.EffectType
-import com.eifel.bionisation4.api.laboratory.util.IGene
 import com.eifel.bionisation4.api.laboratory.util.INBTSerializable
+import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.config.ConfigProperties
-import com.eifel.bionisation4.common.extensions.doWithCap
-import com.eifel.bionisation4.common.storage.capability.entity.BioMob
-import com.eifel.bionisation4.common.storage.capability.player.BioPlayer
+import com.eifel.bionisation4.common.extensions.getImmunity
+import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.entity.LivingEntity
@@ -18,12 +18,15 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
 
     var effectDuration = -1L
     var effectPower = 1
+    var canChangePower = true
 
-    val effectGenes = mutableListOf<IGene>()
+    val effectGenes = mutableListOf<Gene>()
 
     var isCure = false
     var isInfinite = true//+
     var isHidden = false//+
+
+    var timeTicker = 0
 
     var isExpired = false
 
@@ -49,6 +52,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         nbtData.putLong(InternalConstants.EFFECT_DURATION_KEY, effectDuration)
         nbtData.putInt(InternalConstants.EFFECT_POWER_KEY, effectPower)
 
+        nbtData.putInt(InternalConstants.EFFECT_TICKER_KEY, timeTicker)
+
         NBTUtils.objectsToNBT(nbtData, effectGenes, InternalConstants.EFFECT_GENES_KEY)
 
         nbtData.putBoolean(InternalConstants.EFFECT_CURE_KEY, isCure)
@@ -56,6 +61,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         nbtData.putBoolean(InternalConstants.EFFECT_HIDDEN_KEY, isHidden)
         nbtData.putBoolean(InternalConstants.EFFECT_EXPIRED_KEY, isExpired)
         nbtData.putBoolean(InternalConstants.EFFECT_MUTATE_KEY, canMutate)
+
+        nbtData.putBoolean(InternalConstants.EFFECT_POWER_CHANGE_KEY, canChangePower)
 
         nbtData.putInt(InternalConstants.EFFECT_MUTATE_PERIOD_KEY, mutationPeriod)
 
@@ -78,6 +85,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         effectDuration = nbtData.getLong(InternalConstants.EFFECT_DURATION_KEY)
         effectPower = nbtData.getInt(InternalConstants.EFFECT_POWER_KEY)
 
+        timeTicker = nbtData.getInt(InternalConstants.EFFECT_TICKER_KEY)
+
         NBTUtils.nbtToGenes(nbtData, effectGenes, InternalConstants.EFFECT_GENES_KEY)
 
         isCure = nbtData.getBoolean(InternalConstants.EFFECT_CURE_KEY)
@@ -85,6 +94,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         isHidden = nbtData.getBoolean(InternalConstants.EFFECT_HIDDEN_KEY)
         isExpired = nbtData.getBoolean(InternalConstants.EFFECT_EXPIRED_KEY)
         canMutate = nbtData.getBoolean(InternalConstants.EFFECT_MUTATE_KEY)
+
+        canChangePower = nbtData.getBoolean(InternalConstants.EFFECT_POWER_CHANGE_KEY)
 
         mutationPeriod = nbtData.getInt(InternalConstants.EFFECT_MUTATE_PERIOD_KEY)
 
@@ -96,24 +107,30 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     }
 
     fun recalculatePower(entity: LivingEntity) {
-        when(entity){
-            is PlayerEntity -> {
-                entity.doWithCap<BioPlayer> { cap ->
-
-                }
+        if(canChangePower) {
+            var newPower = when (entity) {
+                is PlayerEntity -> EffectUtils.getPowerFromImmunity(entity.getImmunity())
+                else -> EffectUtils.getPowerFromImmunity(entity.getImmunity())
             }
-            else -> {
-                entity.doWithCap<BioMob> { cap ->
-
-                }
-            }
+            effectPower = newPower
         }
-        //todo recalculate based on immunity system
     }
 
     fun mutate() {
         if(canMutate){
-            //todo add mutation mechanic
+            if(timeTicker > 0 && timeTicker % mutationPeriod == 0){
+                if(effectGenes.isNotEmpty()) {
+                    repeat(Utils.random.nextInt(effectGenes.size) + 1) {
+                        val gene = effectGenes.random()
+                        EffectRegistry.getGeneMutationsById(gene.getID())?.let { mutations ->
+                            val randomGene = mutations.random()
+                            val geneImpl = EffectRegistry.getGeneInstance(randomGene).getCopy()
+                            effectGenes.removeIf { it.isSame(gene) }
+                            effectGenes.add(geneImpl)
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -127,9 +144,11 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
 
     fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         recalculatePower(entity)
+        mutate()
         effectGenes.forEach { gene ->
-            gene.perform(entity)
+            gene.perform(entity, this)
         }
+        timeTicker++
     }
 
     fun onAttack(victim: LivingEntity, attacker: LivingEntity) {}
@@ -157,6 +176,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     fun isSame(effect: AbstractEffect) = effect.effectID == effectID
     fun isSame(id: Int) = id == effectID
     fun isSame(name: String) = name == effectName
+
+    abstract fun getCopy(): AbstractEffect
 
     fun getTranslationName() = TranslationUtils.getTranslatedText("effect", effectName, "name")
 }

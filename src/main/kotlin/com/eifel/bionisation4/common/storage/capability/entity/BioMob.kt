@@ -7,6 +7,8 @@ import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.network.NetworkManager
 import com.eifel.bionisation4.common.network.message.mob.PacketMobPropertySync
 import com.eifel.bionisation4.common.network.message.mob.PacketMobSimpleEffectStates
+import com.eifel.bionisation4.common.storage.capability.handler.BloodHandler
+import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.CompoundNBT
@@ -24,8 +26,9 @@ class BioMob(): IBioMob {
     val effects = mutableListOf<AbstractEffect>()
     val pending = mutableListOf<AbstractEffect>()
 
-    private var immunity = 100
-    private var blood = 100
+    var immunity = 100
+    var blood = 100
+    var ticker = 0
 
     fun onUpdate(entity: LivingEntity){
         if(!entity.level.isClientSide){
@@ -55,6 +58,28 @@ class BioMob(): IBioMob {
                     effects.filter { it.isSyncable && !it.isHidden }.map { it.effectID }.toIntArray(), 1, entity.id)
                 )
             }
+            //symbiosis
+            EffectUtils.symbiosisCheckAndTrigger(entity)
+            BloodHandler.checkBloodLevel(entity, blood)
+            ticker++
+        }
+    }
+
+    fun sendAllEffects(entity: LivingEntity) {
+        if(!entity.level.isClientSide) {
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.NEAR.with(
+                    PacketDistributor.TargetPoint.p(
+                        entity.x,
+                        entity.y,
+                        entity.z,
+                        25.0,
+                        entity.level.dimension()
+                    )
+                ), PacketMobSimpleEffectStates(
+                    effects.map { it.effectID }.toIntArray(), 1, entity.id
+                )
+            )
         }
     }
 
@@ -84,10 +109,11 @@ class BioMob(): IBioMob {
             immunity > 100 -> immunity = 100
             immunity < 0 -> immunity = 0
         }
-        NetworkManager.INSTANCE.send(
-            PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketMobPropertySync(
-                immunity, 0, entity.id)
-        )
+        if(!entity.level.isClientSide)
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketMobPropertySync(
+                    immunity, 0, entity.id)
+            )
     }
 
     fun modifyBlood(entity: LivingEntity, value: Int) {
@@ -96,10 +122,11 @@ class BioMob(): IBioMob {
             blood > 100 -> blood = 100
             blood < 0 -> blood = 0
         }
-        NetworkManager.INSTANCE.send(
-            PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketMobPropertySync(
-                blood, 1, entity.id)
-        )
+        if(!entity.level.isClientSide)
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketMobPropertySync(
+                    blood, 1, entity.id)
+            )
     }
 
     fun setImmunity(entity: LivingEntity, value: Int) {
@@ -108,10 +135,11 @@ class BioMob(): IBioMob {
             immunity > 100 -> immunity = 100
             immunity < 0 -> immunity = 0
         }
-        NetworkManager.INSTANCE.send(
-            PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketMobPropertySync(
-                immunity, 0, entity.id)
-        )
+        if(!entity.level.isClientSide)
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketMobPropertySync(
+                    immunity, 0, entity.id)
+            )
     }
 
     fun setBlood(entity: LivingEntity, value: Int) {
@@ -120,16 +148,18 @@ class BioMob(): IBioMob {
             blood > 100 -> blood = 100
             blood < 0 -> blood = 0
         }
-        NetworkManager.INSTANCE.send(
-            PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketMobPropertySync(
-                blood, 1, entity.id)
-        )
+        if(!entity.level.isClientSide)
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketMobPropertySync(
+                    blood, 1, entity.id)
+            )
     }
 
     override fun writeToNBT(): CompoundNBT {
         val nbtData = CompoundNBT()
         nbtData.putInt(InternalConstants.PROP_IMMUNITY_KEY, immunity)
         nbtData.putInt(InternalConstants.PROP_BLOOD_KEY, blood)
+        nbtData.putInt(InternalConstants.PROP_TICKER_KEY, ticker)
         NBTUtils.objectsToNBT(nbtData, effects, InternalConstants.PROP_EFFECT_KEY)
         return nbtData
     }
@@ -137,6 +167,7 @@ class BioMob(): IBioMob {
     override fun readFromNBT(nbtBase: CompoundNBT) {
         immunity = nbtBase.getInt(InternalConstants.PROP_IMMUNITY_KEY)
         blood = nbtBase.getInt(InternalConstants.PROP_BLOOD_KEY)
+        ticker = nbtBase.getInt(InternalConstants.PROP_TICKER_KEY)
         NBTUtils.nbtToEffects(nbtBase, effects, InternalConstants.PROP_EFFECT_KEY)
     }
 }

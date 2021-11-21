@@ -1,5 +1,6 @@
 package com.eifel.bionisation4.common.network.message.player
 
+import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
 import com.eifel.bionisation4.common.storage.capability.player.BioPlayer
@@ -32,7 +33,7 @@ class PacketPlayerSimpleEffectStates(var effects: IntArray, var mode: Int) {
                         player.doWithCap<BioPlayer> {
                             when(msg.mode){
                                 0 -> msg.effects.forEach { effect -> it.remove(effect) }
-                                1 -> msg.effects.forEach { effect -> it.addEffect(DefaultStateEffect(effect)) }
+                                1 -> msg.effects.forEach { effect -> player.addEffect(DefaultStateEffect(effect)) }
                             }
                         }
                     }

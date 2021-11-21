@@ -7,6 +7,8 @@ import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.network.NetworkManager
 import com.eifel.bionisation4.common.network.message.player.PacketPlayerPropertySync
 import com.eifel.bionisation4.common.network.message.player.PacketPlayerSimpleEffectStates
+import com.eifel.bionisation4.common.storage.capability.handler.BloodHandler
+import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
@@ -25,8 +27,9 @@ class BioPlayer(): IBioPlayer {
     val effects = mutableListOf<AbstractEffect>()
     val pending = mutableListOf<AbstractEffect>()
 
-    private var immunity = 100
-    private var blood = 100
+    var immunity = 100
+    var blood = 100
+    var ticker = 0
 
     fun onUpdate(player: PlayerEntity){
         if(!player.level.isClientSide){
@@ -53,13 +56,29 @@ class BioPlayer(): IBioPlayer {
                     effects.filter { it.isSyncable && !it.isHidden }.map { it.effectID }.toIntArray(), 1)
                 )
             }
+            //symbiosis
+            EffectUtils.symbiosisCheckAndTrigger(player)
+            BloodHandler.checkBloodLevel(player, blood)
+            ticker++
         }
     }
 
     fun sendAllEffects(player: PlayerEntity) {
-        NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ player as ServerPlayerEntity }, PacketPlayerSimpleEffectStates(
-            effects.map { it.effectID }.toIntArray(), 1)
-        )
+        if(!player.level.isClientSide) {
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.PLAYER.with { player as ServerPlayerEntity }, PacketPlayerSimpleEffectStates(
+                    effects.map { it.effectID }.toIntArray(), 1
+                )
+            )
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.PLAYER.with { player as ServerPlayerEntity },
+                PacketPlayerPropertySync(immunity, 0)
+            )
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.PLAYER.with { player as ServerPlayerEntity },
+                PacketPlayerPropertySync(blood, 1)
+            )
+        }
     }
 
     fun addEffect(effect: AbstractEffect){
@@ -88,7 +107,8 @@ class BioPlayer(): IBioPlayer {
             immunity > 100 -> immunity = 100
             immunity < 0 -> immunity = 0
         }
-        NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ player as ServerPlayerEntity }, PacketPlayerPropertySync(immunity, 0))
+        if(!player.level.isClientSide)
+            NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ player as ServerPlayerEntity }, PacketPlayerPropertySync(immunity, 0))
     }
 
     fun modifyBlood(player: PlayerEntity, value: Int) {
@@ -97,7 +117,11 @@ class BioPlayer(): IBioPlayer {
             blood > 100 -> blood = 100
             blood < 0 -> blood = 0
         }
-        NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ player as ServerPlayerEntity }, PacketPlayerPropertySync(blood, 1))
+        if(!player.level.isClientSide)
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.PLAYER.with { player as ServerPlayerEntity },
+                PacketPlayerPropertySync(blood, 1)
+            )
     }
 
     fun setImmunity(player: PlayerEntity, value: Int) {
@@ -106,7 +130,8 @@ class BioPlayer(): IBioPlayer {
             immunity > 100 -> immunity = 100
             immunity < 0 -> immunity = 0
         }
-        NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ player as ServerPlayerEntity }, PacketPlayerPropertySync(immunity, 0))
+        if(!player.level.isClientSide)
+            NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ player as ServerPlayerEntity }, PacketPlayerPropertySync(immunity, 0))
     }
 
     fun setBlood(player: PlayerEntity, value: Int) {
@@ -115,13 +140,15 @@ class BioPlayer(): IBioPlayer {
             blood > 100 -> blood = 100
             blood < 0 -> blood = 0
         }
-        NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ player as ServerPlayerEntity }, PacketPlayerPropertySync(blood, 1))
+        if(!player.level.isClientSide)
+            NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ player as ServerPlayerEntity }, PacketPlayerPropertySync(blood, 1))
     }
 
     override fun writeToNBT(): CompoundNBT {
         val nbtData = CompoundNBT()
         nbtData.putInt(InternalConstants.PROP_IMMUNITY_KEY, immunity)
         nbtData.putInt(InternalConstants.PROP_BLOOD_KEY, blood)
+        nbtData.putInt(InternalConstants.PROP_TICKER_KEY, ticker)
         NBTUtils.objectsToNBT(nbtData, effects, InternalConstants.PROP_EFFECT_KEY)
         return nbtData
     }
@@ -129,6 +156,7 @@ class BioPlayer(): IBioPlayer {
     override fun readFromNBT(nbtBase: CompoundNBT) {
         immunity = nbtBase.getInt(InternalConstants.PROP_IMMUNITY_KEY)
         blood = nbtBase.getInt(InternalConstants.PROP_BLOOD_KEY)
+        ticker = nbtBase.getInt(InternalConstants.PROP_TICKER_KEY)
         NBTUtils.nbtToEffects(nbtBase, effects, InternalConstants.PROP_EFFECT_KEY)
     }
 }

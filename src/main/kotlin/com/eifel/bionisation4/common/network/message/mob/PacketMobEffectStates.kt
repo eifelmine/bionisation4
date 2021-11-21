@@ -2,6 +2,7 @@ package com.eifel.bionisation4.common.network.message.mob
 
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
+import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.common.storage.capability.entity.BioMob
 import com.eifel.bionisation4.util.nbt.NBTUtils
@@ -40,7 +41,7 @@ class PacketMobEffectStates(var nbt: CompoundNBT, var mode: Int, var entId: Int)
                                 NBTUtils.nbtToEffects(msg.nbt, effects, InternalConstants.PROP_EFFECT_LIST_KEY)
                                 when(msg.mode){
                                     0 -> effects.forEach { effect -> it.remove(effect) }
-                                    1 -> effects.forEach { effect -> it.addEffect(effect) }
+                                    1 -> effects.forEach { effect -> entity.addEffect(effect) }
                                 }
                             }
                         }

@@ -1,7 +1,7 @@
 package com.eifel.bionisation4.common.network.message.player
 
-import com.eifel.bionisation4.common.extensions.doWithCap
-import com.eifel.bionisation4.common.storage.capability.player.BioPlayer
+import com.eifel.bionisation4.common.extensions.setBlood
+import com.eifel.bionisation4.common.extensions.setImmunity
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fml.network.NetworkDirection
@@ -28,11 +28,9 @@ class PacketPlayerPropertySync(var value: Int, var id: Int) {
             if (context.direction == NetworkDirection.PLAY_TO_CLIENT) {
                 context.enqueueWork {
                     Minecraft.getInstance().player?.let { player ->
-                        player.doWithCap<BioPlayer> {
-                            when (msg.id) {
-                                0 -> it.setImmunity(player, msg.value)
-                                1 -> it.setBlood(player, msg.value)
-                            }
+                        when (msg.id) {
+                            0 -> player.setImmunity(msg.value)
+                            1 -> player.setBlood(msg.value)
                         }
                     }
                 }

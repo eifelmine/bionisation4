@@ -1,3 +1,16 @@
 {
+  "itemGroup.tab_bionisation4": "Bionisation 4",
+  "item.bionisation4.effect_vial": "Effect Vial",
 
+
+  "vial.effect.name": "Effect: ",
+  "vial.usage.desc": "Right click to treat yourself and with shift for others around",
+  "vial.usage.spread": "Effect exposed! You should be more accurate next time!",
+
+
+  "effect.Unknown Effect.name": "Unknown Effect",
+  "effect.Default Effect.name": "Default Effect (Internal)",
+  "effect.Default State Effect.name": "Default State Effect (Internal)",
+  "gene.Unknown Gene.name": "Unknown Gene",
+  "gene.Default Gene.name": "Default Gene (Internal)"
 }

@@ -8,6 +8,8 @@ object ConfigProperties {
     lateinit var defaultEffectSyncPeriod : ForgeConfigSpec.ConfigValue<Int>
     lateinit var saveAfterDeath : ForgeConfigSpec.ConfigValue<Boolean>
 
+    lateinit var vialSpreadRadius : ForgeConfigSpec.ConfigValue<Double>
+
     fun loadData() : ForgeConfigSpec {
         val builder = ForgeConfigSpec.Builder()
         //load data
@@ -25,6 +27,9 @@ object ConfigProperties {
         builder.comment("Save Bionisation effects and stats after player death")
         saveAfterDeath = builder.define("saveAfterDeath", true)
 
+        builder.comment("General Settings").push("item")
+        builder.comment("Default effect spread radius for vial")
+        vialSpreadRadius = builder.define("vialSpreadRadius", 10.0)
         builder.pop()
 
         return builder.build()

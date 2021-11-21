@@ -1,7 +1,7 @@
 package com.eifel.bionisation4.common.network.message.mob
 
-import com.eifel.bionisation4.common.extensions.doWithCap
-import com.eifel.bionisation4.common.storage.capability.entity.BioMob
+import com.eifel.bionisation4.common.extensions.setBlood
+import com.eifel.bionisation4.common.extensions.setImmunity
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.LivingEntity
 import net.minecraft.network.PacketBuffer
@@ -31,11 +31,9 @@ class PacketMobPropertySync(var value: Int, var id: Int, var entId: Int) {
                 context.enqueueWork {
                     Minecraft.getInstance().player?.let { player ->
                         (player.level.getEntity(msg.entId) as? LivingEntity)?.let { entity ->
-                            entity.doWithCap<BioMob> {
-                                when (msg.id) {
-                                    0 -> it.setImmunity(player, msg.value)
-                                    1 -> it.setBlood(player, msg.value)
-                                }
+                            when (msg.id) {
+                                0 -> entity.setImmunity(msg.value)
+                                1 -> entity.setBlood(msg.value)
                             }
                         }
                     }

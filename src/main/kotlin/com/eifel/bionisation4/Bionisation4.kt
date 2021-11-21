@@ -1,6 +1,7 @@
 package com.eifel.bionisation4
 
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
+import com.eifel.bionisation4.api.laboratory.registry.EffectTriggers
 import com.eifel.bionisation4.api.laboratory.registry.LocalizationRegistry
 import com.eifel.bionisation4.common.config.Config
 import com.eifel.bionisation4.common.event.ClientEvents
@@ -8,12 +9,9 @@ import com.eifel.bionisation4.common.event.CommonEvents
 import com.eifel.bionisation4.common.event.ServerEvents
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.network.NetworkManager
-import com.eifel.bionisation4.common.storage.capability.entity.BioMob
-import com.eifel.bionisation4.common.storage.capability.entity.BioMobStorage
-import com.eifel.bionisation4.common.storage.capability.entity.IBioMob
-import com.eifel.bionisation4.common.storage.capability.player.BioPlayer
-import com.eifel.bionisation4.common.storage.capability.player.BioPlayerStorage
-import com.eifel.bionisation4.common.storage.capability.player.IBioPlayer
+import com.eifel.bionisation4.common.storage.capability.entity.BioStat
+import com.eifel.bionisation4.common.storage.capability.entity.BioStatStorage
+import com.eifel.bionisation4.common.storage.capability.entity.IBioStat
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
@@ -37,12 +35,15 @@ object Bionisation4 {
         EffectRegistry.loadDefaultGenes()
         EffectRegistry.loadDefaultGeneMutations()
         EffectRegistry.loadDefaultEffects()
+        EffectRegistry.loadDefaultEffectChances()
         EffectRegistry.loadDefaultSymbiosis()
 
         ItemRegistry.ITEMS.register(bus)
 
         EffectRegistry.loadDefaultGeneVials()
         EffectRegistry.loadDefaultBacteriaCures()
+
+        EffectTriggers.init()
 
         //common setup
         bus.addListener(::onCommonSetup)
@@ -52,8 +53,7 @@ object Bionisation4 {
         //network
         NetworkManager.init()
         //init capability
-        CapabilityManager.INSTANCE.register(IBioPlayer::class.java, BioPlayerStorage(), ::BioPlayer)
-        CapabilityManager.INSTANCE.register(IBioMob::class.java, BioMobStorage(), ::BioMob)
+        CapabilityManager.INSTANCE.register(IBioStat::class.java, BioStatStorage(), ::BioStat)
         //events
         MinecraftForge.EVENT_BUS.register(CommonEvents.javaClass)
         DistExecutor.safeRunWhenOn(Dist.DEDICATED_SERVER) {

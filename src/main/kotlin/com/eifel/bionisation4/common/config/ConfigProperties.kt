@@ -26,6 +26,7 @@ object ConfigProperties {
         builder.comment("General Settings").push("death")
         builder.comment("Save Bionisation effects and stats after player death")
         saveAfterDeath = builder.define("saveAfterDeath", true)
+        builder.pop()
 
         builder.comment("General Settings").push("item")
         builder.comment("Default effect spread radius for vial")

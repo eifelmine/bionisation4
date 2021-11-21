@@ -13,6 +13,7 @@ object EffectRegistry {
     private val GENES = mutableMapOf<Int, Class<out Gene>>()
 
     private val EFFECT_INSTANCES = mutableMapOf<Int, AbstractEffect>()
+    private val EFFECT_CHANCES = mutableMapOf<Int, Int>()
     private val GENE_INSTANCES = mutableMapOf<Int, Gene>()
 
     //list of gene ids it can mutate with
@@ -26,6 +27,7 @@ object EffectRegistry {
     private val BACTERIA_CURES = mutableMapOf<Int, Triple<ItemStack, ItemStack, ItemStack>>()
 
     fun loadDefaultGenes() {
+        //todo add mappings here
         registerGeneClass(0, DefaultGene::class.java)
     }
 
@@ -34,8 +36,13 @@ object EffectRegistry {
     }
 
     fun loadDefaultEffects() {
+        //todo add mappings here
         registerEffectClass(0, DefaultEffect::class.java)
         registerEffectClass(1, DefaultStateEffect::class.java)
+    }
+
+    fun loadDefaultEffectChances() {
+        //todo add mappings here
     }
 
     fun loadDefaultSymbiosis() {
@@ -60,6 +67,12 @@ object EffectRegistry {
         if(GENES.containsKey(id))
             throw IllegalStateException("Gene with id $id is already registered!")
         GENES[id] = clazz
+    }
+
+    fun registerEffectChance(id: Int, chance: Int) {
+        if(EFFECT_CHANCES.containsKey(id))
+            throw IllegalStateException("Effect chance with id $id is already registered!")
+        EFFECT_CHANCES[id] = chance
     }
 
     fun registerGeneMutation(id: Int, mutations: List<Int>) {
@@ -88,12 +101,14 @@ object EffectRegistry {
 
     fun getEffectClassById(id: Int) = EFFECTS.getOrDefault(id, DefaultEffect::class.java)
     fun getGeneClassById(id: Int) = GENES.getOrDefault(id, DefaultGene::class.java)
+    fun getEffectChance(id: Int) = EFFECT_CHANCES.getOrDefault(id, 0)
     fun getGeneMutationsById(id: Int) = GENE_MUTATIONS.getOrDefault(id, null)
     fun getBacteriaCureById(id: Int) = BACTERIA_CURES.getOrDefault(id, Triple(ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY))
     fun getGeneVialByID(id: Int) = GENE_VIALS.getOrDefault(id, ItemStack.EMPTY)
 
     fun getEffects() = EFFECTS
     fun getGenes() = GENES
+    fun getEffectChances() = EFFECT_CHANCES
     fun getGeneMutations() = GENE_MUTATIONS
     fun getGeneVials() = GENE_VIALS
     fun getSymbiosis() = EFFECT_SYMBIOSIS

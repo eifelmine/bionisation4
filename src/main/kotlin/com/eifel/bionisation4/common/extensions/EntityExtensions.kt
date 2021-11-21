@@ -1,70 +1,70 @@
 package com.eifel.bionisation4.common.extensions
 
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
-import com.eifel.bionisation4.common.storage.capability.entity.BioMob
-import com.eifel.bionisation4.common.storage.capability.entity.BioMobProvider
+import com.eifel.bionisation4.common.storage.capability.entity.BioStat
+import com.eifel.bionisation4.common.storage.capability.entity.BioStatProvider
 import net.minecraft.entity.LivingEntity
 
-inline fun <reified E : BioMob> LivingEntity.doWithCap(crossinline action: (BioMob) -> Unit)  = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).ifPresent { cap ->
+inline fun <reified E : BioStat> LivingEntity.doWithCap(crossinline action: (BioStat) -> Unit)  = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).ifPresent { cap ->
     action(cap as E)
 }
 
-inline fun LivingEntity.getImmunity(): Int = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).immunity
+inline fun LivingEntity.getImmunity(): Int = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).immunity
 } ?: 0
 
-inline fun LivingEntity.getBlood(): Int = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).blood
+inline fun LivingEntity.getBlood(): Int = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).blood
 } ?: 0
 
-inline fun LivingEntity.getBioTicker(): Int = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).ticker
+inline fun LivingEntity.getBioTicker(): Int = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).ticker
 } ?: 0
 
-inline fun LivingEntity.setImmunity(value: Int) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).setImmunity(this, value)
+inline fun LivingEntity.setImmunity(value: Int) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).setImmunity(this, value)
 }
 
-inline fun LivingEntity.setBlood(value: Int) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).setBlood(this, value)
+inline fun LivingEntity.setBlood(value: Int) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).setBlood(this, value)
 }
 
-inline fun LivingEntity.modifyImmunity(value: Int) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).modifyImmunity(this, value)
+inline fun LivingEntity.modifyImmunity(value: Int) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).modifyImmunity(this, value)
 }
 
-inline fun LivingEntity.modifyBlood(value: Int) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).modifyBlood(this, value)
+inline fun LivingEntity.modifyBlood(value: Int) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).modifyBlood(this, value)
 }
 
-inline fun LivingEntity.addEffect(effect: AbstractEffect) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).addEffect(effect)
+inline fun LivingEntity.addEffect(effect: AbstractEffect) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).addEffect(effect)
 }
 
-inline fun LivingEntity.expire(effect: AbstractEffect) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).expire(effect)
+inline fun LivingEntity.expire(effect: AbstractEffect) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).expire(effect)
 }
 
-inline fun LivingEntity.expire(effect: Int) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).expire(effect)
+inline fun LivingEntity.expire(effect: Int) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).expire(effect)
 }
 
-inline fun LivingEntity.expire(effect: String) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).expire(effect)
+inline fun LivingEntity.expire(effect: String) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).expire(effect)
 }
 
-inline fun LivingEntity.isEffectActive(effect: AbstractEffect) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).isActive(effect)
+inline fun LivingEntity.isEffectActive(effect: AbstractEffect) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).isActive(effect)
 } ?: false
 
-inline fun LivingEntity.isEffectActive(effect: Int) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).isActive(effect)
+inline fun LivingEntity.isEffectActive(effect: Int) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).isActive(effect)
 } ?: false
 
-inline fun LivingEntity.isEffectActive(effect: String) = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).isActive(effect)
+inline fun LivingEntity.isEffectActive(effect: String) = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).isActive(effect)
 } ?: false
 
-inline fun LivingEntity.updateToClient() = this.getCapability(BioMobProvider.BIO_MOB_CAPABILITY).orElse(null)?.let {
-    (it as BioMob).sendAllEffects(this)
+inline fun LivingEntity.updateToClient() = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).sendAllEffects(this)
 }

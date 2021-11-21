@@ -8,7 +8,6 @@ import com.eifel.bionisation4.common.extensions.isEffectActive
 import com.eifel.bionisation4.common.extensions.toTypedList
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -24,24 +23,11 @@ object EffectUtils {
     fun symbiosisCheckAndTrigger(entity: LivingEntity){
         val symbiosis = EffectRegistry.getSymbiosis()
         if(symbiosis.isNotEmpty()) {
-            when (entity) {
-                is PlayerEntity -> {
-                    symbiosis.forEach { data ->
-                        if(entity.isEffectActive(data.first) && entity.isEffectActive(data.second)){
-                            entity.expire(data.first)
-                            entity.expire(data.second)
-                            entity.addEffect(EffectRegistry.getEffectInstance(data.third).getCopy())
-                        }
-                    }
-                }
-                is LivingEntity -> {
-                    symbiosis.forEach { data ->
-                        if(entity.isEffectActive(data.first) && entity.isEffectActive(data.second)){
-                            entity.expire(data.first)
-                            entity.expire(data.second)
-                            entity.addEffect(EffectRegistry.getEffectInstance(data.third).getCopy())
-                        }
-                    }
+            symbiosis.forEach { data ->
+                if (entity.isEffectActive(data.first) && entity.isEffectActive(data.second)) {
+                    entity.expire(data.first)
+                    entity.expire(data.second)
+                    entity.addEffect(EffectRegistry.getEffectInstance(data.third).getCopy())
                 }
             }
         }

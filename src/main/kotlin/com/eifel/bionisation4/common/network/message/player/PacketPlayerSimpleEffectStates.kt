@@ -3,7 +3,7 @@ package com.eifel.bionisation4.common.network.message.player
 import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
-import com.eifel.bionisation4.common.storage.capability.player.BioPlayer
+import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fml.network.NetworkDirection
@@ -30,7 +30,7 @@ class PacketPlayerSimpleEffectStates(var effects: IntArray, var mode: Int) {
             if (context.direction == NetworkDirection.PLAY_TO_CLIENT) {
                 context.enqueueWork {
                     Minecraft.getInstance().player?.let { player ->
-                        player.doWithCap<BioPlayer> {
+                        player.doWithCap<BioStat> {
                             when(msg.mode){
                                 0 -> msg.effects.forEach { effect -> it.remove(effect) }
                                 1 -> msg.effects.forEach { effect -> player.addEffect(DefaultStateEffect(effect)) }

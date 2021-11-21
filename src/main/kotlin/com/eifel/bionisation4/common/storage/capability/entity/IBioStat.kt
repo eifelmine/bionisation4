@@ -1,8 +1,8 @@
-package com.eifel.bionisation4.common.storage.capability.player
+package com.eifel.bionisation4.common.storage.capability.entity
 
 import net.minecraft.nbt.CompoundNBT
 
-interface IBioPlayer {
+interface IBioStat {
 
     fun writeToNBT(): CompoundNBT
     fun readFromNBT(nbtBase: CompoundNBT)

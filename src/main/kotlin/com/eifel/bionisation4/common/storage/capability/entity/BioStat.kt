@@ -117,6 +117,37 @@ class BioStat(): IBioStat {
         }
     }
 
+    fun syncMobProperties(entity: LivingEntity) {
+        if(!entity.level.isClientSide) {
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.NEAR.with(
+                    PacketDistributor.TargetPoint.p(
+                        entity.x,
+                        entity.y,
+                        entity.z,
+                        25.0,
+                        entity.level.dimension()
+                    )
+                ), PacketMobPropertySync(
+                    immunity, 0, entity.id
+                )
+            )
+            NetworkManager.INSTANCE.send(
+                PacketDistributor.NEAR.with(
+                    PacketDistributor.TargetPoint.p(
+                        entity.x,
+                        entity.y,
+                        entity.z,
+                        25.0,
+                        entity.level.dimension()
+                    )
+                ), PacketMobPropertySync(
+                    blood, 1, entity.id
+                )
+            )
+        }
+    }
+
     fun addEffect(effect: AbstractEffect){
         if(!isActive(effect))
             this.pending.add(effect)

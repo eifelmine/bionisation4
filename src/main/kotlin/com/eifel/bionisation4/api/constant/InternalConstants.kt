@@ -47,4 +47,11 @@ object InternalConstants {
     val PROP_EFFECT_LIST_KEY = getModIDString("prop_effect_list")
 
     val VIAL_EFFECT_KEY = getModIDString("vial_effect")
+
+    //effects
+
+    val GENE_DEFAULT_ID = 0
+
+    val EFFECT_DEFAULT_ID = 0
+    val EFFECT_DEFAULT_STATE_ID = 1
 }

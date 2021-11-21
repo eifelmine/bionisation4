@@ -1,5 +1,6 @@
 package com.eifel.bionisation4.api.laboratory.registry
 
+import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.laboratory.common.DefaultEffect
@@ -28,7 +29,7 @@ object EffectRegistry {
 
     fun loadDefaultGenes() {
         //todo add mappings here
-        registerGeneClass(0, DefaultGene::class.java)
+        registerGeneClass(InternalConstants.GENE_DEFAULT_ID, DefaultGene::class.java)
     }
 
     fun loadDefaultGeneMutations() {
@@ -37,8 +38,8 @@ object EffectRegistry {
 
     fun loadDefaultEffects() {
         //todo add mappings here
-        registerEffectClass(0, DefaultEffect::class.java)
-        registerEffectClass(1, DefaultStateEffect::class.java)
+        registerEffectClass(InternalConstants.EFFECT_DEFAULT_ID, DefaultEffect::class.java)
+        registerEffectClass(InternalConstants.EFFECT_DEFAULT_STATE_ID, DefaultStateEffect::class.java)
     }
 
     fun loadDefaultEffectChances() {

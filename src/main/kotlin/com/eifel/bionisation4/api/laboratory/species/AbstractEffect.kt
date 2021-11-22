@@ -165,12 +165,10 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
                     isExpired = true
                 }
             }
-            if (!isHidden) {
-                if (!isExpired)
-                    onTick(entity, false)
-                else
-                    onTick(entity, true)
-            }
+            if (!isExpired)
+                onTick(entity, false)
+            else
+                onTick(entity, true)
         }
     }
 

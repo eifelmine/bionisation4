@@ -8,4 +8,5 @@ object Utils {
     val random = Random(System.currentTimeMillis())
 
     fun getModIDString(input : String) = "${Info.MOD_ID}:$input"
+    fun chance(chance: Int) = random.nextInt(100) < chance
 }

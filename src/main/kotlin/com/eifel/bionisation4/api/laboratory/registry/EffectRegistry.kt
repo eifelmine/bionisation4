@@ -5,6 +5,7 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.laboratory.common.DefaultEffect
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
+import com.eifel.bionisation4.common.laboratory.common.effect.Bleeding
 import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
 import net.minecraft.item.ItemStack
 
@@ -40,10 +41,12 @@ object EffectRegistry {
         //todo add mappings here
         registerEffectClass(InternalConstants.EFFECT_DEFAULT_ID, DefaultEffect::class.java)
         registerEffectClass(InternalConstants.EFFECT_DEFAULT_STATE_ID, DefaultStateEffect::class.java)
+        registerEffectClass(InternalConstants.EFFECT_BLEEDING_ID, Bleeding::class.java)
     }
 
     fun loadDefaultEffectChances() {
         //todo add mappings here
+        registerEffectChance(InternalConstants.EFFECT_BLEEDING_ID, 5)
     }
 
     fun loadDefaultSymbiosis() {

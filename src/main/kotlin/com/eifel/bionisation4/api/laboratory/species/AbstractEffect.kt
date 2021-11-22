@@ -135,14 +135,15 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     }
 
     fun getDNA() = effectGenes.joinToString("-", "[", "]", -1, "") { gene -> "${gene.getID()}" }
+    fun getDNATranslated() = effectGenes.joinToString("-", "[", "]", -1, "") { gene -> "${gene.getTranslationName()}" }
 
-    fun onExpired(entity: LivingEntity) {
+    open fun onExpired(entity: LivingEntity) {
         effectGenes.forEach { gene ->
             gene.clear(entity)
         }
     }
 
-    fun onTick(entity: LivingEntity, isLastTick: Boolean) {
+    open fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         recalculatePower(entity)
         mutate()
         effectGenes.forEach { gene ->
@@ -151,9 +152,9 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         timeTicker++
     }
 
-    fun onAttack(victim: LivingEntity, attacker: LivingEntity) {}
+    open fun onAttack(victim: LivingEntity, attacker: LivingEntity) {}
 
-    fun onDeath(entity: LivingEntity) {}
+    open fun onDeath(entity: LivingEntity) {}
 
     fun perform(entity: LivingEntity){
         if(!entity.level.isClientSide) {

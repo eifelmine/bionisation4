@@ -1,16 +1,27 @@
 {
   "itemGroup.tab_bionisation4": "Bionisation 4",
+
   "item.bionisation4.effect_vial": "Effect Vial",
 
+  "item.bionisation4.bandage": "Bandage",
+  "bandage.usage.desc": "Right click to prevent bleeding or fracture (with shift on others)",
 
   "vial.effect.name": "Effect: ",
   "vial.usage.desc": "Right click to treat yourself and with shift for others around",
   "vial.usage.spread": "Effect exposed! You should be more accurate next time!",
+  "vial.info.genes": "Genes: ",
+  "vial.info.type": "Type: ",
 
+  "effect.COMMON.type": "Common",
+  "effect.BACTERIA.type": "Bacteria",
+  "effect.VIRUS.type": "Virus",
+  "effect.FUNGI.type": "Fungi",
 
   "effect.Unknown Effect.name": "Unknown Effect",
   "effect.Default Effect.name": "Default Effect (Internal)",
   "effect.Default State Effect.name": "Default State Effect (Internal)",
+  "effect.Bleeding.name": "Bleeding",
+
   "gene.Unknown Gene.name": "Unknown Gene",
   "gene.Default Gene.name": "Default Gene (Internal)"
 }

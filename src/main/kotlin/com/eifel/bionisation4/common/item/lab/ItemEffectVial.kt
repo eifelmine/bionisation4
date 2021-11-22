@@ -71,6 +71,8 @@ class ItemEffectVial(): Item(Properties().tab(BionisationTab.BIONISATION_TAB).ra
 
         info.add(TranslationUtils.getText(" "))
         info.add(TranslationUtils.getText( "${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "effect", "name")} ${TextFormatting.GREEN}${effect.getTranslationName()}"))
+        info.add(TranslationUtils.getText( "${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "info", "type")} ${TextFormatting.DARK_AQUA}${effect.effectType.getTranslatedName()}"))
+        info.add(TranslationUtils.getText( "${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "info", "genes")} ${TextFormatting.RED}${effect.getDNATranslated()}"))
         info.add(TranslationUtils.getText(" "))
         info.add(TranslationUtils.getText("${TextFormatting.GOLD}${TranslationUtils.getTranslatedText("vial", "usage", "desc")}"))
     }

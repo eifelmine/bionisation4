@@ -4,7 +4,6 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.doWithCap
-import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.LivingEntity
@@ -36,7 +35,7 @@ class PacketMobEffectStates(var nbt: CompoundNBT, var mode: Int, var entId: Int)
                 context.enqueueWork {
                     Minecraft.getInstance().player?.let { player ->
                         (player.level.getEntity(msg.entId) as? LivingEntity)?.let { entity ->
-                            entity.doWithCap<BioStat> {
+                            entity.doWithCap {
                                 val effects = mutableListOf<AbstractEffect>()
                                 NBTUtils.nbtToEffects(msg.nbt, effects, InternalConstants.PROP_EFFECT_LIST_KEY)
                                 when(msg.mode){

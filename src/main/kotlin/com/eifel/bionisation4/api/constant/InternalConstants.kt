@@ -54,4 +54,7 @@ object InternalConstants {
 
     val EFFECT_DEFAULT_ID = 0
     val EFFECT_DEFAULT_STATE_ID = 1
+
+    //effects
+    val EFFECT_BLEEDING_ID = 2
 }

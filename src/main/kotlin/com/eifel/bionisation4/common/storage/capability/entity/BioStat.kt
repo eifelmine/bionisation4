@@ -34,20 +34,33 @@ class BioStat(): IBioStat {
     var ticker = 0
 
     fun onUpdate(entity: LivingEntity){
-        if(!entity.level.isClientSide){
-            if(pending.isNotEmpty()) {
-                effects.addAll(pending)
-                if(entity is ServerPlayerEntity)
-                    NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ entity }, PacketPlayerSimpleEffectStates(
-                            pending.map { it.effectID }.toIntArray(), 1)
+        if(pending.isNotEmpty()) {
+            effects.addAll(pending)
+            if(!entity.level.isClientSide) {
+                if (entity is ServerPlayerEntity)
+                    NetworkManager.INSTANCE.send(
+                        PacketDistributor.PLAYER.with { entity }, PacketPlayerSimpleEffectStates(
+                            pending.map { it.effectID }.toIntArray(), 1
+                        )
                     )
                 else
                     NetworkManager.INSTANCE.send(
-                        PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketMobSimpleEffectStates(
-                            pending.map { it.effectID }.toIntArray(), 1, entity.id)
+                        PacketDistributor.NEAR.with(
+                            PacketDistributor.TargetPoint.p(
+                                entity.x,
+                                entity.y,
+                                entity.z,
+                                25.0,
+                                entity.level.dimension()
+                            )
+                        ), PacketMobSimpleEffectStates(
+                            pending.map { it.effectID }.toIntArray(), 1, entity.id
+                        )
                     )
-                pending.clear()
             }
+            pending.clear()
+        }
+        if(!entity.level.isClientSide){
             val it = effects.iterator()
             while(it.hasNext()){
                 val effect = it.next()

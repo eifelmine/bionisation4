@@ -3,7 +3,6 @@ package com.eifel.bionisation4.common.network.message.mob
 import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
-import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.LivingEntity
 import net.minecraft.network.PacketBuffer
@@ -33,7 +32,7 @@ class PacketMobSimpleEffectStates(var effects: IntArray, var mode: Int, var entI
                 context.enqueueWork {
                     Minecraft.getInstance().player?.let { player ->
                         (player.level.getEntity(msg.entId) as? LivingEntity)?.let { entity ->
-                            entity.doWithCap<BioStat> {
+                            entity.doWithCap {
                                 when (msg.mode) {
                                     0 -> msg.effects.forEach { effect -> it.remove(effect) }
                                     1 -> msg.effects.forEach { effect -> entity.addEffect(DefaultStateEffect(effect)) }

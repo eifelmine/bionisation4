@@ -17,7 +17,7 @@ object EffectUtils {
     fun spreadEffect(effect: AbstractEffect, world: World, pos: BlockPos, radius: Double, predicate: (Entity) -> Boolean = { e -> e is LivingEntity }) =
         world.getEntities(null, AxisAlignedBB(pos).inflate(radius)) { predicate(it) }
             .toTypedList<LivingEntity>().forEach {
-                it.addEffect(effect)
+                it.addEffect(effect.getCopy())
             }
 
     fun symbiosisCheckAndTrigger(entity: LivingEntity){

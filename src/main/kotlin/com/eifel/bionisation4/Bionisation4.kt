@@ -1,10 +1,13 @@
 package com.eifel.bionisation4
 
+import com.eifel.bionisation4.api.laboratory.registry.ClientRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectTriggers
 import com.eifel.bionisation4.api.laboratory.registry.LocalizationRegistry
+import com.eifel.bionisation4.client.particle.ParticleRegistry
 import com.eifel.bionisation4.common.config.Config
 import com.eifel.bionisation4.common.event.ClientEvents
+import com.eifel.bionisation4.common.event.ClientModLoadingEvents
 import com.eifel.bionisation4.common.event.CommonEvents
 import com.eifel.bionisation4.common.event.ServerEvents
 import com.eifel.bionisation4.common.item.ItemRegistry
@@ -39,6 +42,15 @@ object Bionisation4 {
         EffectRegistry.loadDefaultSymbiosis()
 
         ItemRegistry.ITEMS.register(bus)
+
+        DistExecutor.safeRunWhenOn(Dist.CLIENT) {
+            DistExecutor.SafeRunnable {
+                ParticleRegistry.PARTICLES.register(bus)
+                bus.register(ClientModLoadingEvents.javaClass)
+                //load particle generators
+                ClientRegistry.loadDefaultParticleGenerators()
+            }
+        }
 
         EffectRegistry.loadDefaultGeneVials()
         EffectRegistry.loadDefaultBacteriaCures()

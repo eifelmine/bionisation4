@@ -5,8 +5,8 @@ import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatProvider
 import net.minecraft.entity.LivingEntity
 
-inline fun <reified E : BioStat> LivingEntity.doWithCap(crossinline action: (BioStat) -> Unit)  = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).ifPresent { cap ->
-    action(cap as E)
+inline fun LivingEntity.doWithCap(crossinline action: (BioStat) -> Unit)  = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).ifPresent { cap ->
+    action(cap as BioStat)
 }
 
 inline fun LivingEntity.getImmunity(): Int = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
@@ -68,3 +68,7 @@ inline fun LivingEntity.isEffectActive(effect: String) = this.getCapability(BioS
 inline fun LivingEntity.updateToClient() = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
     (it as BioStat).sendAllEffects(this)
 }
+
+inline fun LivingEntity.getEffects() = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).effects
+} ?: mutableListOf()

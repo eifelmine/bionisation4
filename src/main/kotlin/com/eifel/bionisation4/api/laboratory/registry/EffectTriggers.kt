@@ -1,7 +1,12 @@
 package com.eifel.bionisation4.api.laboratory.registry
 
+import com.eifel.bionisation4.api.constant.InternalConstants
+import com.eifel.bionisation4.api.util.Utils
+import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.toTypedList
+import com.eifel.bionisation4.common.laboratory.common.effect.Bleeding
 import net.minecraftforge.event.entity.living.LivingEvent
+import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.eventbus.api.Event
 import kotlin.reflect.KClass
 
@@ -16,6 +21,18 @@ object EffectTriggers {
             override fun getEventClass(): KClass<LivingEvent.LivingUpdateEvent> = LivingEvent.LivingUpdateEvent::class
             override fun trigger(event: LivingEvent.LivingUpdateEvent) {
 
+            }
+        })
+        addTrigger(object: IEffectTrigger<LivingHurtEvent>{
+
+            override fun getId() = 1
+            override fun getEventClass(): KClass<LivingHurtEvent> = LivingHurtEvent::class
+            override fun trigger(event: LivingHurtEvent) {
+                event.entityLiving?.let { victim ->
+                    //bleeding
+                    if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_BLEEDING_ID)))
+                        victim.addEffect(Bleeding())
+                }
             }
         })
     }

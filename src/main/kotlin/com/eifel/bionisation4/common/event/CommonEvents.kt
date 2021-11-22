@@ -31,8 +31,8 @@ object CommonEvents {
     fun onPlayerClone(event: PlayerEvent.Clone) {
         if (!event.player.level.isClientSide) {
             if (!event.isWasDeath || (event.isWasDeath && ConfigProperties.saveAfterDeath.get())) {
-                event.player.doWithCap<BioStat> { newCap ->
-                    event.original.doWithCap<BioStat> { oldCap ->
+                event.player.doWithCap { newCap ->
+                    event.original.doWithCap { oldCap ->
                         newCap.readFromNBT(oldCap.writeToNBT())
                     }
                 }
@@ -66,7 +66,7 @@ object CommonEvents {
                 EffectTriggers.getTriggers<LivingHurtEvent>().forEach { it.trigger(event) }
                 val damageSource = event.source
                 (damageSource.directEntity as? LivingEntity)?.let { source ->
-                    victim.doWithCap<BioStat> { cap ->
+                    victim.doWithCap { cap ->
                         cap.effects.forEach {
                             it.onAttack(victim, source)
                         }
@@ -116,7 +116,7 @@ object CommonEvents {
         target?.let { victim ->
             if(!victim.level.isClientSide) {
                 EffectTriggers.getTriggers<LivingDeathEvent>().forEach { it.trigger(event) }
-                victim.doWithCap<BioStat> { cap ->
+                victim.doWithCap { cap ->
                     cap.effects.forEach {
                         it.onDeath(victim)
                     }
@@ -140,7 +140,7 @@ object CommonEvents {
             when (event.entity) {
                 is LivingEntity -> {
                     val entity = event.entityLiving
-                    entity.doWithCap<BioStat> { cap ->
+                    entity.doWithCap { cap ->
                         cap.onUpdate(entity)
                         if (cap.ticker % 12000 == 0)
                             cap.modifyBlood(entity, 2)

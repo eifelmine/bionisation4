@@ -22,7 +22,7 @@ object NBTUtils {
     }
 
     fun nbtToStrings(compound: CompoundNBT, list: MutableCollection<String>, key: String) {
-        val tags = compound.getList(key, 9)
+        val tags = compound.getList(key, 10)
         tags.map { it as CompoundNBT }.mapTo(list){tag ->
             tag.getString("string")
         }
@@ -41,7 +41,7 @@ object NBTUtils {
     }
 
     fun <T: INBTSerializable> nbtToObjects(compound: CompoundNBT, list: MutableCollection<T>, key: String, clazz: Class<T>) {
-        val tags = compound.getList(key, 9)
+        val tags = compound.getList(key, 10)
         tags.map { it as CompoundNBT }.mapTo(list){ tag ->
             val obj = clazz.newInstance()
             obj.fromNBT(tag)
@@ -50,7 +50,7 @@ object NBTUtils {
     }
 
     fun <T: Gene> nbtToGenes(compound: CompoundNBT, list: MutableCollection<T>, key: String) {
-        val tags = compound.getList(key, 9)
+        val tags = compound.getList(key, 10)
         tags.map { it as CompoundNBT }.mapTo(list){ tag ->
             val obj = EffectRegistry.getGeneClassById(tag.getInt(InternalConstants.GENE_ID_KEY)).newInstance()
             obj.fromNBT(tag)
@@ -59,7 +59,7 @@ object NBTUtils {
     }
 
     fun <T: AbstractEffect> nbtToEffects(compound: CompoundNBT, list: MutableCollection<T>, key: String) {
-        val tags = compound.getList(key, 9)
+        val tags = compound.getList(key, 10)
         tags.map { it as CompoundNBT }.mapTo(list){ tag ->
             val obj = EffectRegistry.getEffectClassById(tag.getInt(InternalConstants.EFFECT_ID_KEY)).newInstance()
             obj.fromNBT(tag)
@@ -115,7 +115,7 @@ object NBTUtils {
     inline fun <reified T: Enum<*>> nbtToEnum(compound: CompoundNBT, key: String): T? = enumValueOrNull(compound.getString(key))
 
     inline fun <reified T: Enum<*>> nbtToEnums(compound: CompoundNBT, list: MutableCollection<T>, key: String) {
-        val tags = compound.getList(key, 9)
+        val tags = compound.getList(key, 10)
         tags.map { it as CompoundNBT }.mapNotNullTo(list){ tag ->
             enumValueOrNull(tag.getString("enum"))
         }

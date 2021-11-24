@@ -57,4 +57,5 @@ object InternalConstants {
 
     //effects
     val EFFECT_BLEEDING_ID = 2
+    val EFFECT_IMMUNITY_ID = 3
 }

@@ -11,7 +11,6 @@ import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
 
 abstract class AbstractEffect(var effectID: Int, var effectName: String = "Default Effect", var effectType: EffectType = EffectType.COMMON) : INBTSerializable {
@@ -106,15 +105,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         isSyncable = nbtData.getBoolean(InternalConstants.EFFECT_SYNCABLE_KEY)
     }
 
-    fun recalculatePower(entity: LivingEntity) {
-        if(canChangePower) {
-            var newPower = when (entity) {
-                is PlayerEntity -> EffectUtils.getPowerFromImmunity(entity.getImmunity())
-                else -> EffectUtils.getPowerFromImmunity(entity.getImmunity())
-            }
-            effectPower = newPower
-        }
-    }
+    fun recalculatePower(entity: LivingEntity) = if(canChangePower)
+            effectPower = EffectUtils.getPowerFromImmunity(entity.getImmunity()) else Unit
 
     fun mutate() {
         if(canMutate){

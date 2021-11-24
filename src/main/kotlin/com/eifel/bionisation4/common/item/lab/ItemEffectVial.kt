@@ -5,12 +5,12 @@ import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.core.BionisationTab
 import com.eifel.bionisation4.common.extensions.addEffect
+import com.eifel.bionisation4.common.item.CommonItem
 import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Rarity
@@ -24,7 +24,7 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-class ItemEffectVial(): Item(Properties().tab(BionisationTab.BIONISATION_TAB).rarity(Rarity.EPIC).stacksTo(1)) {
+class ItemEffectVial(): CommonItem(rarity = Rarity.EPIC, size = 1) {
 
     override fun fillItemCategory(group: ItemGroup, list: NonNullList<ItemStack>) {
         if(group == BionisationTab.BIONISATION_TAB) {

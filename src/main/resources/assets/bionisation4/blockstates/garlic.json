@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "age=0": { "model": "bionisation4:block/garlic_stage0" },
+        "age=1": { "model": "bionisation4:block/garlic_stage0" },
+        "age=2": { "model": "bionisation4:block/garlic_stage1" },
+        "age=3": { "model": "bionisation4:block/garlic_stage1" },
+        "age=4": { "model": "bionisation4:block/garlic_stage2" },
+        "age=5": { "model": "bionisation4:block/garlic_stage2" },
+        "age=6": { "model": "bionisation4:block/garlic_stage2" },
+        "age=7": { "model": "bionisation4:block/garlic_stage3" }
+    }
+}

@@ -12,13 +12,14 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-class CommonItem(rarity: Rarity = Rarity.UNCOMMON, size: Int = 64, val enchanted: Boolean = false, val desc: List<Triple<String, String, String>> = listOf()): Item(Properties().tab(BionisationTab.BIONISATION_TAB).rarity(rarity).stacksTo(size)) {
+open class CommonItem(rarity: Rarity = Rarity.UNCOMMON, size: Int = 64, val enchanted: Boolean = false, val desc: List<Triple<String, String, String>> = listOf()): Item(Properties().tab(BionisationTab.BIONISATION_TAB).rarity(rarity).stacksTo(size)) {
 
     @OnlyIn(Dist.CLIENT)
     override fun appendHoverText(stack: ItemStack, world: World?, info: MutableList<ITextComponent>, flag: ITooltipFlag) {
         super.appendHoverText(stack, world, info, flag)
-        desc.forEach { desc ->
-            info.add(TranslationUtils.getText("${TextFormatting.GOLD}${TranslationUtils.getTranslatedText(desc.first, desc.second, desc.third)}"))
+        if(desc.isNotEmpty()) {
+            info.add(TranslationUtils.getText(" "))
+            desc.forEach { desc -> info.add(TranslationUtils.getText("${TextFormatting.GOLD}${TranslationUtils.getTranslatedText(desc.first, desc.second, desc.third)}")) }
         }
     }
 

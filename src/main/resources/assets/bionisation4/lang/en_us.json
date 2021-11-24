@@ -10,7 +10,7 @@
   "item.bionisation4.chickenhead": "Chicken head",
   "item.bionisation4.striderskin": "Strider skin",
   "item.bionisation4.octtentacle": "Octopus tentacle",
-  "item.bionisation4.zhorsebone": "Zombie horse bone",
+  "item.bionisation4.zhorsebone": "Zombie horse bones",
   "item.bionisation4.piglinfang": "Piglin fang",
   "item.bionisation4.zoglinskull": "Zoglin skull",
   "item.bionisation4.evokerpotion": "Evoker potion",
@@ -33,6 +33,10 @@
   "item.bionisation4.bandage": "Bandage",
   "bandage.usage.desc": "Right click to prevent bleeding (with shift on others)",
 
+  "item.bionisation4.garlic": "Garlic bulb",
+  "item.bionisation4.garlicbulb": "Garlic bulb",
+  "garlic.usage.desc": "Restores 2 immunity after some time",
+
   "item.bionisation4.splint": "Splint",
   "splint.usage.desc": "Right click to prevent fracture (with shift on others)",
 
@@ -51,7 +55,10 @@
   "effect.Default Effect.name": "Default Effect (Internal)",
   "effect.Default State Effect.name": "Default State Effect (Internal)",
   "effect.Bleeding.name": "Bleeding",
+  "effect.Immunity.name": "Immunity",
 
   "gene.Unknown Gene.name": "Unknown Gene",
-  "gene.Default Gene.name": "Default Gene (Internal)"
+  "gene.Default Gene.name": "Default Gene (Internal)",
+
+  "block.bionisation4.garlic": "Garlic"
 }

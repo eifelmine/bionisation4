@@ -3,6 +3,7 @@ package com.eifel.bionisation4.common.item
 import com.eifel.bionisation4.Info
 import com.eifel.bionisation4.common.item.lab.ItemEffectVial
 import com.eifel.bionisation4.common.item.utility.Bandage
+import com.eifel.bionisation4.common.item.utility.GarlicBulb
 import com.eifel.bionisation4.common.item.utility.ImmunityChecker
 import com.eifel.bionisation4.common.item.utility.Splint
 import net.minecraftforge.registries.DeferredRegister
@@ -16,6 +17,7 @@ object ItemRegistry {
     val BANDAGE = ITEMS.register("bandage") { Bandage() }
     val SPLINT = ITEMS.register("splint") { Splint() }
     val IMMUNITY_CHECKER = ITEMS.register("immunitychecker") { ImmunityChecker() }
+    val GARLIC_BULB = ITEMS.register("garlicbulb") { GarlicBulb() }
 
     //utility
     val BAT_WING = ITEMS.register("batwing") { CommonItem() }

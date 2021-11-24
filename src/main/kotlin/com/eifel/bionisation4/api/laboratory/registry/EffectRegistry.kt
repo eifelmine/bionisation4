@@ -6,6 +6,7 @@ import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.laboratory.common.DefaultEffect
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
 import com.eifel.bionisation4.common.laboratory.common.effect.Bleeding
+import com.eifel.bionisation4.common.laboratory.common.effect.Immunity
 import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
 import net.minecraft.item.ItemStack
 
@@ -42,6 +43,7 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.EFFECT_DEFAULT_ID, DefaultEffect::class.java)
         registerEffectClass(InternalConstants.EFFECT_DEFAULT_STATE_ID, DefaultStateEffect::class.java)
         registerEffectClass(InternalConstants.EFFECT_BLEEDING_ID, Bleeding::class.java)
+        registerEffectClass(InternalConstants.EFFECT_IMMUNITY_ID, Immunity::class.java)
     }
 
     fun loadDefaultEffectChances() {

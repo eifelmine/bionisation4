@@ -1,23 +1,15 @@
 package com.eifel.bionisation4.common.item.utility
 
-import com.eifel.bionisation4.common.core.BionisationTab
-import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.client.util.ITooltipFlag
+import com.eifel.bionisation4.common.item.CommonItem
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Rarity
 import net.minecraft.util.ActionResult
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.Hand
-import net.minecraft.util.text.ITextComponent
-import net.minecraft.util.text.TextFormatting
 import net.minecraft.world.World
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
 
-class Splint(): Item(Properties().tab(BionisationTab.BIONISATION_TAB).rarity(Rarity.UNCOMMON).stacksTo(64)) {
+class Splint(): CommonItem(desc = listOf(Triple("splint", "usage", "desc"))) {
 
     override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
         val stack = player.getItemInHand(hand)
@@ -35,12 +27,5 @@ class Splint(): Item(Properties().tab(BionisationTab.BIONISATION_TAB).rarity(Rar
             }
         }
         return ActionResultType.SUCCESS
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    override fun appendHoverText(stack: ItemStack, world: World?, info: MutableList<ITextComponent>, flag: ITooltipFlag) {
-        super.appendHoverText(stack, world, info, flag)
-        info.add(TranslationUtils.getText(" "))
-        info.add(TranslationUtils.getText("${TextFormatting.GOLD}${TranslationUtils.getTranslatedText("splint", "usage", "desc")}"))
     }
 }

@@ -19,11 +19,22 @@ object FlowerFeatures {
     //extra features
     val FIRE_LILY = Feature.NETHER_FOREST_VEGETATION.configured(BlockStateProvidingFeatureConfig((WeightedBlockStateProvider()).add(BlockRegistry.FIRE_LILY.get().defaultBlockState(), 51)))
             .decorated(Placement.COUNT_MULTILAYER.configured(FeatureSpreadConfig(4)))
+    val NETHER_AMBER = Feature.NETHER_FOREST_VEGETATION.configured(BlockStateProvidingFeatureConfig((WeightedBlockStateProvider()).add(BlockRegistry.NETHER_AMBER.get().defaultBlockState(), 61)))
+        .decorated(Placement.COUNT_MULTILAYER.configured(FeatureSpreadConfig(6)))
 
-    //todo add stuff there
     fun loadFlowerFeatures(){
         addFlowerFeature(BlockRegistry.GARLIC.get().getStateForAge(7))
         addFlowerFeature(FIRE_LILY, biomes = listOf(BiomeDictionary.Type.NETHER), type = GenerationStage.Decoration.VEGETAL_DECORATION)
+        addFlowerFeature(NETHER_AMBER, biomes = listOf(BiomeDictionary.Type.NETHER), type = GenerationStage.Decoration.VEGETAL_DECORATION)
+        addFlowerFeature(BlockRegistry.WITHER_EYE.get().defaultBlockState(), tries = 21, chance = 35,  whitelist = setOf(Blocks.GRASS_BLOCK),   biomes = listOf(BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.DEAD, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.DRY, BiomeDictionary.Type.WASTELAND))
+        addFlowerFeature(BlockRegistry.CREEPER_SOUL.get().defaultBlockState(), tries = 15, chance = 100, whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS))
+        addFlowerFeature(BlockRegistry.ENDER_FLOWER.get().defaultBlockState(), tries = 6, chance = 50  , whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.MOUNTAIN))
+        addFlowerFeature(BlockRegistry.SNOW_WARDEN.get().defaultBlockState(), whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.COLD, BiomeDictionary.Type.SNOWY))
+        addFlowerFeature(BlockRegistry.DESERT_BONE.get().defaultBlockState(), whitelist = setOf(Blocks.SAND),  biomes = listOf(BiomeDictionary.Type.MESA, BiomeDictionary.Type.DRY, BiomeDictionary.Type.HOT, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY))
+        addFlowerFeature(BlockRegistry.SPIDER_EYE.get().defaultBlockState(), tries = 10, chance = 40  , whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.PLATEAU))
+        addFlowerFeature(BlockRegistry.SPECTRAL_LILY.get().defaultBlockState(), biomes = listOf(BiomeDictionary.Type.WATER, BiomeDictionary.Type.SWAMP))
+        addFlowerFeature(BlockRegistry.RED_FLOWER.get().defaultBlockState(), tries = 8, chance = 35,  whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.MUSHROOM, BiomeDictionary.Type.HILLS))
+        addFlowerFeature(BlockRegistry.CAVE_LANTERN.get().defaultBlockState(), tries = 15, chance = 100,  biomes = listOf(*BiomeDictionary.Type.getAll().toTypedArray()), whitelist = setOf(Blocks.STONE))
     }
 
     fun addFlowerFeature(state: BlockState, tries: Int = 12, blackList: Set<BlockState> = setOf(), whitelist: Set<Block> = setOf(

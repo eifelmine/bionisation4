@@ -1,0 +1,7 @@
+{
+    "parent": "minecraft:block/cross",
+    "textures": {
+        "particle": "bionisation4:blocks/netheramber",
+        "cross": "bionisation4:blocks/netheramber"
+    }
+}

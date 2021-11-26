@@ -37,6 +37,18 @@
   "item.bionisation4.garlicbulb": "Garlic bulb",
   "garlic.usage.desc": "Restores 2 immunity after some time",
 
+  "item.bionisation4.firelily": "Fire Lily",
+  "item.bionisation4.witherflower": "Wither hand",
+  "item.bionisation4.creepersoul": "Creeper soul",
+  "item.bionisation4.enderflower": "Ender flower",
+  "item.bionisation4.snowwarden": "Snow warden",
+  "item.bionisation4.desertbone": "Desert bone",
+  "item.bionisation4.spidereye": "Spider eye",
+  "item.bionisation4.spectrallily": "Spectral lily",
+  "item.bionisation4.netheramber": "Nether amber",
+  "item.bionisation4.redflower": "Red flower",
+  "item.bionisation4.cavelantern": "Stone lantern",
+
   "item.bionisation4.splint": "Splint",
   "splint.usage.desc": "Right click to prevent fracture (with shift on others)",
 
@@ -60,5 +72,16 @@
   "gene.Unknown Gene.name": "Unknown Gene",
   "gene.Default Gene.name": "Default Gene (Internal)",
 
-  "block.bionisation4.garlic": "Garlic"
+  "block.bionisation4.garlic": "Garlic",
+  "block.bionisation4.firelily": "Fire Lily",
+  "block.bionisation4.witherflower": "Wither hand",
+  "block.bionisation4.creepersoul": "Creeper soul",
+  "block.bionisation4.enderflower": "Ender flower",
+  "block.bionisation4.snowwarden": "Snow warden",
+  "block.bionisation4.desertbone": "Desert bone",
+  "block.bionisation4.spidereye": "Spider eye",
+  "block.bionisation4.spectrallily": "Spectral lily",
+  "block.bionisation4.netheramber": "Nether amber",
+  "block.bionisation4.redflower": "Red flower",
+  "block.bionisation4.cavelantern": "Stone lantern"
 }

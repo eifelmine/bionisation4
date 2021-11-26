@@ -96,6 +96,16 @@ object Bionisation4 {
             //todo move this to other class
             RenderTypeLookup.setRenderLayer(BlockRegistry.GARLIC.get(), RenderType.cutout())
             RenderTypeLookup.setRenderLayer(BlockRegistry.FIRE_LILY.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.WITHER_EYE.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.CREEPER_SOUL.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.ENDER_FLOWER.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.SNOW_WARDEN.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.DESERT_BONE.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.SPIDER_EYE.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.NETHER_AMBER.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.RED_FLOWER.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.CAVE_LANTERN.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.SPECTRAL_LILY.get(), RenderType.cutout())
         }
     }
 }

@@ -18,7 +18,7 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-class GarlicBulb(): BlockItem(BlockRegistry.GARLIC.get(), Properties().stacksTo(64).rarity(Rarity.UNCOMMON).tab(BionisationTab.BIONISATION_TAB).food(Food.Builder().fast().build())) {
+class GarlicBulb(): BlockItem(BlockRegistry.GARLIC.get(), Properties().stacksTo(64).rarity(Rarity.UNCOMMON).tab(BionisationTab.BIONISATION_TAB).food(Food.Builder().alwaysEat().fast().build())) {
 
     override fun finishUsingItem(stack: ItemStack, world: World?, entity: LivingEntity?): ItemStack {
         val itemStack = super.finishUsingItem(stack, world, entity)

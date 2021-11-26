@@ -1,0 +1,14 @@
+{ "type": "minecraft:block",
+  "name": "bionisation4:redflower",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bionisation4:redflower"
+        }
+      ]
+    }
+  ]
+}

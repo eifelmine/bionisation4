@@ -1,0 +1,7 @@
+{
+    "parent": "minecraft:block/cross",
+    "textures": {
+        "particle": "bionisation4:blocks/spectrallily",
+        "cross": "bionisation4:blocks/spectrallily"
+    }
+}

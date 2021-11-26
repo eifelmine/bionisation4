@@ -9,6 +9,6 @@ import net.minecraft.world.IBlockReader
 
 class Garlic(): CommonPlant() {
 
-    override fun mayPlaceOn(state: BlockState, reader: IBlockReader, pos: BlockPos) = state.`is`(Blocks.FARMLAND) || state.`is`(Blocks.GRASS)
+    override fun mayPlaceOn(state: BlockState, reader: IBlockReader, pos: BlockPos) = state.`is`(Blocks.FARMLAND) || state.`is`(Blocks.GRASS_BLOCK)
     override fun getBaseSeedId() = ItemRegistry.GARLIC_BULB.get()
 }

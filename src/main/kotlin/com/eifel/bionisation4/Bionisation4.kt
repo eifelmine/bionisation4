@@ -7,15 +7,13 @@ import com.eifel.bionisation4.api.laboratory.registry.LocalizationRegistry
 import com.eifel.bionisation4.client.particle.ParticleRegistry
 import com.eifel.bionisation4.common.block.BlockRegistry
 import com.eifel.bionisation4.common.config.Config
-import com.eifel.bionisation4.common.event.ClientEvents
-import com.eifel.bionisation4.common.event.ClientModLoadingEvents
-import com.eifel.bionisation4.common.event.CommonEvents
-import com.eifel.bionisation4.common.event.ServerEvents
+import com.eifel.bionisation4.common.event.*
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.network.NetworkManager
 import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatStorage
 import com.eifel.bionisation4.common.storage.capability.entity.IBioStat
+import com.eifel.bionisation4.world.generation.flower.FlowerFeatures
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraftforge.api.distmarker.Dist
@@ -73,8 +71,11 @@ object Bionisation4 {
             NetworkManager.init()
             //init capability
             CapabilityManager.INSTANCE.register(IBioStat::class.java, BioStatStorage(), ::BioStat)
+            //features
+            FlowerFeatures.loadFlowerFeatures()
             //events
             MinecraftForge.EVENT_BUS.register(CommonEvents.javaClass)
+            MinecraftForge.EVENT_BUS.register(GenerationEvents.javaClass)
             DistExecutor.safeRunWhenOn(Dist.DEDICATED_SERVER) {
                 DistExecutor.SafeRunnable {
                     MinecraftForge.EVENT_BUS.register(ServerEvents.javaClass)
@@ -92,7 +93,9 @@ object Bionisation4 {
 
     fun onClientSetup(event: FMLClientSetupEvent) {
         event.enqueueWork {
+            //todo move this to other class
             RenderTypeLookup.setRenderLayer(BlockRegistry.GARLIC.get(), RenderType.cutout())
+            RenderTypeLookup.setRenderLayer(BlockRegistry.FIRE_LILY.get(), RenderType.cutout())
         }
     }
 }

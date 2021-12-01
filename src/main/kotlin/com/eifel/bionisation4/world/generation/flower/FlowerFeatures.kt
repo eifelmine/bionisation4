@@ -32,7 +32,7 @@ object FlowerFeatures {
         addFlowerFeature(BlockRegistry.SNOW_WARDEN.get().defaultBlockState(), whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.COLD, BiomeDictionary.Type.SNOWY))
         addFlowerFeature(BlockRegistry.DESERT_BONE.get().defaultBlockState(), whitelist = setOf(Blocks.SAND),  biomes = listOf(BiomeDictionary.Type.MESA, BiomeDictionary.Type.DRY, BiomeDictionary.Type.HOT, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY))
         addFlowerFeature(BlockRegistry.SPIDER_EYE.get().defaultBlockState(), tries = 10, chance = 40  , whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.PLATEAU))
-        addFlowerFeature(BlockRegistry.SPECTRAL_LILY.get().defaultBlockState(), biomes = listOf(BiomeDictionary.Type.WATER, BiomeDictionary.Type.SWAMP))
+        addFlowerFeature(BlockRegistry.SPECTRAL_LILY.get().defaultBlockState(), biomes = listOf(BiomeDictionary.Type.WATER, BiomeDictionary.Type.SWAMP), whitelist = setOf(Blocks.WATER))
         addFlowerFeature(BlockRegistry.RED_FLOWER.get().defaultBlockState(), tries = 8, chance = 35,  whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.MUSHROOM, BiomeDictionary.Type.HILLS))
         addFlowerFeature(BlockRegistry.CAVE_LANTERN.get().defaultBlockState(), tries = 15, chance = 100,  biomes = listOf(*BiomeDictionary.Type.getAll().toTypedArray()), whitelist = setOf(Blocks.STONE))
     }

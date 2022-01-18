@@ -68,6 +68,10 @@
   "effect.Default State Effect.name": "Default State Effect (Internal)",
   "effect.Bleeding.name": "Bleeding",
   "effect.Immunity.name": "Immunity",
+  "effect.Internal Bleeding.name": "Internal Bleeding",
+  "effect.Sunstroke.name": "Sunstroke",
+  "effect.Cold.name": "Cold",
+  "effect.Fatigue.name": "Fatigue",
 
   "gene.Unknown Gene.name": "Unknown Gene",
   "gene.Default Gene.name": "Default Gene (Internal)",

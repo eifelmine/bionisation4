@@ -58,4 +58,8 @@ object InternalConstants {
     //effects
     val EFFECT_BLEEDING_ID = 2
     val EFFECT_IMMUNITY_ID = 3
+    val EFFECT_INTERNAL_BLEEDING_ID = 4
+    val EFFECT_SUNSTROKE_ID = 5
+    val EFFECT_COLD_ID = 6
+    val EFFECT_FATIGUE_ID = 7
 }

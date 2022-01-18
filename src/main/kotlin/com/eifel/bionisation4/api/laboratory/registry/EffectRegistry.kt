@@ -5,8 +5,7 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.laboratory.common.DefaultEffect
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
-import com.eifel.bionisation4.common.laboratory.common.effect.Bleeding
-import com.eifel.bionisation4.common.laboratory.common.effect.Immunity
+import com.eifel.bionisation4.common.laboratory.common.effect.*
 import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
 import net.minecraft.item.ItemStack
 
@@ -44,11 +43,17 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.EFFECT_DEFAULT_STATE_ID, DefaultStateEffect::class.java)
         registerEffectClass(InternalConstants.EFFECT_BLEEDING_ID, Bleeding::class.java)
         registerEffectClass(InternalConstants.EFFECT_IMMUNITY_ID, Immunity::class.java)
+        registerEffectClass(InternalConstants.EFFECT_INTERNAL_BLEEDING_ID, InternalBleeding::class.java)
+        registerEffectClass(InternalConstants.EFFECT_SUNSTROKE_ID, Sunstroke::class.java)
+        registerEffectClass(InternalConstants.EFFECT_COLD_ID, Cold::class.java)
+        registerEffectClass(InternalConstants.EFFECT_FATIGUE_ID, Fatigue::class.java)
     }
 
     fun loadDefaultEffectChances() {
         //todo add mappings here
         registerEffectChance(InternalConstants.EFFECT_BLEEDING_ID, 5)
+        registerEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID, 35)
+        registerEffectChance(InternalConstants.EFFECT_COLD_ID, 20)
     }
 
     fun loadDefaultSymbiosis() {

@@ -1,0 +1,25 @@
+package com.eifel.bionisation4.common.laboratory.common.effect
+
+import com.eifel.bionisation4.api.constant.InternalConstants
+import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
+import com.eifel.bionisation4.api.laboratory.util.EffectType
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
+
+class Nightmares(): AbstractEffect(InternalConstants.EFFECT_NIGHTMARES_ID, "Nightmares", EffectType.COMMON) {
+
+    init {
+        isInfinite = false
+        effectDuration = 6000
+        canChangePower = false
+        isSyncable = false
+    }
+
+    override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
+        super.onTick(entity, isLastTick)
+        if(entity is PlayerEntity && entity.isSleeping)
+            entity.stopSleeping()
+    }
+
+    override fun getCopy() = Nightmares()
+}

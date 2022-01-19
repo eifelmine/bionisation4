@@ -47,6 +47,14 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.EFFECT_SUNSTROKE_ID, Sunstroke::class.java)
         registerEffectClass(InternalConstants.EFFECT_COLD_ID, Cold::class.java)
         registerEffectClass(InternalConstants.EFFECT_FATIGUE_ID, Fatigue::class.java)
+        registerEffectClass(InternalConstants.EFFECT_FOOD_POISONING_ID, FoodPoisoning::class.java)
+        registerEffectClass(InternalConstants.EFFECT_FRACTURE_ID, Fracture::class.java)
+        registerEffectClass(InternalConstants.EFFECT_LACK_OF_BLOOD_ID, LackOfBlood::class.java)
+        registerEffectClass(InternalConstants.EFFECT_LACK_OF_AIR_ID, LackOfAir::class.java)
+        registerEffectClass(InternalConstants.EFFECT_NETHER_ATMOSPHERE_ID, NetherAtmosphere::class.java)
+        registerEffectClass(InternalConstants.EFFECT_ALIENATION_ID, Alienation::class.java)
+        registerEffectClass(InternalConstants.EFFECT_NIGHTMARES_ID, Nightmares::class.java)
+        registerEffectClass(InternalConstants.EFFECT_DEBUG_ID, Debug::class.java)
     }
 
     fun loadDefaultEffectChances() {
@@ -54,6 +62,12 @@ object EffectRegistry {
         registerEffectChance(InternalConstants.EFFECT_BLEEDING_ID, 5)
         registerEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID, 35)
         registerEffectChance(InternalConstants.EFFECT_COLD_ID, 20)
+        registerEffectChance(InternalConstants.EFFECT_FOOD_POISONING_ID, 15)
+        registerEffectChance(InternalConstants.EFFECT_FRACTURE_ID, 10)
+        registerEffectChance(InternalConstants.EFFECT_LACK_OF_AIR_ID, 5)
+        registerEffectChance(InternalConstants.EFFECT_NETHER_ATMOSPHERE_ID, 10)
+        registerEffectChance(InternalConstants.EFFECT_ALIENATION_ID, 10)
+        registerEffectChance(InternalConstants.EFFECT_NIGHTMARES_ID, 10)
     }
 
     fun loadDefaultSymbiosis() {

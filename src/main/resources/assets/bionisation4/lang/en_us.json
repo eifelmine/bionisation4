@@ -72,6 +72,16 @@
   "effect.Sunstroke.name": "Sunstroke",
   "effect.Cold.name": "Cold",
   "effect.Fatigue.name": "Fatigue",
+  "effect.Food Poisoning.name": "Food Poisoning",
+  "effect.Fracture.name": "Fracture",
+  "effect.Lack of blood.name": "Lack of blood",
+  "effect.Lack of air.name": "Lack of air",
+  "effect.Nether atmosphere.name": "Nether atmosphere",
+  "effect.Alienation.name": "Alienation",
+  "effect.Nightmares.name": "Nightmares",
+  "effect.Debug.name": "Debug",
+
+
 
   "gene.Unknown Gene.name": "Unknown Gene",
   "gene.Default Gene.name": "Default Gene (Internal)",

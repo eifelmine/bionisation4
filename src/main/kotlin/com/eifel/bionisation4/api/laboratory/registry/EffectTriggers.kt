@@ -3,12 +3,14 @@ package com.eifel.bionisation4.api.laboratory.registry
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.extensions.*
-import com.eifel.bionisation4.common.laboratory.common.effect.Bleeding
-import com.eifel.bionisation4.common.laboratory.common.effect.Cold
-import com.eifel.bionisation4.common.laboratory.common.effect.Fatigue
-import com.eifel.bionisation4.common.laboratory.common.effect.Sunstroke
+import com.eifel.bionisation4.common.laboratory.common.effect.*
+import net.minecraft.entity.monster.DrownedEntity
+import net.minecraft.entity.monster.PhantomEntity
+import net.minecraft.entity.monster.WitherSkeletonEntity
+import net.minecraft.entity.monster.piglin.PiglinEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Items
+import net.minecraft.util.DamageSource
 import net.minecraft.world.biome.Biome
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent
 import net.minecraftforge.event.entity.living.LivingEvent
@@ -38,6 +40,9 @@ object EffectTriggers {
                     //fatigue
                     if(event.entityLiving.getImmunity() < 30)
                         event.entityLiving.addEffect(Fatigue())
+                    //lack of blood
+                    if(event.entityLiving.getBlood() < 40)
+                        event.entityLiving.addEffect(LackOfBlood())
                 }
             }
         })
@@ -51,6 +56,8 @@ object EffectTriggers {
                     when(event.resultStack.item){
                         //sunstroke
                         Items.GLASS_BOTTLE -> event.entityLiving.expire(InternalConstants.EFFECT_SUNSTROKE_ID)
+                        //food poisoning
+                        in FoodPoisoning.poison -> if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_FOOD_POISONING_ID))) event.entityLiving.addEffect(FoodPoisoning())
                     }
                 }
             }
@@ -64,6 +71,21 @@ object EffectTriggers {
                     //bleeding
                     if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_BLEEDING_ID)))
                         victim.addEffect(Bleeding())
+                    //fracture
+                    if(event.source == DamageSource.FALL && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_FRACTURE_ID)))
+                        victim.addEffect(Fracture())
+                    //lack of air
+                    if(event.source.directEntity is DrownedEntity && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_LACK_OF_AIR_ID)))
+                        victim.addEffect(LackOfAir())
+                    //nether atmosphere
+                    if(event.source.directEntity is PiglinEntity && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_NETHER_ATMOSPHERE_ID)))
+                        victim.addEffect(NetherAtmosphere())
+                    //alienation
+                    if(event.source.directEntity is WitherSkeletonEntity && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_ALIENATION_ID)))
+                        victim.addEffect(Alienation())
+                    //nightmares
+                    if(event.source.directEntity is PhantomEntity && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_NIGHTMARES_ID)))
+                        victim.addEffect(Nightmares())
                 }
             }
         })

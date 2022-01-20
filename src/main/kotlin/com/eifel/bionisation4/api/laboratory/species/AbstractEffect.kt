@@ -144,9 +144,13 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         timeTicker++
     }
 
-    open fun onAttack(victim: LivingEntity, attacker: LivingEntity) {}
+    open fun onAttack(victim: LivingEntity, attacker: LivingEntity) {
+        effectGenes.forEach { it.onAttack(victim, attacker, this) }
+    }
 
-    open fun onDeath(entity: LivingEntity) {}
+    open fun onDeath(entity: LivingEntity) {
+        effectGenes.forEach { it.onDeath(entity, this) }
+    }
 
     fun perform(entity: LivingEntity){
         if(!entity.level.isClientSide) {

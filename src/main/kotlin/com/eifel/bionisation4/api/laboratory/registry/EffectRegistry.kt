@@ -7,6 +7,8 @@ import com.eifel.bionisation4.common.laboratory.common.DefaultEffect
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
 import com.eifel.bionisation4.common.laboratory.common.effect.*
 import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
+import com.eifel.bionisation4.common.laboratory.gene.species.potion.*
+import com.eifel.bionisation4.common.laboratory.gene.species.type.*
 import net.minecraft.item.ItemStack
 
 object EffectRegistry {
@@ -31,6 +33,55 @@ object EffectRegistry {
     fun loadDefaultGenes() {
         //todo add mappings here
         registerGeneClass(InternalConstants.GENE_DEFAULT_ID, DefaultGene::class.java)
+        registerGeneClass(InternalConstants.GENE_MOVEMENT_SPEED_ID, MovementSpeed::class.java)
+        registerGeneClass(InternalConstants.GENE_MOVEMENT_SLOWDOWN_ID, MovementSlowdown::class.java)
+        registerGeneClass(InternalConstants.GENE_DIG_SPEED_ID, DigSpeed::class.java)
+        registerGeneClass(InternalConstants.GENE_DIG_SLOWDOWN_ID, DigSlowdown::class.java)
+        registerGeneClass(InternalConstants.GENE_DAMAGE_BOOST_ID, DamageBoost::class.java)
+        registerGeneClass(InternalConstants.GENE_HEAL_ID, Heal::class.java)
+        registerGeneClass(InternalConstants.GENE_HARM_ID, Harm::class.java)
+        registerGeneClass(InternalConstants.GENE_JUMP_ID, Jump::class.java)
+        registerGeneClass(InternalConstants.GENE_CONFUSION_ID, Confusion::class.java)
+        registerGeneClass(InternalConstants.GENE_REGENERATION_ID, Regeneration::class.java)
+        registerGeneClass(InternalConstants.GENE_DAMAGE_RESISTANCE_ID, DamageResistance::class.java)
+        registerGeneClass(InternalConstants.GENE_FIRE_RESISTANCE_ID, FireResistance::class.java)
+        registerGeneClass(InternalConstants.GENE_WATER_BREATHING_ID, WaterBreathing::class.java)
+        registerGeneClass(InternalConstants.GENE_INVISIBILITY_ID, Invisibility::class.java)
+        registerGeneClass(InternalConstants.GENE_BLINDNESS_ID, Blindness::class.java)
+        registerGeneClass(InternalConstants.GENE_NIGHT_VISION_ID, NightVision::class.java)
+        registerGeneClass(InternalConstants.GENE_HUNGER_ID, Hunger::class.java)
+        registerGeneClass(InternalConstants.GENE_WEAKNESS_ID, Weakness::class.java)
+        registerGeneClass(InternalConstants.GENE_POISON_ID, Poison::class.java)
+        registerGeneClass(InternalConstants.GENE_HEALTH_BOOST_ID, HealthBoost::class.java)
+        registerGeneClass(InternalConstants.GENE_ABSORPTION_ID, Absorption::class.java)
+        registerGeneClass(InternalConstants.GENE_SATURATION_ID, Saturation::class.java)
+        registerGeneClass(InternalConstants.GENE_GLOWING_ID, Glowing::class.java)
+        registerGeneClass(InternalConstants.GENE_LEVITATION_ID, Levitation::class.java)
+        registerGeneClass(InternalConstants.GENE_LUCK_ID, Luck::class.java)
+        registerGeneClass(InternalConstants.GENE_UNLUCK_ID, Unluck::class.java)
+        registerGeneClass(InternalConstants.GENE_SLOW_FALLING_ID, SlowFalling::class.java)
+        registerGeneClass(InternalConstants.GENE_CONDUIT_POWER_ID, ConduitPower::class.java)
+        registerGeneClass(InternalConstants.GENE_DOLPHINS_GRACE_ID, DolphinsGrace::class.java)
+        registerGeneClass(InternalConstants.GENE_BAD_OMEN_ID, BadOmen::class.java)
+
+        registerGeneClass(InternalConstants.GENE_AIR_ID, Air::class.java)
+        registerGeneClass(InternalConstants.GENE_HAND_WEAKNESS_ID, HandWeakness::class.java)
+        registerGeneClass(InternalConstants.GENE_IMMUNITY_DAMAGE_ID, ImmunityDamage::class.java)
+
+        registerGeneClass(InternalConstants.GENE_EXPLOSION_ID, Explosion::class.java)
+        registerGeneClass(InternalConstants.GENE_BLOOD_DAMAGE_ID, BloodDamage::class.java)
+        registerGeneClass(InternalConstants.GENE_CLONE_ID, Clone::class.java)
+        registerGeneClass(InternalConstants.GENE_AIR_SPREAD_ID, AirSpread::class.java)
+        registerGeneClass(InternalConstants.GENE_ATTACK_SPREAD_ID, AttackSpread::class.java)
+        registerGeneClass(InternalConstants.GENE_END_ID, End::class.java)
+        registerGeneClass(InternalConstants.GENE_RANDOM_TELEPORT_ID, RandomTeleport::class.java)
+        registerGeneClass(InternalConstants.GENE_WATER_FEAR_ID, WaterFear::class.java)
+        registerGeneClass(InternalConstants.GENE_HEALTH_DAMAGE_ID, HealthDamage::class.java)
+        registerGeneClass(InternalConstants.GENE_HOSTILE_ID, Hostile::class.java)
+        registerGeneClass(InternalConstants.GENE_SUNBURN_ID, Sunburn::class.java)
+        registerGeneClass(InternalConstants.GENE_AGGRESSIVE_ID, Aggressive::class.java)
+
+
     }
 
     fun loadDefaultGeneMutations() {

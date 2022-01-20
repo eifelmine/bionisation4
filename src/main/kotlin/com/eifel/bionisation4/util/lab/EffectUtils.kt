@@ -20,6 +20,12 @@ object EffectUtils {
                 it.addEffect(effect.getCopy())
             }
 
+    fun applyToEntities(world: World, pos: BlockPos, radius: Double, predicate: (Entity) -> Boolean = { e -> e is LivingEntity }, action: (Entity) -> Unit = {_ ->}) =
+        world.getEntities(null, AxisAlignedBB(pos).inflate(radius)) { predicate(it) }
+            .toTypedList<LivingEntity>().forEach {
+                action(it)
+            }
+
     fun symbiosisCheckAndTrigger(entity: LivingEntity){
         val symbiosis = EffectRegistry.getSymbiosis()
         if(symbiosis.isNotEmpty()) {

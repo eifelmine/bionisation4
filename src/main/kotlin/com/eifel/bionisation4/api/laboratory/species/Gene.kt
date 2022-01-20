@@ -22,14 +22,18 @@ abstract class Gene() : INBTSerializable {
         this.isGeneActive = isActive
     }
 
-    fun perform(entity: LivingEntity, effect: AbstractEffect) {
-        if(!entity.level.isClientSide) {
+    open fun perform(entity: LivingEntity, effect: AbstractEffect) {
+        if(!entity.level.isClientSide && isGeneActive) {
             if (isActive())
                 potions.forEach { it.perform(entity) }
             else
                 potions.forEach { it.clear(entity) }
         }
     }
+
+    open fun onAttack(victim: LivingEntity, attacker: LivingEntity, effect: AbstractEffect) {}
+
+    open fun onDeath(entity: LivingEntity, effect: AbstractEffect) {}
 
     override fun toNBT(): CompoundNBT {
         val nbtData = CompoundNBT()

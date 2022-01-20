@@ -99,6 +99,7 @@ object InternalConstants {
     val GENE_HOSTILE_ID = 44
     val GENE_SUNBURN_ID = 45
     val GENE_AGGRESSIVE_ID = 46
+    val GENE_PEACEFUL_ID = 47
 
 
 

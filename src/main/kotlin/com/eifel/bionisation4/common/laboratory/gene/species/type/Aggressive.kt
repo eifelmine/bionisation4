@@ -11,7 +11,7 @@ import net.minecraft.entity.ai.goal.*
 import net.minecraft.entity.passive.AnimalEntity
 import kotlin.streams.toList
 
-class Aggressive(): Gene(InternalConstants.GENE_SUNBURN_ID, "Aggressive", true) {
+class Aggressive(): Gene(InternalConstants.GENE_AGGRESSIVE_ID, "Aggressive", true) {
 
     private var wasAIReplaced = false
 

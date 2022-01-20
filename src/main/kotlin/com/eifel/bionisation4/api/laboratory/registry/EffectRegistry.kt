@@ -3,6 +3,7 @@ package com.eifel.bionisation4.api.laboratory.registry
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
+import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.laboratory.common.DefaultEffect
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
 import com.eifel.bionisation4.common.laboratory.common.effect.*
@@ -10,6 +11,7 @@ import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.*
 import com.eifel.bionisation4.common.laboratory.gene.species.type.*
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 
 object EffectRegistry {
 
@@ -63,11 +65,9 @@ object EffectRegistry {
         registerGeneClass(InternalConstants.GENE_CONDUIT_POWER_ID, ConduitPower::class.java)
         registerGeneClass(InternalConstants.GENE_DOLPHINS_GRACE_ID, DolphinsGrace::class.java)
         registerGeneClass(InternalConstants.GENE_BAD_OMEN_ID, BadOmen::class.java)
-
         registerGeneClass(InternalConstants.GENE_AIR_ID, Air::class.java)
         registerGeneClass(InternalConstants.GENE_HAND_WEAKNESS_ID, HandWeakness::class.java)
         registerGeneClass(InternalConstants.GENE_IMMUNITY_DAMAGE_ID, ImmunityDamage::class.java)
-
         registerGeneClass(InternalConstants.GENE_EXPLOSION_ID, Explosion::class.java)
         registerGeneClass(InternalConstants.GENE_BLOOD_DAMAGE_ID, BloodDamage::class.java)
         registerGeneClass(InternalConstants.GENE_CLONE_ID, Clone::class.java)
@@ -80,8 +80,7 @@ object EffectRegistry {
         registerGeneClass(InternalConstants.GENE_HOSTILE_ID, Hostile::class.java)
         registerGeneClass(InternalConstants.GENE_SUNBURN_ID, Sunburn::class.java)
         registerGeneClass(InternalConstants.GENE_AGGRESSIVE_ID, Aggressive::class.java)
-
-
+        registerGeneClass(InternalConstants.GENE_PEACEFUL_ID, Peaceful::class.java)
     }
 
     fun loadDefaultGeneMutations() {
@@ -127,6 +126,53 @@ object EffectRegistry {
 
     fun loadDefaultGeneVials() {
         //todo add mappings here
+        registerGeneVial(InternalConstants.GENE_DEFAULT_ID, ItemStack.EMPTY)
+        registerGeneVial(InternalConstants.GENE_MOVEMENT_SPEED_ID, ItemStack(Items.SUGAR))
+        registerGeneVial(InternalConstants.GENE_MOVEMENT_SLOWDOWN_ID, ItemStack(Items.BONE))
+        registerGeneVial(InternalConstants.GENE_DIG_SPEED_ID, ItemStack(Items.GHAST_TEAR))
+        registerGeneVial(InternalConstants.GENE_DIG_SLOWDOWN_ID, ItemStack(Items.INK_SAC))
+        registerGeneVial(InternalConstants.GENE_DAMAGE_BOOST_ID, ItemStack(ItemRegistry.HUSK_BRAIN.get()))
+        registerGeneVial(InternalConstants.GENE_HEAL_ID, ItemStack(Items.GOLDEN_APPLE))
+        registerGeneVial(InternalConstants.GENE_HARM_ID, ItemStack(ItemRegistry.WITCH_POTION.get()))
+        registerGeneVial(InternalConstants.GENE_JUMP_ID, ItemStack(Items.FEATHER))
+        registerGeneVial(InternalConstants.GENE_CONFUSION_ID, ItemStack(ItemRegistry.OCT_TENTACLE.get()))
+        registerGeneVial(InternalConstants.GENE_REGENERATION_ID, ItemStack(Items.GLISTERING_MELON_SLICE))
+        registerGeneVial(InternalConstants.GENE_DAMAGE_RESISTANCE_ID, ItemStack(Items.MAGMA_CREAM))
+        registerGeneVial(InternalConstants.GENE_FIRE_RESISTANCE_ID, ItemStack(ItemRegistry.BLAZE_CORE.get()))
+        registerGeneVial(InternalConstants.GENE_WATER_BREATHING_ID, ItemStack(ItemRegistry.DROWNED_TOOTH.get()))
+        registerGeneVial(InternalConstants.GENE_INVISIBILITY_ID, ItemStack(ItemRegistry.SPECTRAL_DUST.get()))
+        registerGeneVial(InternalConstants.GENE_BLINDNESS_ID, ItemStack(Items.SPIDER_EYE))
+        registerGeneVial(InternalConstants.GENE_NIGHT_VISION_ID, ItemStack(Items.ENDER_PEARL))
+        registerGeneVial(InternalConstants.GENE_HUNGER_ID, ItemStack(Items.ROTTEN_FLESH))
+        registerGeneVial(InternalConstants.GENE_WEAKNESS_ID, ItemStack(ItemRegistry.SKELETON_DUST.get()))
+        registerGeneVial(InternalConstants.GENE_POISON_ID, ItemStack(Items.FERMENTED_SPIDER_EYE))
+        registerGeneVial(InternalConstants.GENE_HEALTH_BOOST_ID, ItemStack(ItemRegistry.EVOKER_POTION.get()))
+        registerGeneVial(InternalConstants.GENE_ABSORPTION_ID, ItemStack(Items.PHANTOM_MEMBRANE))
+        registerGeneVial(InternalConstants.GENE_SATURATION_ID, ItemStack(Items.EGG))
+        registerGeneVial(InternalConstants.GENE_GLOWING_ID, ItemStack(Items.GLOWSTONE_DUST))
+        registerGeneVial(InternalConstants.GENE_LEVITATION_ID, ItemStack(ItemRegistry.VEX_WING.get()))
+        registerGeneVial(InternalConstants.GENE_LUCK_ID, ItemStack(Items.RABBIT_FOOT))
+        registerGeneVial(InternalConstants.GENE_UNLUCK_ID, ItemStack(ItemRegistry.CHICKEN_HEAD.get()))
+        registerGeneVial(InternalConstants.GENE_SLOW_FALLING_ID, ItemStack(ItemRegistry.STRIDER_SKIN.get()))
+        registerGeneVial(InternalConstants.GENE_CONDUIT_POWER_ID, ItemStack(Items.CONDUIT))
+        registerGeneVial(InternalConstants.GENE_DOLPHINS_GRACE_ID, ItemStack(Items.TROPICAL_FISH))
+        registerGeneVial(InternalConstants.GENE_BAD_OMEN_ID, ItemStack(ItemRegistry.WEIRD_SEEDS.get()))
+        registerGeneVial(InternalConstants.GENE_AIR_ID, ItemStack(Items.PRISMARINE_SHARD))
+        registerGeneVial(InternalConstants.GENE_HAND_WEAKNESS_ID, ItemStack(ItemRegistry.ZOMBIE_HORSE_BONE.get()))
+        registerGeneVial(InternalConstants.GENE_IMMUNITY_DAMAGE_ID, ItemStack(ItemRegistry.PIGLIN_FANG.get()))
+        registerGeneVial(InternalConstants.GENE_EXPLOSION_ID, ItemStack(ItemRegistry.CREEPER_HEART.get()))
+        registerGeneVial(InternalConstants.GENE_BLOOD_DAMAGE_ID, ItemStack(ItemRegistry.SPIDER_LEG.get()))
+        registerGeneVial(InternalConstants.GENE_CLONE_ID, ItemStack(ItemRegistry.PHANTOM_TAIL.get()))
+        registerGeneVial(InternalConstants.GENE_AIR_SPREAD_ID, ItemStack(Items.NETHER_STAR))
+        registerGeneVial(InternalConstants.GENE_ATTACK_SPREAD_ID, ItemStack(Items.NETHER_WART))
+        registerGeneVial(InternalConstants.GENE_END_ID, ItemStack(ItemRegistry.SHULKER_ESSENCE.get()))
+        registerGeneVial(InternalConstants.GENE_RANDOM_TELEPORT_ID, ItemStack(Items.ENDER_EYE))
+        registerGeneVial(InternalConstants.GENE_WATER_FEAR_ID, ItemStack(Items.NAUTILUS_SHELL))
+        registerGeneVial(InternalConstants.GENE_HEALTH_DAMAGE_ID, ItemStack(ItemRegistry.WITHER_CORE.get()))
+        registerGeneVial(InternalConstants.GENE_HOSTILE_ID, ItemStack(ItemRegistry.WOLF_TOOTH.get()))
+        registerGeneVial(InternalConstants.GENE_SUNBURN_ID, ItemStack(ItemRegistry.BAT_WING.get()))
+        registerGeneVial(InternalConstants.GENE_AGGRESSIVE_ID, ItemStack(ItemRegistry.ZOGLIN_SKULL.get()))
+        registerGeneVial(InternalConstants.GENE_PEACEFUL_ID, ItemStack(Items.GOLDEN_CARROT))
     }
 
     fun loadDefaultBacteriaCures() {

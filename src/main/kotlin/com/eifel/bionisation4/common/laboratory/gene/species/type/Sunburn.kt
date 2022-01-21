@@ -12,7 +12,7 @@ class Sunburn(): Gene(InternalConstants.GENE_SUNBURN_ID, "Sunburn", true) {
 
     override fun perform(entity: LivingEntity, effect: AbstractEffect) {
         super.perform(entity, effect)
-        if(entity.getBioTicker() % 50 == 0 && entity.level.canSeeSky(entity.blockPosition())){
+        if(entity.getBioTicker() % 50 == 0 && entity.level.isDay && entity.level.canSeeSky(entity.blockPosition())){
             entity.setSecondsOnFire(10)
             entity.addEffect(EffectInstance(Effects.WEAKNESS, 100, 1))
             entity.addEffect(EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 2))

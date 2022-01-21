@@ -81,7 +81,7 @@
   "effect.Nightmares.name": "Nightmares",
   "effect.Debug.name": "Debug",
 
-
+  "effect.Rabies.name": "Rabies",
 
   "gene.Unknown Gene.name": "Unknown Gene",
   "gene.Default Gene.name": "Default Gene (Internal)",
@@ -132,12 +132,12 @@
   "gene.Sunburn.name": "Sunburn",
   "gene.Aggressive.name": "Aggressive",
   "gene.Peaceful.name": "Peaceful",
-  "gene..name": "",
-  "gene..name": "",
-  "gene..name": "",
-  "gene..name": "",
-  "gene..name": "",
-  "gene..name": "",
+  "gene.Ground.name": "Ground",
+  "gene.Arrow immunity.name": "Arrow immunity",
+  "gene.Fire.name": "Fire",
+  "gene.Radius.name": "Radius",
+  "gene.Mutagen.name": "Mutagen",
+  "gene.Undead.name": "Undead",
 
 
   "block.bionisation4.garlic": "Garlic",

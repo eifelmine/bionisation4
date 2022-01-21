@@ -6,6 +6,9 @@ import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.CompoundNBT
+import net.minecraftforge.event.entity.living.LivingAttackEvent
+import net.minecraftforge.event.entity.living.LivingDeathEvent
+import net.minecraftforge.event.entity.living.LivingHurtEvent
 import kotlin.random.Random
 
 abstract class Gene() : INBTSerializable {
@@ -13,6 +16,9 @@ abstract class Gene() : INBTSerializable {
     var id = Random.nextInt()
     var geneName = "Unknown Gene"
     var isGeneActive = false
+    var overriddenPower = -1
+
+    var canModifyPower = true
 
     val potions = mutableListOf<GenePotionEffect>()
 
@@ -22,32 +28,42 @@ abstract class Gene() : INBTSerializable {
         this.isGeneActive = isActive
     }
 
+    fun setPower(power: Int): Gene {
+        this.overriddenPower = power
+        return this
+    }
+
     open fun perform(entity: LivingEntity, effect: AbstractEffect) {
         if(!entity.level.isClientSide && isGeneActive) {
             if (isActive())
-                potions.forEach { it.perform(entity) }
+                potions.forEach { it.perform(entity, overriddenPower) }
             else
                 potions.forEach { it.clear(entity) }
         }
     }
 
-    open fun onAttack(victim: LivingEntity, attacker: LivingEntity, effect: AbstractEffect) {}
+    open fun onHurt(event: LivingHurtEvent, victim: LivingEntity, attacker: LivingEntity, effect: AbstractEffect) {}
+    open fun onAttack(event: LivingAttackEvent, victim: LivingEntity, attacker: LivingEntity, effect: AbstractEffect) {}
 
-    open fun onDeath(entity: LivingEntity, effect: AbstractEffect) {}
+    open fun onDeath(event: LivingDeathEvent, entity: LivingEntity, effect: AbstractEffect) {}
 
     override fun toNBT(): CompoundNBT {
         val nbtData = CompoundNBT()
         nbtData.putInt(InternalConstants.GENE_ID_KEY, this.id)
+        nbtData.putInt(InternalConstants.GENE_POWER_KEY, this.overriddenPower)
         nbtData.putString(InternalConstants.GENE_NAME_KEY, this.geneName)
         nbtData.putBoolean(InternalConstants.GENE_ACTIVE_KEY, this.isGeneActive)
+        nbtData.putBoolean(InternalConstants.GENE_POWER_MODIFY_KEY, this.canModifyPower)
         NBTUtils.objectsToNBT(nbtData, potions, InternalConstants.GENE_POTIONS_KEY)
         return nbtData
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {
         this.id = nbtData.getInt(InternalConstants.GENE_ID_KEY)
+        this.overriddenPower = nbtData.getInt(InternalConstants.GENE_POWER_KEY)
         this.geneName = nbtData.getString(InternalConstants.GENE_NAME_KEY)
         this.isGeneActive = nbtData.getBoolean(InternalConstants.GENE_ACTIVE_KEY)
+        this.canModifyPower = nbtData.getBoolean(InternalConstants.GENE_POWER_MODIFY_KEY)
         NBTUtils.nbtToObjects(nbtData, potions, InternalConstants.GENE_POTIONS_KEY, GenePotionEffect::class.java)
     }
 

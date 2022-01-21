@@ -28,22 +28,24 @@ object EffectTriggers {
             override fun getId() = 0
             override fun getEventClass(): KClass<LivingEvent.LivingUpdateEvent> = LivingEvent.LivingUpdateEvent::class
             override fun trigger(event: LivingEvent.LivingUpdateEvent) {
-                if(event.entityLiving is PlayerEntity){
-                    if(event.entityLiving.getBioTicker() % 1200 == 0) {
+                when(event.entityLiving){
+                    is PlayerEntity -> {
+                        val player = event.entityLiving as PlayerEntity
                         //sunstroke
-                        if (event.entityLiving.isInBiome(Biome.Category.DESERT) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID)))
-                            event.entityLiving.addEffect(Sunstroke())
-                        //cold
-                        if ((event.entityLiving.isInBiome(Biome.Category.ICY) || event.entityLiving.isInBiome(Biome.Category.TAIGA)) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_COLD_ID)) && !event.entityLiving.hasArmor(true) && event.entityLiving.getImmunity() < 80)
-                            event.entityLiving.addEffect(Cold())
+                        if (player.isInBiome(Biome.Category.DESERT) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID)))
+                            if(player.inventory.armor[3].isEmpty)
+                                player.addEffect(Sunstroke())
                     }
-                    //fatigue
-                    if(event.entityLiving.getImmunity() < 30)
-                        event.entityLiving.addEffect(Fatigue())
-                    //lack of blood
-                    if(event.entityLiving.getBlood() < 40)
-                        event.entityLiving.addEffect(LackOfBlood())
                 }
+                //fatigue
+                if(event.entityLiving.getImmunity() < 30)
+                    event.entityLiving.addEffect(Fatigue())
+                //lack of blood
+                if(event.entityLiving.getBlood() < 40)
+                    event.entityLiving.addEffect(LackOfBlood())
+                //cold
+                if ((event.entityLiving.isInBiome(Biome.Category.ICY) || event.entityLiving.isInBiome(Biome.Category.TAIGA)) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_COLD_ID)) && !event.entityLiving.hasArmor(true) && event.entityLiving.getImmunity() < 80)
+                    event.entityLiving.addEffect(Cold())
             }
         })
         addTrigger(object: IEffectTrigger<LivingEntityUseItemEvent.Finish>{
@@ -51,13 +53,15 @@ object EffectTriggers {
             override fun getId() = 1
             override fun getEventClass(): KClass<LivingEntityUseItemEvent.Finish> = LivingEntityUseItemEvent.Finish::class
             override fun trigger(event: LivingEntityUseItemEvent.Finish) {
-                if(event.entityLiving is PlayerEntity){
-                    println(event.resultStack.item)
-                    when(event.resultStack.item){
-                        //sunstroke
-                        Items.GLASS_BOTTLE -> event.entityLiving.expire(InternalConstants.EFFECT_SUNSTROKE_ID)
-                        //food poisoning
-                        in FoodPoisoning.poison -> if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_FOOD_POISONING_ID))) event.entityLiving.addEffect(FoodPoisoning())
+                when(event.entityLiving){
+                    is PlayerEntity -> {
+                        val player = event.entityLiving as PlayerEntity
+                        when(event.resultStack.item){
+                            //sunstroke
+                            Items.GLASS_BOTTLE -> player.expire(InternalConstants.EFFECT_SUNSTROKE_ID)
+                            //food poisoning
+                            in FoodPoisoning.poison -> if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_FOOD_POISONING_ID))) player.addEffect(FoodPoisoning())
+                        }
                     }
                 }
             }
@@ -106,6 +110,7 @@ interface IEffectTrigger<T: Event> {
 
 //LivingEvent.LivingUpdateEvent
 //LivingHurtEvent
+//LivingAttackEvent
 //LivingEntityUseItemEvent.Start
 //LivingEntityUseItemEvent.Stop
 //LivingEntityUseItemEvent.Finish

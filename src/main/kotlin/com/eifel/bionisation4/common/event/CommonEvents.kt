@@ -1,11 +1,10 @@
 package com.eifel.bionisation4.common.event
 
+import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectTriggers
+import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.config.ConfigProperties
-import com.eifel.bionisation4.common.extensions.doWithCap
-import com.eifel.bionisation4.common.extensions.setBlood
-import com.eifel.bionisation4.common.extensions.setImmunity
-import com.eifel.bionisation4.common.extensions.updateToClient
+import com.eifel.bionisation4.common.extensions.*
 import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatProvider
 import net.minecraft.entity.Entity
@@ -42,6 +41,22 @@ object CommonEvents {
 
     @JvmStatic
     @SubscribeEvent
+    fun onEntitySpawn(event: LivingSpawnEvent.SpecialSpawn) {
+        if(!event.entityLiving.level.isClientSide){
+            val occ = EffectRegistry.getOccasions()
+            if(occ.containsKey(event.entityLiving.type)){
+                val data = occ[event.entityLiving.type]!!
+                data.forEach { (t, u) ->
+                    if(Utils.chance(u)){
+                        event.entityLiving.addEffect(EffectRegistry.getEffectInstance(t).getCopy())
+                    }
+                }
+            }
+        }
+    }
+
+    @JvmStatic
+    @SubscribeEvent
     fun onPlayerLogIn(event: PlayerEvent.PlayerLoggedInEvent) {
         if(!event.player.level.isClientSide)
             event.player.updateToClient()
@@ -68,7 +83,26 @@ object CommonEvents {
                 (damageSource.directEntity as? LivingEntity)?.let { source ->
                     victim.doWithCap { cap ->
                         cap.effects.forEach {
-                            it.onAttack(victim, source)
+                            it.onHurt(event, victim, source)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @JvmStatic
+    @SubscribeEvent
+    fun onEntityBeingHurt(event: LivingAttackEvent) {
+        val target = event.entityLiving
+        target?.let { victim ->
+            if(!victim.level.isClientSide) {
+                EffectTriggers.getTriggers<LivingAttackEvent>().forEach { it.trigger(event) }
+                val damageSource = event.source
+                (damageSource.directEntity as? LivingEntity)?.let { source ->
+                    source.doWithCap { cap ->
+                        cap.effects.forEach {
+                            it.onAttack(event, victim, source)
                         }
                     }
                 }
@@ -118,7 +152,7 @@ object CommonEvents {
                 EffectTriggers.getTriggers<LivingDeathEvent>().forEach { it.trigger(event) }
                 victim.doWithCap { cap ->
                     cap.effects.forEach {
-                        it.onDeath(victim)
+                        it.onDeath(event, victim)
                     }
                 }
             }

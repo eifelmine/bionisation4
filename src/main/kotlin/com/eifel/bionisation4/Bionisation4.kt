@@ -55,9 +55,6 @@ object Bionisation4 {
             }
         }
 
-        EffectRegistry.loadDefaultGeneVials()
-        EffectRegistry.loadDefaultBacteriaCures()
-
         EffectTriggers.init()
 
         //common setup
@@ -67,6 +64,10 @@ object Bionisation4 {
 
     fun onCommonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork {
+            //load items
+            EffectRegistry.loadDefaultGeneVials()
+            EffectRegistry.loadDefaultBacteriaCures()
+            EffectRegistry.loadDefaultEffectOccasions()
             //network
             NetworkManager.init()
             //init capability

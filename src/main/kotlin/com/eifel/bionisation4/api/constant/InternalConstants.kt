@@ -7,6 +7,8 @@ object InternalConstants {
     val GENE_ID_KEY = getModIDString("gene_id")
     val GENE_NAME_KEY = getModIDString("gene_name")
     val GENE_ACTIVE_KEY = getModIDString("gene_active")
+    val GENE_POWER_KEY = getModIDString("gene_power")
+    val GENE_POWER_MODIFY_KEY = getModIDString("gene_power_modify")
 
     val GENE_POT_ID_KEY = getModIDString("gene_pid")
     val GENE_POT_DUR_KEY = getModIDString("gene_pdur")
@@ -100,6 +102,13 @@ object InternalConstants {
     val GENE_SUNBURN_ID = 45
     val GENE_AGGRESSIVE_ID = 46
     val GENE_PEACEFUL_ID = 47
+    val GENE_GROUND_ID = 48
+    val GENE_ARROW_IMMUNITY_ID = 49
+    val GENE_FIRE_ID = 50
+    val GENE_RADIUS_ID = 51
+    val GENE_MUTAGEN_ID = 52
+    val GENE_UNDEAD_ID = 53
+    val GENE_BURN_ID = 54
 
 
 
@@ -121,4 +130,7 @@ object InternalConstants {
     val EFFECT_ALIENATION_ID = 13
     val EFFECT_NIGHTMARES_ID = 14
     val EFFECT_DEBUG_ID = 15
+
+    val VIRUS_RABIES_ID = 500
+
 }

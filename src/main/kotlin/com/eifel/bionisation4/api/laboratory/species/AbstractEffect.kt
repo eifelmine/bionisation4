@@ -12,6 +12,9 @@ import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.CompoundNBT
+import net.minecraftforge.event.entity.living.LivingAttackEvent
+import net.minecraftforge.event.entity.living.LivingDeathEvent
+import net.minecraftforge.event.entity.living.LivingHurtEvent
 
 abstract class AbstractEffect(var effectID: Int, var effectName: String = "Default Effect", var effectType: EffectType = EffectType.COMMON) : INBTSerializable {
 
@@ -105,8 +108,15 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         isSyncable = nbtData.getBoolean(InternalConstants.EFFECT_SYNCABLE_KEY)
     }
 
-    fun recalculatePower(entity: LivingEntity) = if(canChangePower)
-            effectPower = EffectUtils.getPowerFromImmunity(entity.getImmunity()) else Unit
+    fun recalculatePower(entity: LivingEntity) {
+        if(canChangePower) {
+            val prev = effectPower
+            effectPower = EffectUtils.getPowerFromImmunity(entity.getImmunity())
+            if(prev != effectPower){
+                effectGenes.forEach { if(it.canModifyPower) it.overriddenPower = effectPower }
+            }
+        }
+    }
 
     fun mutate() {
         if(canMutate){
@@ -138,18 +148,22 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     open fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         recalculatePower(entity)
         mutate()
-        effectGenes.forEach { gene ->
+        effectGenes.filter { it.isGeneActive }.forEach { gene ->
             gene.perform(entity, this)
         }
         timeTicker++
     }
 
-    open fun onAttack(victim: LivingEntity, attacker: LivingEntity) {
-        effectGenes.forEach { it.onAttack(victim, attacker, this) }
+    open fun onHurt(event: LivingHurtEvent, victim: LivingEntity, attacker: LivingEntity) {
+        effectGenes.filter { it.isGeneActive }.forEach { it.onHurt(event, victim, attacker, this) }
     }
 
-    open fun onDeath(entity: LivingEntity) {
-        effectGenes.forEach { it.onDeath(entity, this) }
+    open fun onAttack(event: LivingAttackEvent, victim: LivingEntity, attacker: LivingEntity) {
+        effectGenes.filter { it.isGeneActive }.forEach { it.onAttack(event, victim, attacker, this) }
+    }
+
+    open fun onDeath(event: LivingDeathEvent, entity: LivingEntity) {
+        effectGenes.filter { it.isGeneActive }.forEach { it.onDeath(event, entity, this) }
     }
 
     fun perform(entity: LivingEntity){
@@ -172,7 +186,21 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     fun isSame(id: Int) = id == effectID
     fun isSame(name: String) = name == effectName
 
-    abstract fun getCopy(): AbstractEffect
+    fun hasGene(gene: Gene) = effectGenes.any { it.id == gene.id }
+    fun hasGene(id: Int) = effectGenes.any { it.id == id }
+    fun hasGene(name: String) = effectGenes.any { it.geneName == name }
 
+    fun deactivateGenes() = effectGenes.forEach { it.isGeneActive = false }
+    fun activateGenes() = effectGenes.forEach { it.isGeneActive = true }
+
+    fun activateGene(gene: Gene) { effectGenes.find { it.id == gene.id }?.isGeneActive = true }
+    fun activateGene(id: Int) { effectGenes.find { it.id == id }?.isGeneActive = true }
+    fun activateGene(name: String) { effectGenes.find { it.geneName == name }?.isGeneActive = true }
+
+    fun deactivateGene(gene: Gene) { effectGenes.find { it.id == gene.id }?.isGeneActive = false }
+    fun deactivateGene(id: Int) { effectGenes.find { it.id == id }?.isGeneActive = false }
+    fun deactivateGene(name: String) { effectGenes.find { it.geneName == name }?.isGeneActive = false }
+
+    abstract fun getCopy(): AbstractEffect
     fun getTranslationName() = TranslationUtils.getTranslatedText("effect", effectName, "name")
 }

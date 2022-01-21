@@ -11,10 +11,10 @@ class GenePotionEffect(var potion: Int, var duration: Int, var power: Int): IGen
 
     constructor() : this(0, 100, 1)
 
-    override fun perform(entity: LivingEntity) {
+    override fun perform(entity: LivingEntity, power: Int) {
         if(!entity.level.isClientSide) {
             Effect.byId(this.potion)?.let {
-                entity.addEffect(EffectInstance(it, this.duration, this.power))
+                entity.addEffect(EffectInstance(it, this.duration, if(power >= 0) power else this.power))
             }
         }
     }

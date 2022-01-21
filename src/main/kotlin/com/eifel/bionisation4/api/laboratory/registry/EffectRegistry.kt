@@ -10,6 +10,8 @@ import com.eifel.bionisation4.common.laboratory.common.effect.*
 import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.*
 import com.eifel.bionisation4.common.laboratory.gene.species.type.*
+import com.eifel.bionisation4.common.laboratory.virus.Rabies
+import net.minecraft.entity.EntityType
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 
@@ -21,6 +23,8 @@ object EffectRegistry {
     private val EFFECT_INSTANCES = mutableMapOf<Int, AbstractEffect>()
     private val EFFECT_CHANCES = mutableMapOf<Int, Int>()
     private val GENE_INSTANCES = mutableMapOf<Int, Gene>()
+
+    private val EFFECT_OCCASIONS = mutableMapOf<EntityType<*>, MutableMap<Int, Int>>()
 
     //list of gene ids it can mutate with
     private val GENE_MUTATIONS = mutableMapOf<Int, List<Int>>()
@@ -81,14 +85,29 @@ object EffectRegistry {
         registerGeneClass(InternalConstants.GENE_SUNBURN_ID, Sunburn::class.java)
         registerGeneClass(InternalConstants.GENE_AGGRESSIVE_ID, Aggressive::class.java)
         registerGeneClass(InternalConstants.GENE_PEACEFUL_ID, Peaceful::class.java)
+        registerGeneClass(InternalConstants.GENE_GROUND_ID, Ground::class.java)
+        registerGeneClass(InternalConstants.GENE_ARROW_IMMUNITY_ID, ArrowImmunity::class.java)
+        registerGeneClass(InternalConstants.GENE_FIRE_ID, Fire::class.java)
+        registerGeneClass(InternalConstants.GENE_RADIUS_ID, Radius::class.java)
+        registerGeneClass(InternalConstants.GENE_MUTAGEN_ID, Mutagen::class.java)
+        registerGeneClass(InternalConstants.GENE_UNDEAD_ID, Undead::class.java)
+        registerGeneClass(InternalConstants.GENE_BURN_ID, Burn::class.java)
     }
 
     fun loadDefaultGeneMutations() {
         //todo add mappings here
     }
 
+    fun loadDefaultEffectOccasions() {
+        //todo add mappings here
+        registerEffectOccasion(EntityType.FOX, InternalConstants.VIRUS_RABIES_ID, 30)
+        registerEffectOccasion(EntityType.WOLF, InternalConstants.VIRUS_RABIES_ID, 10)
+        registerEffectOccasion(EntityType.POLAR_BEAR, InternalConstants.VIRUS_RABIES_ID, 10)
+    }
+
     fun loadDefaultEffects() {
         //todo add mappings here
+        //effect
         registerEffectClass(InternalConstants.EFFECT_DEFAULT_ID, DefaultEffect::class.java)
         registerEffectClass(InternalConstants.EFFECT_DEFAULT_STATE_ID, DefaultStateEffect::class.java)
         registerEffectClass(InternalConstants.EFFECT_BLEEDING_ID, Bleeding::class.java)
@@ -105,6 +124,8 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.EFFECT_ALIENATION_ID, Alienation::class.java)
         registerEffectClass(InternalConstants.EFFECT_NIGHTMARES_ID, Nightmares::class.java)
         registerEffectClass(InternalConstants.EFFECT_DEBUG_ID, Debug::class.java)
+        //virus
+        registerEffectClass(InternalConstants.VIRUS_RABIES_ID, Rabies::class.java)
     }
 
     fun loadDefaultEffectChances() {
@@ -173,6 +194,13 @@ object EffectRegistry {
         registerGeneVial(InternalConstants.GENE_SUNBURN_ID, ItemStack(ItemRegistry.BAT_WING.get()))
         registerGeneVial(InternalConstants.GENE_AGGRESSIVE_ID, ItemStack(ItemRegistry.ZOGLIN_SKULL.get()))
         registerGeneVial(InternalConstants.GENE_PEACEFUL_ID, ItemStack(Items.GOLDEN_CARROT))
+        registerGeneVial(InternalConstants.GENE_GROUND_ID, ItemStack(Items.POISONOUS_POTATO))
+        registerGeneVial(InternalConstants.GENE_ARROW_IMMUNITY_ID, ItemStack(Items.TURTLE_EGG))
+        registerGeneVial(InternalConstants.GENE_FIRE_ID, ItemStack(Items.BLAZE_ROD))
+        registerGeneVial(InternalConstants.GENE_RADIUS_ID, ItemStack(Items.SLIME_BALL))
+        registerGeneVial(InternalConstants.GENE_MUTAGEN_ID, ItemStack(Items.BONE_MEAL))
+        registerGeneVial(InternalConstants.GENE_UNDEAD_ID, ItemStack(Items.DRAGON_BREATH))
+        registerGeneVial(InternalConstants.GENE_BURN_ID, ItemStack(Items.FIRE_CORAL))
     }
 
     fun loadDefaultBacteriaCures() {
@@ -195,6 +223,12 @@ object EffectRegistry {
         if(EFFECT_CHANCES.containsKey(id))
             throw IllegalStateException("Effect chance with id $id is already registered!")
         EFFECT_CHANCES[id] = chance
+    }
+
+    fun registerEffectOccasion(entity: EntityType<*>, id: Int, chance: Int) {
+        val data = EFFECT_OCCASIONS.getOrDefault(entity, mutableMapOf())
+        data[id] = chance
+        EFFECT_OCCASIONS[entity] = data
     }
 
     fun registerGeneMutation(id: Int, mutations: List<Int>) {
@@ -234,6 +268,7 @@ object EffectRegistry {
     fun getGeneMutations() = GENE_MUTATIONS
     fun getGeneVials() = GENE_VIALS
     fun getSymbiosis() = EFFECT_SYMBIOSIS
+    fun getOccasions() = EFFECT_OCCASIONS
     fun getBacteriaCures() = BACTERIA_CURES
 
     fun getEffectInstance(id: Int): AbstractEffect {

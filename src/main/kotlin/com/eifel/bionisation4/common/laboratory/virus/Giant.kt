@@ -20,7 +20,7 @@ class Giant(): AbstractEffect(InternalConstants.VIRUS_GIANT_ID, "Giant", EffectT
         isSyncable = true
         isHidden = false
 
-        effectGenes.add(DamageBoost().setPower(3).setCyclic(300))
+        effectGenes.add(DamageBoost().setPower(3))
         effectGenes.add(AirSpread().setRadius(5.0))
         effectGenes.add(Radius().setRadius(8.0))
         effectGenes.add(HealthBoost().setPower(2))

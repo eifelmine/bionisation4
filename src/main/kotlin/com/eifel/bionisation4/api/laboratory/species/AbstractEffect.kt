@@ -6,6 +6,7 @@ import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.api.laboratory.util.INBTSerializable
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.config.ConfigProperties
+import com.eifel.bionisation4.common.extensions.getBioTicker
 import com.eifel.bionisation4.common.extensions.getImmunity
 import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
@@ -148,22 +149,36 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     open fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         recalculatePower(entity)
         mutate()
-        effectGenes.filter { it.isGeneActive }.forEach { gene ->
+        effectGenes.filter { it.isGeneActive }.filter { if(it.cyclicDelay > 0) entity.getBioTicker() % it.cyclicDelay == 0 else true }.forEach { gene ->
             gene.perform(entity, this)
+            if(gene.deactivateAfter)
+                gene.isGeneActive = false
         }
         timeTicker++
     }
 
     open fun onHurt(event: LivingHurtEvent, victim: LivingEntity, attacker: LivingEntity) {
-        effectGenes.filter { it.isGeneActive }.forEach { it.onHurt(event, victim, attacker, this) }
+        effectGenes.filter { it.isGeneActive }.forEach { gene ->
+            gene.onHurt(event, victim, attacker, this)
+            if(gene.deactivateAfter)
+                gene.isGeneActive = false
+        }
     }
 
     open fun onAttack(event: LivingAttackEvent, victim: LivingEntity, attacker: LivingEntity) {
-        effectGenes.filter { it.isGeneActive }.forEach { it.onAttack(event, victim, attacker, this) }
+        effectGenes.filter { it.isGeneActive }.forEach { gene ->
+            gene.onAttack(event, victim, attacker, this)
+            if(gene.deactivateAfter)
+                gene.isGeneActive = false
+        }
     }
 
     open fun onDeath(event: LivingDeathEvent, entity: LivingEntity) {
-        effectGenes.filter { it.isGeneActive }.forEach { it.onDeath(event, entity, this) }
+        effectGenes.filter { it.isGeneActive }.forEach { gene ->
+            gene.onDeath(event, entity, this)
+            if(gene.deactivateAfter)
+                gene.isGeneActive = false
+        }
     }
 
     fun perform(entity: LivingEntity){

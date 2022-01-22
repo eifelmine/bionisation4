@@ -43,9 +43,18 @@ object CommonEvents {
     @SubscribeEvent
     fun onEntitySpawn(event: LivingSpawnEvent.SpecialSpawn) {
         if(!event.entityLiving.level.isClientSide){
-            val occ = EffectRegistry.getOccasions()
-            if(occ.containsKey(event.entityLiving.type)){
-                val data = occ[event.entityLiving.type]!!
+            val occasionsDefault = EffectRegistry.getOccasions()
+            if(occasionsDefault.containsKey(event.entityLiving.type)){
+                val data = occasionsDefault[event.entityLiving.type]!!
+                data.forEach { (t, u) ->
+                    if(Utils.chance(u)){
+                        event.entityLiving.addEffect(EffectRegistry.getEffectInstance(t).getCopy())
+                    }
+                }
+            }
+            val occasionsClass = EffectRegistry.getOccasionsClass()
+            occasionsClass.keys.filter { it.isAssignableFrom(event.entityLiving.javaClass) }.forEach {
+                val data = occasionsClass[it]!!
                 data.forEach { (t, u) ->
                     if(Utils.chance(u)){
                         event.entityLiving.addEffect(EffectRegistry.getEffectInstance(t).getCopy())

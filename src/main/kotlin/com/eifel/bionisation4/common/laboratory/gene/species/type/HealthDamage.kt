@@ -5,14 +5,41 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
 import net.minecraft.entity.LivingEntity
+import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.DamageSource
 
 class HealthDamage(): Gene(InternalConstants.GENE_HEALTH_DAMAGE_ID, "Health damage", true) {
 
+    var amount = 2f
+    var delay = 300
+
     override fun perform(entity: LivingEntity, effect: AbstractEffect) {
         super.perform(entity, effect)
-        if(entity.getBioTicker() % 300 == 0)
-            entity.hurt(DamageSource.GENERIC, 2f)
+        if(entity.getBioTicker() % delay == 0)
+            entity.hurt(DamageSource.GENERIC, amount)
+    }
+
+    fun setHealth(health: Float): HealthDamage {
+        this.amount = health
+        return this
+    }
+
+    fun setDelay(delay: Int): HealthDamage {
+        this.delay = delay
+        return this
+    }
+
+    override fun toNBT(): CompoundNBT {
+        val data = super.toNBT()
+        data.putFloat(InternalConstants.GENE_HEALTH_KEY, amount)
+        data.putInt(InternalConstants.GENE_DELAY_KEY, delay)
+        return data
+    }
+
+    override fun fromNBT(nbtData: CompoundNBT) {
+        super.fromNBT(nbtData)
+        this.amount = nbtData.getFloat(InternalConstants.GENE_HEALTH_KEY)
+        this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)
     }
 
     override fun getCopy() = HealthDamage()

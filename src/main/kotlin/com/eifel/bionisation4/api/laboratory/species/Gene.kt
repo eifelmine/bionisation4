@@ -19,6 +19,9 @@ abstract class Gene() : INBTSerializable {
     var overriddenPower = -1
 
     var canModifyPower = true
+    var cyclicDelay = -1
+
+    var deactivateAfter = false
 
     val potions = mutableListOf<GenePotionEffect>()
 
@@ -33,12 +36,19 @@ abstract class Gene() : INBTSerializable {
         return this
     }
 
+    fun setCyclic(delay: Int): Gene {
+        this.cyclicDelay = delay
+        return this
+    }
+
+    fun setDeactivateAfter(value: Boolean): Gene {
+        this.deactivateAfter = value
+        return this
+    }
+
     open fun perform(entity: LivingEntity, effect: AbstractEffect) {
-        if(!entity.level.isClientSide && isGeneActive) {
-            if (isActive())
-                potions.forEach { it.perform(entity, overriddenPower) }
-            else
-                potions.forEach { it.clear(entity) }
+        if(!entity.level.isClientSide) {
+            potions.forEach { it.perform(entity, overriddenPower) }
         }
     }
 
@@ -51,9 +61,11 @@ abstract class Gene() : INBTSerializable {
         val nbtData = CompoundNBT()
         nbtData.putInt(InternalConstants.GENE_ID_KEY, this.id)
         nbtData.putInt(InternalConstants.GENE_POWER_KEY, this.overriddenPower)
+        nbtData.putInt(InternalConstants.GENE_CYCLIC_KEY, this.cyclicDelay)
         nbtData.putString(InternalConstants.GENE_NAME_KEY, this.geneName)
         nbtData.putBoolean(InternalConstants.GENE_ACTIVE_KEY, this.isGeneActive)
         nbtData.putBoolean(InternalConstants.GENE_POWER_MODIFY_KEY, this.canModifyPower)
+        nbtData.putBoolean(InternalConstants.GENE_DEACTIVATE_KEY, this.deactivateAfter)
         NBTUtils.objectsToNBT(nbtData, potions, InternalConstants.GENE_POTIONS_KEY)
         return nbtData
     }
@@ -61,9 +73,11 @@ abstract class Gene() : INBTSerializable {
     override fun fromNBT(nbtData: CompoundNBT) {
         this.id = nbtData.getInt(InternalConstants.GENE_ID_KEY)
         this.overriddenPower = nbtData.getInt(InternalConstants.GENE_POWER_KEY)
+        this.cyclicDelay = nbtData.getInt(InternalConstants.GENE_CYCLIC_KEY)
         this.geneName = nbtData.getString(InternalConstants.GENE_NAME_KEY)
         this.isGeneActive = nbtData.getBoolean(InternalConstants.GENE_ACTIVE_KEY)
         this.canModifyPower = nbtData.getBoolean(InternalConstants.GENE_POWER_MODIFY_KEY)
+        this.deactivateAfter = nbtData.getBoolean(InternalConstants.GENE_DEACTIVATE_KEY)
         NBTUtils.nbtToObjects(nbtData, potions, InternalConstants.GENE_POTIONS_KEY, GenePotionEffect::class.java)
     }
 

@@ -10,8 +10,12 @@ import com.eifel.bionisation4.common.laboratory.common.effect.*
 import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.*
 import com.eifel.bionisation4.common.laboratory.gene.species.type.*
+import com.eifel.bionisation4.common.laboratory.virus.Ender
+import com.eifel.bionisation4.common.laboratory.virus.Giant
 import com.eifel.bionisation4.common.laboratory.virus.Rabies
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.MobEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 
@@ -25,6 +29,8 @@ object EffectRegistry {
     private val GENE_INSTANCES = mutableMapOf<Int, Gene>()
 
     private val EFFECT_OCCASIONS = mutableMapOf<EntityType<*>, MutableMap<Int, Int>>()
+    private val EFFECT_OCCASIONS_CLASS = mutableMapOf<Class<out LivingEntity>, MutableMap<Int, Int>>()
+
 
     //list of gene ids it can mutate with
     private val GENE_MUTATIONS = mutableMapOf<Int, List<Int>>()
@@ -96,6 +102,11 @@ object EffectRegistry {
 
     fun loadDefaultGeneMutations() {
         //todo add mappings here
+        //just make all genes can mutate into each other
+        getGenes().keys.forEach { id ->
+            registerGeneMutation(id, getGenes().keys.toList())
+        }
+        //whoever wants to change this - go ahead
     }
 
     fun loadDefaultEffectOccasions() {
@@ -103,6 +114,8 @@ object EffectRegistry {
         registerEffectOccasion(EntityType.FOX, InternalConstants.VIRUS_RABIES_ID, 30)
         registerEffectOccasion(EntityType.WOLF, InternalConstants.VIRUS_RABIES_ID, 10)
         registerEffectOccasion(EntityType.POLAR_BEAR, InternalConstants.VIRUS_RABIES_ID, 10)
+        registerEffectOccasion(MobEntity::class.java, InternalConstants.VIRUS_GIANT_ID, 10)
+        registerEffectOccasion(EntityType.ENDERMAN, InternalConstants.VIRUS_ENDER_ID, 35)
     }
 
     fun loadDefaultEffects() {
@@ -126,6 +139,9 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.EFFECT_DEBUG_ID, Debug::class.java)
         //virus
         registerEffectClass(InternalConstants.VIRUS_RABIES_ID, Rabies::class.java)
+        registerEffectClass(InternalConstants.VIRUS_GIANT_ID, Giant::class.java)
+        registerEffectClass(InternalConstants.VIRUS_ENDER_ID, Ender::class.java)
+
     }
 
     fun loadDefaultEffectChances() {
@@ -231,6 +247,12 @@ object EffectRegistry {
         EFFECT_OCCASIONS[entity] = data
     }
 
+    fun registerEffectOccasion(clazz: Class<out LivingEntity>, id: Int, chance: Int) {
+        val data = EFFECT_OCCASIONS_CLASS.getOrDefault(clazz, mutableMapOf())
+        data[id] = chance
+        EFFECT_OCCASIONS_CLASS[clazz] = data
+    }
+
     fun registerGeneMutation(id: Int, mutations: List<Int>) {
         if(GENE_MUTATIONS.containsKey(id))
             throw IllegalStateException("Gene mutations with id $id is already registered!")
@@ -269,6 +291,7 @@ object EffectRegistry {
     fun getGeneVials() = GENE_VIALS
     fun getSymbiosis() = EFFECT_SYMBIOSIS
     fun getOccasions() = EFFECT_OCCASIONS
+    fun getOccasionsClass() = EFFECT_OCCASIONS_CLASS
     fun getBacteriaCures() = BACTERIA_CURES
 
     fun getEffectInstance(id: Int): AbstractEffect {

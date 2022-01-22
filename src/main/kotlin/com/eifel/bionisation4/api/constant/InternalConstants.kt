@@ -8,13 +8,25 @@ object InternalConstants {
     val GENE_NAME_KEY = getModIDString("gene_name")
     val GENE_ACTIVE_KEY = getModIDString("gene_active")
     val GENE_POWER_KEY = getModIDString("gene_power")
+    val GENE_CYCLIC_KEY = getModIDString("gene_cyclic")
+    val GENE_DEACTIVATE_KEY = getModIDString("gene_deactivate")
     val GENE_POWER_MODIFY_KEY = getModIDString("gene_power_modify")
 
     val GENE_POT_ID_KEY = getModIDString("gene_pid")
     val GENE_POT_DUR_KEY = getModIDString("gene_pdur")
     val GENE_POT_POW_KEY = getModIDString("gene_ppow")
+    val GENE_POT_REPL_KEY = getModIDString("gene_prepl")
 
     val GENE_POTIONS_KEY = getModIDString("gene_pots")
+
+    val GENE_RADIUS_KEY = getModIDString("gene_radius")
+    val GENE_HEALTH_KEY = getModIDString("gene_health")
+    val GENE_BLOOD_KEY = getModIDString("gene_blood")
+    val GENE_IMMUNITY_KEY = getModIDString("gene_immunity")
+    val GENE_DURATION_KEY = getModIDString("gene_duration")
+    val GENE_AMOUNT_KEY = getModIDString("gene_amount")
+    val GENE_DELAY_KEY = getModIDString("gene_delay")
+    val GENE_COUNT_KEY = getModIDString("gene_count")
 
     val EFFECT_ID_KEY = getModIDString("eff_id")
     val EFFECT_NAME_KEY = getModIDString("eff_name")
@@ -132,5 +144,18 @@ object InternalConstants {
     val EFFECT_DEBUG_ID = 15
 
     val VIRUS_RABIES_ID = 500
+    val VIRUS_GIANT_ID = 501
+    val VIRUS_ENDER_ID = 502
+    val VIRUS_BRAIN_ID = 503
+    val VIRUS_WITHER_ID = 504
+    val VIRUS_BAT_ID = 505
+    val VIRUS_CREEPER_ID = 506
+    val VIRUS_RED_ID = 507
+    val VIRUS_OCEAN_ID = 508
+    val VIRUS_SKULL_ID = 509
+    val VIRUS_POLAR_ID = 510
+    val VIRUS_AER_ID = 511
+    val VIRUS_DESERT_ID = 512
+    val VIRUS_PTERO_ID = 513
 
 }

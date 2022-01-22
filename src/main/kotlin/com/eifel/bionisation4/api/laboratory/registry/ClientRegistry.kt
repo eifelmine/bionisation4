@@ -1,8 +1,10 @@
 package com.eifel.bionisation4.api.laboratory.registry
 
 import com.eifel.bionisation4.api.constant.InternalConstants
+import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.client.particle.ParticleRegistry
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.monster.EndermanEntity
 
 object ClientRegistry {
 
@@ -14,6 +16,16 @@ object ClientRegistry {
             entity ->
             if(entity.tickCount % 5 == 0)
                 entity.level.addParticle(ParticleRegistry.BLOOD_PARTICLE.get(), entity.x, entity.y + (entity.eyeHeight - 0.2), entity.z, 0.1, 0.1, 0.1)
+        }
+        registerParticleGenerator(InternalConstants.VIRUS_GIANT_ID){
+                entity ->
+            if(entity.tickCount % 5 == 0)
+                entity.level.addParticle(ParticleRegistry.GIANT_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+        }
+        registerParticleGenerator(InternalConstants.VIRUS_ENDER_ID){
+                entity ->
+            if(entity !is EndermanEntity && entity.tickCount % 5 == 0)
+                entity.level.addParticle(ParticleRegistry.ENDER_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
         }
     }
 

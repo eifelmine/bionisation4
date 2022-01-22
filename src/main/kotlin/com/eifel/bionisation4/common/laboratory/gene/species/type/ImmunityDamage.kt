@@ -6,13 +6,40 @@ import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
 import com.eifel.bionisation4.common.extensions.modifyImmunity
 import net.minecraft.entity.LivingEntity
+import net.minecraft.nbt.CompoundNBT
 
 class ImmunityDamage(): Gene(InternalConstants.GENE_IMMUNITY_DAMAGE_ID, "Immunity damage", true) {
 
+    var amount = 2
+    var delay = 300
+
     override fun perform(entity: LivingEntity, effect: AbstractEffect) {
         super.perform(entity, effect)
-        if(entity.getBioTicker() % 300 == 0)
-            entity.modifyImmunity(-2)
+        if(entity.getBioTicker() % delay == 0)
+            entity.modifyImmunity(-amount)
+    }
+
+    fun setImmunity(immunity: Int): ImmunityDamage {
+        this.amount = immunity
+        return this
+    }
+
+    fun setDelay(delay: Int): ImmunityDamage {
+        this.delay = delay
+        return this
+    }
+
+    override fun toNBT(): CompoundNBT {
+        val data = super.toNBT()
+        data.putInt(InternalConstants.GENE_IMMUNITY_KEY, amount)
+        data.putInt(InternalConstants.GENE_DELAY_KEY, delay)
+        return data
+    }
+
+    override fun fromNBT(nbtData: CompoundNBT) {
+        super.fromNBT(nbtData)
+        this.amount = nbtData.getInt(InternalConstants.GENE_IMMUNITY_KEY)
+        this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)
     }
 
     override fun getCopy() = ImmunityDamage()

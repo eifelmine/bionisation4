@@ -29,7 +29,6 @@ class Bat(): AbstractEffect(InternalConstants.VIRUS_BAT_ID, "Bat", EffectType.VI
 
     override fun onDeath(event: LivingDeathEvent, entity: LivingEntity) {
         super.onDeath(event, entity)
-        entity.level.explode(entity, entity.blockPosition().x.toDouble(), entity.blockPosition().y.toDouble(), entity.blockPosition().z.toDouble(), 2.0f, net.minecraft.world.Explosion.Mode.BREAK)
         repeat(5) {
             EntityType.BAT.create(entity.level)?.let{ ent ->
                 ent.setPos(entity.x + Utils.random.nextDouble(), entity.y, entity.z + Utils.random.nextDouble())

@@ -2,16 +2,21 @@ package com.eifel.bionisation4.common.event
 
 import com.eifel.bionisation4.Info
 import com.eifel.bionisation4.api.laboratory.registry.ClientRegistry
+import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.common.extensions.getBlood
 import com.eifel.bionisation4.common.extensions.getEffects
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
+import com.eifel.bionisation4.util.translation.TranslationUtils
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.LivingEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.text.StringTextComponent
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.event.entity.living.LivingEvent
+import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.client.gui.GuiUtils.drawTexturedModalRect
 
@@ -23,6 +28,19 @@ object ClientEvents {
 
     var t_height = 11
     var t_width = 64
+
+    @JvmStatic
+    @SubscribeEvent
+    fun onRenderTooltip(event: ItemTooltipEvent){
+        val data = EffectRegistry.getGeneVials().filter { ItemStack.isSame(it.value, event.itemStack) }
+        if(data.isNotEmpty()) {
+            event.toolTip.add(StringTextComponent(""))
+            event.toolTip.add(TranslationUtils.getTranslatedTextComponent("item", "gene", "tooltip"))
+            data.forEach { (gene, stack) ->
+                event.toolTip.add(StringTextComponent("§7" +  EffectRegistry.getGeneInstance(gene).getTranslationName()))
+            }
+        }
+    }
 
     @JvmStatic
     @SubscribeEvent

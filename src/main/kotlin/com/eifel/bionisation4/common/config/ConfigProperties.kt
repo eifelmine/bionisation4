@@ -10,6 +10,12 @@ object ConfigProperties {
 
     lateinit var vialSpreadRadius : ForgeConfigSpec.ConfigValue<Double>
 
+    lateinit var randomVirusCreation : ForgeConfigSpec.ConfigValue<Boolean>
+    lateinit var randomVirusSpawnChance : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var randomVirusGeneCount : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var randomVirusMobCount : ForgeConfigSpec.ConfigValue<Int>
+
+
     fun loadData() : ForgeConfigSpec {
         val builder = ForgeConfigSpec.Builder()
         //load data
@@ -26,6 +32,17 @@ object ConfigProperties {
         builder.comment("General Settings").push("death")
         builder.comment("Save Bionisation effects and stats after player death")
         saveAfterDeath = builder.define("saveAfterDeath", true)
+        builder.pop()
+
+        builder.comment("Effect Settings").push("general")
+        builder.comment("Enables random virus creation with random genes applied")
+        randomVirusCreation = builder.define("randomVirusCreation", true)
+        builder.comment("Determine random virus spawn chance from 1 to 100")
+        randomVirusSpawnChance = builder.define("randomVirusSpawnChance", 5)
+        builder.comment("Determine random virus msx gene count")
+        randomVirusGeneCount = builder.define("randomVirusGeneCount", 8)
+        builder.comment("Every N mobs there will be chance to spawn random wild virus")
+        randomVirusMobCount = builder.define("randomVirusMobCount", 20)
         builder.pop()
 
         builder.comment("General Settings").push("item")

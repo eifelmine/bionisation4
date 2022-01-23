@@ -30,6 +30,10 @@ object InternalConstants {
     val GENE_COUNT_KEY = getModIDString("gene_count")
     val GENE_PREDICATE_KEY = getModIDString("gene_predicate")
 
+
+    val EFFECT_SHOWTIME_KEY = getModIDString("eff_showtime")
+    val EFFECT_MAX_DURATION_KEY = getModIDString("eff_max_duration")
+
     val EFFECT_ID_KEY = getModIDString("eff_id")
     val EFFECT_NAME_KEY = getModIDString("eff_name")
     val EFFECT_TYPE_KEY = getModIDString("eff_type")
@@ -160,5 +164,5 @@ object InternalConstants {
     val VIRUS_AER_ID = 511
     val VIRUS_DESERT_ID = 512
     val VIRUS_PTERO_ID = 513
-
+    val VIRUS_WILD_ID = 514
 }

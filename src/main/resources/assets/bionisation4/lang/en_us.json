@@ -58,6 +58,8 @@
   "vial.info.genes": "Genes: ",
   "vial.info.type": "Type: ",
 
+  "item.gene.tooltip": "§6Applicable for genes:",
+
   "effect.COMMON.type": "Common",
   "effect.BACTERIA.type": "Bacteria",
   "effect.VIRUS.type": "Virus",
@@ -95,6 +97,7 @@
   "effect.Aer.name": "Aer",
   "effect.Desert.name": "Desert",
   "effect.Ptero.name": "Ptero",
+  "effect.Wild.name": "Wild",
 
   "gene.Unknown Gene.name": "Unknown Gene",
   "gene.Default Gene.name": "Default Gene (Internal)",

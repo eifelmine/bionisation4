@@ -42,6 +42,7 @@ object Bionisation4 {
         EffectRegistry.loadDefaultEffects()
         EffectRegistry.loadDefaultEffectChances()
         EffectRegistry.loadDefaultSymbiosis()
+        EffectRegistry.loadRandomVirusGenes()
 
         BlockRegistry.BLOCKS.register(bus)
         ItemRegistry.ITEMS.register(bus)

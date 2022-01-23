@@ -5,6 +5,7 @@ import com.eifel.bionisation4.api.laboratory.registry.EffectTriggers
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.extensions.*
+import com.eifel.bionisation4.common.laboratory.virus.Wild
 import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatProvider
 import net.minecraft.entity.Entity
@@ -17,6 +18,8 @@ import net.minecraftforge.event.world.BlockEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 
 object CommonEvents {
+
+    var spawnedEntities = 1
 
     @JvmStatic
     @SubscribeEvent
@@ -43,6 +46,7 @@ object CommonEvents {
     @SubscribeEvent
     fun onEntitySpawn(event: LivingSpawnEvent.SpecialSpawn) {
         if(!event.entityLiving.level.isClientSide){
+            spawnedEntities++
             val occasionsDefault = EffectRegistry.getOccasions()
             if(occasionsDefault.containsKey(event.entityLiving.type)){
                 val data = occasionsDefault[event.entityLiving.type]!!
@@ -59,6 +63,13 @@ object CommonEvents {
                     if(Utils.chance(u)){
                         event.entityLiving.addEffect(EffectRegistry.getEffectInstance(t).getCopy())
                     }
+                }
+            }
+            if(spawnedEntities % ConfigProperties.randomVirusMobCount.get() == 0 && ConfigProperties.randomVirusCreation.get()){
+                if(Utils.chance(ConfigProperties.randomVirusSpawnChance.get())){
+                    val wild = Wild()
+                    wild.loadRandomProperties()
+                    event.entityLiving.addEffect(wild)
                 }
             }
         }

@@ -3,6 +3,7 @@ package com.eifel.bionisation4.api.laboratory.registry
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
+import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.laboratory.common.DefaultEffect
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
@@ -30,7 +31,7 @@ object EffectRegistry {
     private val EFFECT_OCCASIONS = mutableMapOf<EntityType<*>, MutableMap<Int, Int>>()
     private val EFFECT_OCCASIONS_CLASS = mutableMapOf<Class<out LivingEntity>, MutableMap<Int, Int>>()
 
-
+    private val RANDOM_VIRUS_GENES = mutableMapOf<Int, Int>()
     //list of gene ids it can mutate with
     private val GENE_MUTATIONS = mutableMapOf<Int, List<Int>>()
 
@@ -165,6 +166,7 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.VIRUS_AER_ID, Aer::class.java)
         registerEffectClass(InternalConstants.VIRUS_DESERT_ID, Desert::class.java)
         registerEffectClass(InternalConstants.VIRUS_PTERO_ID, Ptero::class.java)
+        registerEffectClass(InternalConstants.VIRUS_WILD_ID, Wild::class.java)
     }
 
     fun loadDefaultEffectChances() {
@@ -180,6 +182,15 @@ object EffectRegistry {
         registerEffectChance(InternalConstants.EFFECT_NIGHTMARES_ID, 10)
         //virus
         registerEffectChance(InternalConstants.VIRUS_AER_ID, 10)
+    }
+
+    fun loadRandomVirusGenes() {
+        //todo add mappings here
+        //im too lazy to do it myself, so
+        getGenes().keys.forEach { id ->
+            registerRandomVirusGene(id, Utils.random.nextInt(15) + 1)
+        }
+        //ooooh yeah
     }
 
     fun loadDefaultSymbiosis() {
@@ -280,6 +291,12 @@ object EffectRegistry {
         EFFECT_OCCASIONS_CLASS[clazz] = data
     }
 
+    fun registerRandomVirusGene(id: Int, chance: Int) {
+        if(RANDOM_VIRUS_GENES.containsKey(id))
+            throw IllegalStateException("Gene chance with id $id is already registered!")
+        RANDOM_VIRUS_GENES[id] = chance
+    }
+
     fun registerGeneMutation(id: Int, mutations: List<Int>) {
         if(GENE_MUTATIONS.containsKey(id))
             throw IllegalStateException("Gene mutations with id $id is already registered!")
@@ -320,6 +337,8 @@ object EffectRegistry {
     fun getOccasions() = EFFECT_OCCASIONS
     fun getOccasionsClass() = EFFECT_OCCASIONS_CLASS
     fun getBacteriaCures() = BACTERIA_CURES
+    fun getRandomVirusGenes() = RANDOM_VIRUS_GENES
+
 
     fun getEffectInstance(id: Int): AbstractEffect {
         if(EFFECT_INSTANCES.containsKey(id))

@@ -7,7 +7,7 @@ import com.eifel.bionisation4.api.laboratory.species.GenePotionEffect
 class Absorption(): Gene(InternalConstants.GENE_ABSORPTION_ID, "Absorption", true) {
 
     init {
-        potions.add(GenePotionEffect(22, 100, 1))
+        potions.add(GenePotionEffect(22, 100, 1).setReplace(false))
     }
 
     override fun getCopy() = Absorption()

@@ -10,12 +10,11 @@ import com.eifel.bionisation4.common.laboratory.common.effect.*
 import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.*
 import com.eifel.bionisation4.common.laboratory.gene.species.type.*
-import com.eifel.bionisation4.common.laboratory.virus.Ender
-import com.eifel.bionisation4.common.laboratory.virus.Giant
-import com.eifel.bionisation4.common.laboratory.virus.Rabies
+import com.eifel.bionisation4.common.laboratory.virus.*
+import com.eifel.bionisation4.common.laboratory.virus.Wither
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.MobEntity
+import net.minecraft.entity.monster.MonsterEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 
@@ -98,6 +97,8 @@ object EffectRegistry {
         registerGeneClass(InternalConstants.GENE_MUTAGEN_ID, Mutagen::class.java)
         registerGeneClass(InternalConstants.GENE_UNDEAD_ID, Undead::class.java)
         registerGeneClass(InternalConstants.GENE_BURN_ID, Burn::class.java)
+        registerGeneClass(InternalConstants.GENE_RANDOM_WORDS_ID, RandomWords::class.java)
+        registerGeneClass(InternalConstants.GENE_SHADOW_ID, Shadow::class.java)
     }
 
     fun loadDefaultGeneMutations() {
@@ -114,8 +115,20 @@ object EffectRegistry {
         registerEffectOccasion(EntityType.FOX, InternalConstants.VIRUS_RABIES_ID, 30)
         registerEffectOccasion(EntityType.WOLF, InternalConstants.VIRUS_RABIES_ID, 10)
         registerEffectOccasion(EntityType.POLAR_BEAR, InternalConstants.VIRUS_RABIES_ID, 10)
-        registerEffectOccasion(MobEntity::class.java, InternalConstants.VIRUS_GIANT_ID, 10)
+        registerEffectOccasion(MonsterEntity::class.java, InternalConstants.VIRUS_GIANT_ID, 10)
         registerEffectOccasion(EntityType.ENDERMAN, InternalConstants.VIRUS_ENDER_ID, 35)
+        registerEffectOccasion(EntityType.ZOMBIE, InternalConstants.VIRUS_BRAIN_ID, 15)
+        registerEffectOccasion(EntityType.ZOMBIE_VILLAGER, InternalConstants.VIRUS_BRAIN_ID, 15)
+        registerEffectOccasion(EntityType.HUSK, InternalConstants.VIRUS_BRAIN_ID, 15)
+        registerEffectOccasion(EntityType.WITHER_SKELETON, InternalConstants.VIRUS_WITHER_ID, 25)
+        registerEffectOccasion(EntityType.BAT, InternalConstants.VIRUS_BAT_ID, 25)
+        registerEffectOccasion(EntityType.CREEPER, InternalConstants.VIRUS_CREEPER_ID, 15)
+        registerEffectOccasion(EntityType.SPIDER, InternalConstants.VIRUS_RED_ID, 10)
+        registerEffectOccasion(EntityType.GUARDIAN, InternalConstants.VIRUS_OCEAN_ID, 25)
+        registerEffectOccasion(EntityType.SKELETON, InternalConstants.VIRUS_SKULL_ID, 10)
+        registerEffectOccasion(EntityType.POLAR_BEAR, InternalConstants.VIRUS_POLAR_ID, 10)
+        registerEffectOccasion(EntityType.HUSK, InternalConstants.VIRUS_DESERT_ID, 15)
+        registerEffectOccasion(EntityType.CHICKEN, InternalConstants.VIRUS_PTERO_ID, 5)
     }
 
     fun loadDefaultEffects() {
@@ -141,7 +154,17 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.VIRUS_RABIES_ID, Rabies::class.java)
         registerEffectClass(InternalConstants.VIRUS_GIANT_ID, Giant::class.java)
         registerEffectClass(InternalConstants.VIRUS_ENDER_ID, Ender::class.java)
-
+        registerEffectClass(InternalConstants.VIRUS_BRAIN_ID, Brain::class.java)
+        registerEffectClass(InternalConstants.VIRUS_WITHER_ID, Wither::class.java)
+        registerEffectClass(InternalConstants.VIRUS_BAT_ID, Bat::class.java)
+        registerEffectClass(InternalConstants.VIRUS_CREEPER_ID, Creeper::class.java)
+        registerEffectClass(InternalConstants.VIRUS_RED_ID, Red::class.java)
+        registerEffectClass(InternalConstants.VIRUS_OCEAN_ID, Ocean::class.java)
+        registerEffectClass(InternalConstants.VIRUS_SKULL_ID, Skull::class.java)
+        registerEffectClass(InternalConstants.VIRUS_POLAR_ID, Polar::class.java)
+        registerEffectClass(InternalConstants.VIRUS_AER_ID, Aer::class.java)
+        registerEffectClass(InternalConstants.VIRUS_DESERT_ID, Desert::class.java)
+        registerEffectClass(InternalConstants.VIRUS_PTERO_ID, Ptero::class.java)
     }
 
     fun loadDefaultEffectChances() {
@@ -155,6 +178,8 @@ object EffectRegistry {
         registerEffectChance(InternalConstants.EFFECT_NETHER_ATMOSPHERE_ID, 10)
         registerEffectChance(InternalConstants.EFFECT_ALIENATION_ID, 10)
         registerEffectChance(InternalConstants.EFFECT_NIGHTMARES_ID, 10)
+        //virus
+        registerEffectChance(InternalConstants.VIRUS_AER_ID, 10)
     }
 
     fun loadDefaultSymbiosis() {
@@ -217,6 +242,8 @@ object EffectRegistry {
         registerGeneVial(InternalConstants.GENE_MUTAGEN_ID, ItemStack(Items.BONE_MEAL))
         registerGeneVial(InternalConstants.GENE_UNDEAD_ID, ItemStack(Items.DRAGON_BREATH))
         registerGeneVial(InternalConstants.GENE_BURN_ID, ItemStack(Items.FIRE_CORAL))
+        registerGeneVial(InternalConstants.GENE_RANDOM_WORDS_ID, ItemStack(Items.PUFFERFISH))
+        registerGeneVial(InternalConstants.GENE_SHADOW_ID, ItemStack(Items.ZOMBIE_HEAD))
     }
 
     fun loadDefaultBacteriaCures() {

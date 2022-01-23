@@ -9,7 +9,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.passive.AnimalEntity
 import net.minecraft.nbt.CompoundNBT
 
-class Hostile(): Gene(InternalConstants.GENE_HEALTH_DAMAGE_ID, "Hostile", true) {
+class Hostile(): Gene(InternalConstants.GENE_HOSTILE_ID, "Hostile", true) {
 
     var radius = 10.0
     var duration = 5

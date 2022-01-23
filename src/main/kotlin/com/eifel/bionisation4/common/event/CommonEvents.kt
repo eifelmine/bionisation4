@@ -88,12 +88,9 @@ object CommonEvents {
         target?.let { victim ->
             if(!victim.level.isClientSide) {
                 EffectTriggers.getTriggers<LivingHurtEvent>().forEach { it.trigger(event) }
-                val damageSource = event.source
-                (damageSource.directEntity as? LivingEntity)?.let { source ->
-                    victim.doWithCap { cap ->
-                        cap.effects.forEach {
-                            it.onHurt(event, victim, source)
-                        }
+                victim.doWithCap { cap ->
+                    cap.effects.forEach {
+                        it.onHurt(event, victim)
                     }
                 }
             }

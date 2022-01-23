@@ -12,6 +12,7 @@ import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
@@ -149,17 +150,22 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     open fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         recalculatePower(entity)
         mutate()
-        effectGenes.filter { it.isGeneActive }.filter { if(it.cyclicDelay > 0) entity.getBioTicker() % it.cyclicDelay == 0 else true }.forEach { gene ->
-            gene.perform(entity, this)
+        effectGenes.filter { it.isGeneActive && (if(it.playerOnly) entity is PlayerEntity else true ) }.filter { if(it.cyclicDelay > 0) entity.getBioTicker() % it.cyclicDelay == 0 else true }.forEach { gene ->
+            try {
+                gene.perform(entity, this)
+            }catch (e: Exception){
+                e.printStackTrace()
+                gene.isGeneActive = false
+            }
             if(gene.deactivateAfter)
                 gene.isGeneActive = false
         }
         timeTicker++
     }
 
-    open fun onHurt(event: LivingHurtEvent, victim: LivingEntity, attacker: LivingEntity) {
+    open fun onHurt(event: LivingHurtEvent, victim: LivingEntity) {
         effectGenes.filter { it.isGeneActive }.forEach { gene ->
-            gene.onHurt(event, victim, attacker, this)
+            gene.onHurt(event, victim, this)
             if(gene.deactivateAfter)
                 gene.isGeneActive = false
         }
@@ -174,7 +180,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     }
 
     open fun onDeath(event: LivingDeathEvent, entity: LivingEntity) {
-        effectGenes.filter { it.isGeneActive }.forEach { gene ->
+        effectGenes.filter { it.isGeneActive && (if(it.playerOnly) entity is PlayerEntity else true ) }.forEach { gene ->
             gene.onDeath(event, entity, this)
             if(gene.deactivateAfter)
                 gene.isGeneActive = false
@@ -190,10 +196,15 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
                     isExpired = true
                 }
             }
-            if (!isExpired)
-                onTick(entity, false)
-            else
-                onTick(entity, true)
+            try {
+                if (!isExpired)
+                    onTick(entity, false)
+                else
+                    onTick(entity, true)
+            }catch (e: Exception){
+                e.printStackTrace()
+                this.isExpired = true
+            }
         }
     }
 

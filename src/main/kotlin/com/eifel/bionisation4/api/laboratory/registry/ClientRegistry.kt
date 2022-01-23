@@ -27,6 +27,21 @@ object ClientRegistry {
             if(entity !is EndermanEntity && entity.tickCount % 5 == 0)
                 entity.level.addParticle(ParticleRegistry.ENDER_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
         }
+        registerParticleGenerator(InternalConstants.VIRUS_BAT_ID){
+                entity ->
+            if(entity.tickCount % 5 == 0)
+                entity.level.addParticle(ParticleRegistry.BLACK_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+        }
+        registerParticleGenerator(InternalConstants.VIRUS_CREEPER_ID){
+                entity ->
+            if(entity.tickCount % 5 == 0)
+                entity.level.addParticle(ParticleRegistry.GREEN_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+        }
+        registerParticleGenerator(InternalConstants.VIRUS_RED_ID){
+                entity ->
+            if(entity.tickCount % 5 == 0)
+                entity.level.addParticle(ParticleRegistry.RED_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+        }
     }
 
     fun registerParticleGenerator(id: Int, gen: (LivingEntity) -> Unit) {

@@ -12,5 +12,7 @@ object ParticleRegistry {
     val BLOOD_PARTICLE = PARTICLES.register("blood_particle") { BasicParticleType(true) }
     val GIANT_PARTICLE = PARTICLES.register("giant_particle") { BasicParticleType(true) }
     val ENDER_PARTICLE = PARTICLES.register("ender_particle") { BasicParticleType(true) }
-
+    val BLACK_PARTICLE = PARTICLES.register("black_particle") { BasicParticleType(true) }
+    val GREEN_PARTICLE = PARTICLES.register("green_particle") { BasicParticleType(true) }
+    val RED_PARTICLE = PARTICLES.register("red_particle") { BasicParticleType(true) }
 }

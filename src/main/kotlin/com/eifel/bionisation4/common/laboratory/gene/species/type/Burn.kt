@@ -6,7 +6,7 @@ import com.eifel.bionisation4.api.laboratory.species.Gene
 import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.CompoundNBT
 
-class Burn(): Gene(InternalConstants.GENE_FIRE_ID, "Burn", true) {
+class Burn(): Gene(InternalConstants.GENE_BURN_ID, "Burn", true) {
 
     var duration = 10
 

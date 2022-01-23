@@ -11,6 +11,7 @@ object InternalConstants {
     val GENE_CYCLIC_KEY = getModIDString("gene_cyclic")
     val GENE_DEACTIVATE_KEY = getModIDString("gene_deactivate")
     val GENE_POWER_MODIFY_KEY = getModIDString("gene_power_modify")
+    val GENE_PLAYER_ONLY_KEY = getModIDString("gene_player_only")
 
     val GENE_POT_ID_KEY = getModIDString("gene_pid")
     val GENE_POT_DUR_KEY = getModIDString("gene_pdur")
@@ -27,6 +28,7 @@ object InternalConstants {
     val GENE_AMOUNT_KEY = getModIDString("gene_amount")
     val GENE_DELAY_KEY = getModIDString("gene_delay")
     val GENE_COUNT_KEY = getModIDString("gene_count")
+    val GENE_PREDICATE_KEY = getModIDString("gene_predicate")
 
     val EFFECT_ID_KEY = getModIDString("eff_id")
     val EFFECT_NAME_KEY = getModIDString("eff_name")
@@ -121,7 +123,8 @@ object InternalConstants {
     val GENE_MUTAGEN_ID = 52
     val GENE_UNDEAD_ID = 53
     val GENE_BURN_ID = 54
-
+    val GENE_RANDOM_WORDS_ID = 55
+    val GENE_SHADOW_ID = 56
 
 
     val EFFECT_DEFAULT_ID = 0

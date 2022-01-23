@@ -22,6 +22,7 @@ abstract class Gene() : INBTSerializable {
     var cyclicDelay = -1
 
     var deactivateAfter = false
+    var playerOnly = false
 
     val potions = mutableListOf<GenePotionEffect>()
 
@@ -36,6 +37,11 @@ abstract class Gene() : INBTSerializable {
         return this
     }
 
+    fun setPlayerOnly(value: Boolean): Gene {
+        this.playerOnly = value
+        return this
+    }
+
     fun setCyclic(delay: Int): Gene {
         this.cyclicDelay = delay
         return this
@@ -46,13 +52,18 @@ abstract class Gene() : INBTSerializable {
         return this
     }
 
+    fun setActive(value: Boolean): Gene {
+        this.isGeneActive = value
+        return this
+    }
+
     open fun perform(entity: LivingEntity, effect: AbstractEffect) {
         if(!entity.level.isClientSide) {
             potions.forEach { it.perform(entity, overriddenPower) }
         }
     }
 
-    open fun onHurt(event: LivingHurtEvent, victim: LivingEntity, attacker: LivingEntity, effect: AbstractEffect) {}
+    open fun onHurt(event: LivingHurtEvent, victim: LivingEntity, effect: AbstractEffect) {}
     open fun onAttack(event: LivingAttackEvent, victim: LivingEntity, attacker: LivingEntity, effect: AbstractEffect) {}
 
     open fun onDeath(event: LivingDeathEvent, entity: LivingEntity, effect: AbstractEffect) {}
@@ -66,6 +77,7 @@ abstract class Gene() : INBTSerializable {
         nbtData.putBoolean(InternalConstants.GENE_ACTIVE_KEY, this.isGeneActive)
         nbtData.putBoolean(InternalConstants.GENE_POWER_MODIFY_KEY, this.canModifyPower)
         nbtData.putBoolean(InternalConstants.GENE_DEACTIVATE_KEY, this.deactivateAfter)
+        nbtData.putBoolean(InternalConstants.GENE_PLAYER_ONLY_KEY, this.playerOnly)
         NBTUtils.objectsToNBT(nbtData, potions, InternalConstants.GENE_POTIONS_KEY)
         return nbtData
     }
@@ -78,6 +90,7 @@ abstract class Gene() : INBTSerializable {
         this.isGeneActive = nbtData.getBoolean(InternalConstants.GENE_ACTIVE_KEY)
         this.canModifyPower = nbtData.getBoolean(InternalConstants.GENE_POWER_MODIFY_KEY)
         this.deactivateAfter = nbtData.getBoolean(InternalConstants.GENE_DEACTIVATE_KEY)
+        this.playerOnly = nbtData.getBoolean(InternalConstants.GENE_PLAYER_ONLY_KEY)
         NBTUtils.nbtToObjects(nbtData, potions, InternalConstants.GENE_POTIONS_KEY, GenePotionEffect::class.java)
     }
 

@@ -9,7 +9,6 @@ import com.eifel.bionisation4.common.laboratory.gene.species.potion.HealthBoost
 import com.eifel.bionisation4.common.laboratory.gene.species.type.AirSpread
 import com.eifel.bionisation4.common.laboratory.gene.species.type.End
 import com.eifel.bionisation4.common.laboratory.gene.species.type.Radius
-import net.minecraft.entity.LivingEntity
 
 class Giant(): AbstractEffect(InternalConstants.VIRUS_GIANT_ID, "Giant", EffectType.VIRUS) {
 
@@ -26,10 +25,6 @@ class Giant(): AbstractEffect(InternalConstants.VIRUS_GIANT_ID, "Giant", EffectT
         effectGenes.add(HealthBoost().setPower(2))
         effectGenes.add(FireResistance())
         effectGenes.add(End())
-    }
-
-    override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
-        super.onTick(entity, isLastTick)
     }
 
     override fun getCopy() = Giant()

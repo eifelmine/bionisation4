@@ -4,6 +4,7 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.extensions.*
 import com.eifel.bionisation4.common.laboratory.common.effect.*
+import com.eifel.bionisation4.common.laboratory.virus.Aer
 import net.minecraft.entity.monster.DrownedEntity
 import net.minecraft.entity.monster.PhantomEntity
 import net.minecraft.entity.monster.WitherSkeletonEntity
@@ -46,6 +47,9 @@ object EffectTriggers {
                 //cold
                 if ((event.entityLiving.isInBiome(Biome.Category.ICY) || event.entityLiving.isInBiome(Biome.Category.TAIGA)) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_COLD_ID)) && !event.entityLiving.hasArmor(true) && event.entityLiving.getImmunity() < 80)
                     event.entityLiving.addEffect(Cold())
+                //aer
+                if(event.entityLiving.getImmunity() < 40 && event.entityLiving.getBioTicker() % 1200 == 0 && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.VIRUS_AER_ID)))
+                    event.entityLiving.addEffect(Aer())
             }
         })
         addTrigger(object: IEffectTrigger<LivingEntityUseItemEvent.Finish>{
@@ -66,9 +70,24 @@ object EffectTriggers {
                 }
             }
         })
-        addTrigger(object: IEffectTrigger<LivingHurtEvent>{
+        addTrigger(object: IEffectTrigger<LivingEntityUseItemEvent.Tick>{
 
             override fun getId() = 2
+            override fun getEventClass(): KClass<LivingEntityUseItemEvent.Tick> = LivingEntityUseItemEvent.Tick::class
+            override fun trigger(event: LivingEntityUseItemEvent.Tick) {
+                when(event.entityLiving){
+                    is PlayerEntity -> {
+                        val player = event.entityLiving as PlayerEntity
+                        //skull virus
+                        if(player.isEffectActive(InternalConstants.VIRUS_SKULL_ID))
+                            event.isCanceled = true
+                    }
+                }
+            }
+        })
+        addTrigger(object: IEffectTrigger<LivingHurtEvent>{
+
+            override fun getId() = 3
             override fun getEventClass(): KClass<LivingHurtEvent> = LivingHurtEvent::class
             override fun trigger(event: LivingHurtEvent) {
                 event.entityLiving?.let { victim ->

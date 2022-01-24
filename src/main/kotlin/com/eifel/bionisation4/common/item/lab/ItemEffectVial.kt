@@ -72,9 +72,12 @@ class ItemEffectVial(): CommonItem(rarity = Rarity.EPIC, size = 1) {
         info.add(TranslationUtils.getText(" "))
         info.add(TranslationUtils.getText( "${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "effect", "name")} ${TextFormatting.GREEN}${effect.getTranslationName()}"))
         info.add(TranslationUtils.getText( "${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "info", "type")} ${TextFormatting.DARK_AQUA}${effect.effectType.getTranslatedName()}"))
-        info.add(TranslationUtils.getText( "${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "info", "genes")}"))
-        effect.getDNATranslated().removeSurrounding("[", "]").split("-").forEach {
-            info.add(TranslationUtils.getText( "    ${TextFormatting.GRAY}-${TextFormatting.YELLOW} $it"))
+        val genes = effect.getDNATranslated().removeSurrounding("[", "]").split("-")
+        if(genes.isNotEmpty() && genes.any { it.isNotEmpty() }) {
+            info.add(TranslationUtils.getText("${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "info", "genes")}"))
+            genes.forEach {
+                info.add(TranslationUtils.getText("    ${TextFormatting.GRAY}-${TextFormatting.YELLOW} $it"))
+            }
         }
         info.add(TranslationUtils.getText(" "))
         info.add(TranslationUtils.getText("${TextFormatting.GOLD}${TranslationUtils.getTranslatedText("vial", "usage", "desc")}"))

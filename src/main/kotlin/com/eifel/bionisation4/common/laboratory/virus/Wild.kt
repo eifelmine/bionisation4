@@ -34,7 +34,7 @@ class Wild(): AbstractEffect(InternalConstants.VIRUS_WILD_ID, "Wild", EffectType
                         gene.setCyclic(Utils.random.nextInt(6000))
                     gene.setPlayerOnly(Utils.random.nextBoolean())
                     gene.setDeactivateAfter(Utils.random.nextBoolean())
-                    gene.setPower(Utils.random.nextInt(5) + 1)
+                    gene.setPower(Utils.random.nextInt(1, 5))
                     genes += gene
                 }
             }else

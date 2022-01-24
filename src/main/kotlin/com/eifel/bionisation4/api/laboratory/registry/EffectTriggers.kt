@@ -3,11 +3,12 @@ package com.eifel.bionisation4.api.laboratory.registry
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.extensions.*
+import com.eifel.bionisation4.common.laboratory.bacteria.*
 import com.eifel.bionisation4.common.laboratory.common.effect.*
 import com.eifel.bionisation4.common.laboratory.virus.Aer
-import net.minecraft.entity.monster.DrownedEntity
-import net.minecraft.entity.monster.PhantomEntity
-import net.minecraft.entity.monster.WitherSkeletonEntity
+import net.minecraft.block.Blocks
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.monster.*
 import net.minecraft.entity.monster.piglin.PiglinEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Items
@@ -16,6 +17,7 @@ import net.minecraft.world.biome.Biome
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
+import net.minecraftforge.event.world.BlockEvent
 import net.minecraftforge.eventbus.api.Event
 import kotlin.reflect.KClass
 
@@ -36,6 +38,10 @@ object EffectTriggers {
                         if (player.isInBiome(Biome.Category.DESERT) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID)))
                             if(player.inventory.armor[3].isEmpty)
                                 player.addEffect(Sunstroke())
+
+                        if (player.getBioTicker() % 1200 == 0 && player.level.getBlockState(player.blockPosition().offset(0, -1, 0)).block == Blocks.MYCELIUM && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_MYCELIUM_ID)))
+                            if(player.inventory.armor[0].isEmpty)
+                                player.addEffect(Mycelium())
                     }
                 }
                 //fatigue
@@ -50,6 +56,12 @@ object EffectTriggers {
                 //aer
                 if(event.entityLiving.getImmunity() < 40 && event.entityLiving.getBioTicker() % 1200 == 0 && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.VIRUS_AER_ID)))
                     event.entityLiving.addEffect(Aer())
+                //swamp
+                if(event.entityLiving.getBioTicker() % 3600 == 0 && event.entityLiving.isInBiome(Biome.Category.SWAMP) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_SWAMP_ID)) && !event.entityLiving.hasBioArmor(true))
+                    event.entityLiving.addEffect(Swamp())
+                //water
+                if(event.entityLiving.getImmunity() < 80 && event.entityLiving.getBioTicker() % 1200 == 0 && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_WATER_ID)))
+                    event.entityLiving.addEffect(Water())
             }
         })
         addTrigger(object: IEffectTrigger<LivingEntityUseItemEvent.Finish>{
@@ -63,6 +75,16 @@ object EffectTriggers {
                         when(event.resultStack.item){
                             //sunstroke
                             Items.GLASS_BOTTLE -> player.expire(InternalConstants.EFFECT_SUNSTROKE_ID)
+                            //black
+                            Items.SPIDER_EYE -> {
+                                if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_BLACK_ID)))
+                                    player.addEffect(Black())
+                            }
+                            //sea
+                            Items.TROPICAL_FISH -> {
+                                if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_SEA_ID)))
+                                    player.addEffect(Sea())
+                            }
                             //food poisoning
                             in FoodPoisoning.poison -> if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_FOOD_POISONING_ID))) player.addEffect(FoodPoisoning())
                         }
@@ -109,6 +131,45 @@ object EffectTriggers {
                     //nightmares
                     if(event.source.directEntity is PhantomEntity && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_NIGHTMARES_ID)))
                         victim.addEffect(Nightmares())
+                    if(event.source.directEntity is LivingEntity) {
+                        val attacker = event.source.directEntity as LivingEntity
+                        //black
+                        if (victim is SpiderEntity && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_BLACK_ID)))
+                            if(attacker.mainHandItem.isEmpty)
+                                attacker.addEffect(Black())
+                        //ender
+                        if (victim is EndermanEntity && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_ENDER_ID)))
+                            if(attacker.mainHandItem.isEmpty)
+                                attacker.addEffect(Ender())
+                    }
+                    //glowing
+                    if(event.source.directEntity is BlazeEntity && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_GLOWING_ID)))
+                        victim.addEffect(Glowing())
+                    //glowing
+                    if(event.source == DamageSource.CACTUS && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_CACTUS_ID)))
+                        victim.addEffect(Cactus())
+                    //bone
+                    if(event.source.directEntity is AbstractSkeletonEntity && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_BONE_ID)))
+                        victim.addEffect(Bone())
+                }
+            }
+        })
+        addTrigger(object: IEffectTrigger<BlockEvent.BreakEvent>{
+
+            override fun getId() = 4
+            override fun getEventClass(): KClass<BlockEvent.BreakEvent> = BlockEvent.BreakEvent::class
+            override fun trigger(event: BlockEvent.BreakEvent) {
+                event.player?.let { miner ->
+                    when(event.state.block){
+                        Blocks.GLOWSTONE -> {
+                            if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_GLOWING_ID) / 3))
+                                miner.addEffect(Glowing())
+                        }
+                    }
+                    if(miner.mainHandItem.isEmpty){
+                        if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_TERRA_ID)))
+                            miner.addEffect(Terra())
+                    }
                 }
             }
         })

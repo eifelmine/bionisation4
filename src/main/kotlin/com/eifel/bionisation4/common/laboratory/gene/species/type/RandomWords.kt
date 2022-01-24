@@ -20,8 +20,8 @@ class RandomWords(): Gene(InternalConstants.GENE_RANDOM_WORDS_ID, "Random words"
         super.perform(entity, effect)
         if(entity is ServerPlayerEntity && entity.getBioTicker() % delay == 0){
             val text = mutableListOf<String>()
-            repeat (Utils.random.nextInt(5) + 1){
-                text += (1..Utils.random.nextInt(15) + 1)
+            repeat (Utils.random.nextInt(1, 5)){
+                text += (1..Utils.random.nextInt(1, 15))
                     .map { _ -> kotlin.random.Random.nextInt(0, charPool.size) }
                     .map(charPool::get)
                     .joinToString("")

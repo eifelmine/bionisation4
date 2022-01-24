@@ -99,6 +99,18 @@
   "effect.Ptero.name": "Ptero",
   "effect.Wild.name": "Wild",
 
+  "effect.Black.name": "Black",
+  "effect.Swamp.name": "Swamp",
+  "effect.Glowing.name": "Glowing",
+  "effect.Water.name": "Water",
+  "effect.Ender.name": "Ender",
+  "effect.Cactus.name": "Cactus",
+  "effect.Bone.name": "Bone",
+  "effect.Terra.name": "Terra",
+  "effect.Mycelium.name": "Mycelium",
+  "effect.Sea.name": "Sea",
+  "effect.Clone.name": "Clone",
+
   "gene.Unknown Gene.name": "Unknown Gene",
   "gene.Default Gene.name": "Default Gene (Internal)",
   "gene.Absorption.name": "Absorption",

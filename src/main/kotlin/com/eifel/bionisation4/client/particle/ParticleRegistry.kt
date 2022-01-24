@@ -15,4 +15,6 @@ object ParticleRegistry {
     val BLACK_PARTICLE = PARTICLES.register("black_particle") { BasicParticleType(true) }
     val GREEN_PARTICLE = PARTICLES.register("green_particle") { BasicParticleType(true) }
     val RED_PARTICLE = PARTICLES.register("red_particle") { BasicParticleType(true) }
+    val GRAY_PARTICLE = PARTICLES.register("gray_particle") { BasicParticleType(true) }
+    val BROWN_PARTICLE = PARTICLES.register("brown_particle") { BasicParticleType(true) }
 }

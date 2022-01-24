@@ -39,7 +39,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
 
     var canInfectItems = false
     var isAntibioticVulnerable = effectType == EffectType.BACTERIA
-    var antibioticResistancePercent = 0.0
+    var antibioticResistancePercent = if(isAntibioticVulnerable) Utils.random.nextDouble() else 0.0
 
     var isSyncable = false
 
@@ -91,6 +91,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
 
         timeTicker = nbtData.getInt(InternalConstants.EFFECT_TICKER_KEY)
 
+        effectGenes.clear()
         NBTUtils.nbtToGenes(nbtData, effectGenes, InternalConstants.EFFECT_GENES_KEY)
 
         isCure = nbtData.getBoolean(InternalConstants.EFFECT_CURE_KEY)
@@ -124,7 +125,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         if(canMutate){
             if(timeTicker > 0 && timeTicker % mutationPeriod == 0){
                 if(effectGenes.isNotEmpty()) {
-                    repeat(Utils.random.nextInt(effectGenes.size) + 1) {
+                    repeat(Utils.random.nextInt(1, effectGenes.size)) {
                         val gene = effectGenes.random()
                         EffectRegistry.getGeneMutationsById(gene.getID())?.let { mutations ->
                             val randomGene = mutations.random()

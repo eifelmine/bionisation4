@@ -91,6 +91,7 @@ abstract class Gene() : INBTSerializable {
         this.canModifyPower = nbtData.getBoolean(InternalConstants.GENE_POWER_MODIFY_KEY)
         this.deactivateAfter = nbtData.getBoolean(InternalConstants.GENE_DEACTIVATE_KEY)
         this.playerOnly = nbtData.getBoolean(InternalConstants.GENE_PLAYER_ONLY_KEY)
+        potions.clear()
         NBTUtils.nbtToObjects(nbtData, potions, InternalConstants.GENE_POTIONS_KEY, GenePotionEffect::class.java)
     }
 

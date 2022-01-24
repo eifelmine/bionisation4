@@ -17,5 +17,7 @@ object ClientModLoadingEvents {
         Minecraft.getInstance().particleEngine.register(ParticleRegistry.BLACK_PARTICLE.get(), ::BlackParticleFactory)
         Minecraft.getInstance().particleEngine.register(ParticleRegistry.GREEN_PARTICLE.get(), ::GreenParticleFactory)
         Minecraft.getInstance().particleEngine.register(ParticleRegistry.RED_PARTICLE.get(), ::RedParticleFactory)
+        Minecraft.getInstance().particleEngine.register(ParticleRegistry.GRAY_PARTICLE.get(), ::GrayParticleFactory)
+        Minecraft.getInstance().particleEngine.register(ParticleRegistry.BROWN_PARTICLE.get(), ::BrownParticleFactory)
     }
 }

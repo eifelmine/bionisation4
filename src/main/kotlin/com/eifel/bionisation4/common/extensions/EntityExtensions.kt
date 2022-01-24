@@ -78,3 +78,6 @@ inline fun LivingEntity.isInBiome(type: Biome.Category) = this.level.getBiome(th
 
 inline fun LivingEntity.hasArmor(isFull: Boolean) = if(isFull) this.armorSlots.all { !it.isEmpty } else this.armorSlots.any { !it.isEmpty }
 
+inline fun LivingEntity.hasBioArmor(isFull: Boolean) = if(isFull) this.armorSlots.all { !it.isEmpty /*//todo */ } else this.armorSlots.any { !it.isEmpty  /*//todo */ }
+
+

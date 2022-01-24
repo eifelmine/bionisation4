@@ -5,13 +5,17 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.item.ItemRegistry
+import com.eifel.bionisation4.common.laboratory.bacteria.*
+import com.eifel.bionisation4.common.laboratory.bacteria.Clone
 import com.eifel.bionisation4.common.laboratory.common.DefaultEffect
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
 import com.eifel.bionisation4.common.laboratory.common.effect.*
 import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.*
+import com.eifel.bionisation4.common.laboratory.gene.species.potion.Glowing
 import com.eifel.bionisation4.common.laboratory.gene.species.type.*
 import com.eifel.bionisation4.common.laboratory.virus.*
+import com.eifel.bionisation4.common.laboratory.virus.Ender
 import com.eifel.bionisation4.common.laboratory.virus.Wither
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
@@ -80,7 +84,7 @@ object EffectRegistry {
         registerGeneClass(InternalConstants.GENE_IMMUNITY_DAMAGE_ID, ImmunityDamage::class.java)
         registerGeneClass(InternalConstants.GENE_EXPLOSION_ID, Explosion::class.java)
         registerGeneClass(InternalConstants.GENE_BLOOD_DAMAGE_ID, BloodDamage::class.java)
-        registerGeneClass(InternalConstants.GENE_CLONE_ID, Clone::class.java)
+        registerGeneClass(InternalConstants.GENE_CLONE_ID, com.eifel.bionisation4.common.laboratory.gene.species.type.Clone::class.java)
         registerGeneClass(InternalConstants.GENE_AIR_SPREAD_ID, AirSpread::class.java)
         registerGeneClass(InternalConstants.GENE_ATTACK_SPREAD_ID, AttackSpread::class.java)
         registerGeneClass(InternalConstants.GENE_END_ID, End::class.java)
@@ -117,6 +121,7 @@ object EffectRegistry {
         registerEffectOccasion(EntityType.WOLF, InternalConstants.VIRUS_RABIES_ID, 10)
         registerEffectOccasion(EntityType.POLAR_BEAR, InternalConstants.VIRUS_RABIES_ID, 10)
         registerEffectOccasion(MonsterEntity::class.java, InternalConstants.VIRUS_GIANT_ID, 10)
+        registerEffectOccasion(MonsterEntity::class.java, InternalConstants.BACTERIA_CLONE_ID, 10)
         registerEffectOccasion(EntityType.ENDERMAN, InternalConstants.VIRUS_ENDER_ID, 35)
         registerEffectOccasion(EntityType.ZOMBIE, InternalConstants.VIRUS_BRAIN_ID, 15)
         registerEffectOccasion(EntityType.ZOMBIE_VILLAGER, InternalConstants.VIRUS_BRAIN_ID, 15)
@@ -167,6 +172,19 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.VIRUS_DESERT_ID, Desert::class.java)
         registerEffectClass(InternalConstants.VIRUS_PTERO_ID, Ptero::class.java)
         registerEffectClass(InternalConstants.VIRUS_WILD_ID, Wild::class.java)
+        //bacteria
+        registerEffectClass(InternalConstants.BACTERIA_BLACK_ID, Black::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_SWAMP_ID, Swamp::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_GLOWING_ID, com.eifel.bionisation4.common.laboratory.bacteria.Glowing::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_WATER_ID, Water::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_ENDER_ID, com.eifel.bionisation4.common.laboratory.bacteria.Ender::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_CACTUS_ID, Cactus::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_BONE_ID, Bone::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_TERRA_ID, Terra::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_MYCELIUM_ID, Mycelium::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_SEA_ID, Sea::class.java)
+        registerEffectClass(InternalConstants.BACTERIA_CLONE_ID, Clone::class.java)
+
     }
 
     fun loadDefaultEffectChances() {
@@ -182,13 +200,24 @@ object EffectRegistry {
         registerEffectChance(InternalConstants.EFFECT_NIGHTMARES_ID, 10)
         //virus
         registerEffectChance(InternalConstants.VIRUS_AER_ID, 10)
+        //bacteria
+        registerEffectChance(InternalConstants.BACTERIA_BLACK_ID, 100)
+        registerEffectChance(InternalConstants.BACTERIA_SWAMP_ID, 10)
+        registerEffectChance(InternalConstants.BACTERIA_GLOWING_ID, 15)
+        registerEffectChance(InternalConstants.BACTERIA_WATER_ID, 25)
+        registerEffectChance(InternalConstants.BACTERIA_ENDER_ID, 100)
+        registerEffectChance(InternalConstants.BACTERIA_CACTUS_ID, 20)
+        registerEffectChance(InternalConstants.BACTERIA_BONE_ID, 5)
+        registerEffectChance(InternalConstants.BACTERIA_TERRA_ID, 10)
+        registerEffectChance(InternalConstants.BACTERIA_MYCELIUM_ID, 25)
+        registerEffectChance(InternalConstants.BACTERIA_SEA_ID, 25)
     }
 
     fun loadRandomVirusGenes() {
         //todo add mappings here
         //im too lazy to do it myself, so
         getGenes().keys.forEach { id ->
-            registerRandomVirusGene(id, Utils.random.nextInt(15) + 1)
+            registerRandomVirusGene(id, Utils.random.nextInt(1, 15))
         }
         //ooooh yeah
     }

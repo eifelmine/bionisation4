@@ -26,6 +26,10 @@
   "item.bionisation4.weirdseeds": "Weird seeds",
   "item.bionisation4.wolfstooth": "Wolf tooth",
 
+  "item.bionisation4.antibiotic_weak": "Antibiotic",
+  "item.bionisation4.antibiotic_mid": "Antibiotic",
+  "item.bionisation4.antibiotic_strong": "Antibiotic",
+
   "item.bionisation4.immunitychecker": "Immunity checker",
   "checker.usage.desc": "Hold right click to get your immunity status",
   "checker.usage.result": "Immunity strength: ",
@@ -36,6 +40,9 @@
   "item.bionisation4.garlic": "Garlic bulb",
   "item.bionisation4.garlicbulb": "Garlic bulb",
   "garlic.usage.desc": "Restores 2 immunity after some time",
+
+  "antibiotic.usage.desc": "Eat to get antibiotic effect",
+  "antibiotic.info.against": "Effective against:",
 
   "item.bionisation4.firelily": "Fire Lily",
   "item.bionisation4.witherflower": "Wither hand",
@@ -110,6 +117,8 @@
   "effect.Mycelium.name": "Mycelium",
   "effect.Sea.name": "Sea",
   "effect.Clone.name": "Clone",
+
+  "effect.Antibiotic.name": "Antibiotic",
 
   "gene.Unknown Gene.name": "Unknown Gene",
   "gene.Default Gene.name": "Default Gene (Internal)",

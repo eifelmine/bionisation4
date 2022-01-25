@@ -15,6 +15,7 @@ object ConfigProperties {
     lateinit var randomVirusGeneCount : ForgeConfigSpec.ConfigValue<Int>
     lateinit var randomVirusMobCount : ForgeConfigSpec.ConfigValue<Int>
 
+    lateinit var defaultAntibioticDuration : ForgeConfigSpec.ConfigValue<Int>
 
     fun loadData() : ForgeConfigSpec {
         val builder = ForgeConfigSpec.Builder()
@@ -43,6 +44,11 @@ object ConfigProperties {
         randomVirusGeneCount = builder.define("randomVirusGeneCount", 8)
         builder.comment("Every N mobs there will be chance to spawn random wild virus")
         randomVirusMobCount = builder.define("randomVirusMobCount", 20)
+
+        builder.comment("Effect Settings").push("cures")
+        builder.comment("Default antibiotic effect duration")
+        defaultAntibioticDuration = builder.define("defaultAntibioticDuration", 12000)
+
         builder.pop()
 
         builder.comment("General Settings").push("item")

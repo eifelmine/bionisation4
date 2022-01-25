@@ -43,6 +43,7 @@ object InternalConstants {
     val EFFECT_POWER_KEY = getModIDString("eff_power")
     val EFFECT_POWER_CHANGE_KEY = getModIDString("eff_power_change")
     val EFFECT_GENES_KEY = getModIDString("eff_genes")
+    val EFFECT_MULTIPLE_KEY = getModIDString("eff_multiple")
 
     val EFFECT_CURE_KEY = getModIDString("eff_cure")
     val EFFECT_INFINITE_KEY = getModIDString("eff_infinite")
@@ -67,6 +68,9 @@ object InternalConstants {
     val PROP_EFFECT_LIST_KEY = getModIDString("prop_effect_list")
 
     val VIAL_EFFECT_KEY = getModIDString("vial_effect")
+
+    val ANTIBIOTIC_AGAINST_KEY = getModIDString("ant_against")
+
 
     //effects
 
@@ -149,6 +153,8 @@ object InternalConstants {
     val EFFECT_ALIENATION_ID = 13
     val EFFECT_NIGHTMARES_ID = 14
     val EFFECT_DEBUG_ID = 15
+
+    val EFFECT_ANTIBIOTIC_ID = 16
 
     val VIRUS_RABIES_ID = 500
     val VIRUS_GIANT_ID = 501

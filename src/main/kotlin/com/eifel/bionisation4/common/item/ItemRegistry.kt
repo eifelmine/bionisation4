@@ -2,10 +2,7 @@ package com.eifel.bionisation4.common.item
 
 import com.eifel.bionisation4.Info
 import com.eifel.bionisation4.common.item.lab.ItemEffectVial
-import com.eifel.bionisation4.common.item.utility.Bandage
-import com.eifel.bionisation4.common.item.utility.GarlicBulb
-import com.eifel.bionisation4.common.item.utility.ImmunityChecker
-import com.eifel.bionisation4.common.item.utility.Splint
+import com.eifel.bionisation4.common.item.utility.*
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 
@@ -18,6 +15,10 @@ object ItemRegistry {
     val SPLINT = ITEMS.register("splint") { Splint() }
     val IMMUNITY_CHECKER = ITEMS.register("immunitychecker") { ImmunityChecker() }
     val GARLIC_BULB = ITEMS.register("garlicbulb") { GarlicBulb() }
+
+    val ANTIBIOTIC_WEAK = ITEMS.register("antibiotic_weak") { Antibiotic() }
+    val ANTIBIOTIC_MID = ITEMS.register("antibiotic_mid") { Antibiotic() }
+    val ANTIBIOTIC_STRONG = ITEMS.register("antibiotic_strong") { Antibiotic() }
 
     //utility
     val BAT_WING = ITEMS.register("batwing") { CommonItem() }
@@ -42,7 +43,6 @@ object ItemRegistry {
     val WITHER_CORE = ITEMS.register("withercore") { CommonItem(enchanted = true) }
     val WEIRD_SEEDS = ITEMS.register("weirdseeds") { CommonItem() }
     val WOLF_TOOTH = ITEMS.register("wolfstooth") { CommonItem() }
-
 
     val EFFECT_VIAL = ITEMS.register("effect_vial") { ItemEffectVial() }
 }

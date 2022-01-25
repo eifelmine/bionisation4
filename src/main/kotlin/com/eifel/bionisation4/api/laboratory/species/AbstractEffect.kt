@@ -42,6 +42,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     var antibioticResistancePercent = if(isAntibioticVulnerable) Utils.random.nextDouble() else 0.0
 
     var isSyncable = false
+    var isMultiple = false
 
     constructor() : this(0)
 
@@ -65,6 +66,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         nbtData.putBoolean(InternalConstants.EFFECT_HIDDEN_KEY, isHidden)
         nbtData.putBoolean(InternalConstants.EFFECT_EXPIRED_KEY, isExpired)
         nbtData.putBoolean(InternalConstants.EFFECT_MUTATE_KEY, canMutate)
+        nbtData.putBoolean(InternalConstants.EFFECT_MULTIPLE_KEY, isMultiple)
 
         nbtData.putBoolean(InternalConstants.EFFECT_POWER_CHANGE_KEY, canChangePower)
 
@@ -99,6 +101,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         isHidden = nbtData.getBoolean(InternalConstants.EFFECT_HIDDEN_KEY)
         isExpired = nbtData.getBoolean(InternalConstants.EFFECT_EXPIRED_KEY)
         canMutate = nbtData.getBoolean(InternalConstants.EFFECT_MUTATE_KEY)
+        isMultiple = nbtData.getBoolean(InternalConstants.EFFECT_MULTIPLE_KEY)
 
         canChangePower = nbtData.getBoolean(InternalConstants.EFFECT_POWER_CHANGE_KEY)
 

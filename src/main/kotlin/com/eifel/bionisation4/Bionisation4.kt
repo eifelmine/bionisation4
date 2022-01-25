@@ -69,6 +69,7 @@ object Bionisation4 {
             EffectRegistry.loadDefaultGeneVials()
             EffectRegistry.loadDefaultBacteriaCures()
             EffectRegistry.loadDefaultEffectOccasions()
+            EffectRegistry.loadDefaultAntibiotics()
             //network
             NetworkManager.init()
             //init capability

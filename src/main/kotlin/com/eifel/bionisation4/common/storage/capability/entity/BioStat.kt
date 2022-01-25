@@ -162,7 +162,7 @@ class BioStat(): IBioStat {
     }
 
     fun addEffect(effect: AbstractEffect){
-        if(!isActive(effect))
+        if(effect.isMultiple || !isActive(effect))
             this.pending.add(effect)
     }
 

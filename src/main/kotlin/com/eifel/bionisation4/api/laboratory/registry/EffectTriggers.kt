@@ -5,6 +5,7 @@ import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.extensions.*
 import com.eifel.bionisation4.common.laboratory.bacteria.*
 import com.eifel.bionisation4.common.laboratory.common.effect.*
+import com.eifel.bionisation4.common.laboratory.treat.Antibiotic
 import com.eifel.bionisation4.common.laboratory.virus.Aer
 import net.minecraft.block.Blocks
 import net.minecraft.entity.LivingEntity
@@ -35,7 +36,7 @@ object EffectTriggers {
                     is PlayerEntity -> {
                         val player = event.entityLiving as PlayerEntity
                         //sunstroke
-                        if (player.isInBiome(Biome.Category.DESERT) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID)))
+                        if (player.getBioTicker() % 600 == 0 && player.isInBiome(Biome.Category.DESERT) && player.level.isDay && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID)))
                             if(player.inventory.armor[3].isEmpty)
                                 player.addEffect(Sunstroke())
 
@@ -72,7 +73,7 @@ object EffectTriggers {
                 when(event.entityLiving){
                     is PlayerEntity -> {
                         val player = event.entityLiving as PlayerEntity
-                        when(event.resultStack.item){
+                        when(event.item.item){
                             //sunstroke
                             Items.GLASS_BOTTLE -> player.expire(InternalConstants.EFFECT_SUNSTROKE_ID)
                             //black
@@ -87,6 +88,11 @@ object EffectTriggers {
                             }
                             //food poisoning
                             in FoodPoisoning.poison -> if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_FOOD_POISONING_ID))) player.addEffect(FoodPoisoning())
+                            //ant
+                            in EffectRegistry.getAntibiotics().keys -> {
+                                val ant = EffectRegistry.getAntibiotics()[event.item.item]!!
+                                player.addEffect(Antibiotic().setExpirationIds(ant))
+                            }
                         }
                     }
                 }

@@ -4,6 +4,7 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.util.Utils
+import com.eifel.bionisation4.common.block.BlockRegistry
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.laboratory.bacteria.*
 import com.eifel.bionisation4.common.laboratory.bacteria.Clone
@@ -14,12 +15,15 @@ import com.eifel.bionisation4.common.laboratory.gene.DefaultGene
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.*
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.Glowing
 import com.eifel.bionisation4.common.laboratory.gene.species.type.*
+import com.eifel.bionisation4.common.laboratory.treat.Antibiotic
 import com.eifel.bionisation4.common.laboratory.virus.*
 import com.eifel.bionisation4.common.laboratory.virus.Ender
 import com.eifel.bionisation4.common.laboratory.virus.Wither
+import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.monster.MonsterEntity
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 
@@ -38,6 +42,8 @@ object EffectRegistry {
     private val RANDOM_VIRUS_GENES = mutableMapOf<Int, Int>()
     //list of gene ids it can mutate with
     private val GENE_MUTATIONS = mutableMapOf<Int, List<Int>>()
+
+    private val ANTIBIOTICS = mutableMapOf<Item, List<Int>>()
 
     //two effects for mutation and result
     private val EFFECT_SYMBIOSIS = mutableListOf<Triple<Int, Int, Int>>()
@@ -184,7 +190,15 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.BACTERIA_MYCELIUM_ID, Mycelium::class.java)
         registerEffectClass(InternalConstants.BACTERIA_SEA_ID, Sea::class.java)
         registerEffectClass(InternalConstants.BACTERIA_CLONE_ID, Clone::class.java)
+        //cures
+        registerEffectClass(InternalConstants.EFFECT_ANTIBIOTIC_ID, Antibiotic::class.java)
 
+    }
+
+    fun loadDefaultAntibiotics() {
+        registerAntibiotic(ItemRegistry.ANTIBIOTIC_WEAK.get(), mutableListOf(InternalConstants.BACTERIA_SWAMP_ID, InternalConstants.BACTERIA_WATER_ID, InternalConstants.BACTERIA_CACTUS_ID, InternalConstants.BACTERIA_SEA_ID))
+        registerAntibiotic(ItemRegistry.ANTIBIOTIC_MID.get(), mutableListOf(InternalConstants.BACTERIA_ENDER_ID, InternalConstants.BACTERIA_BONE_ID, InternalConstants.BACTERIA_TERRA_ID, InternalConstants.BACTERIA_MYCELIUM_ID))
+        registerAntibiotic(ItemRegistry.ANTIBIOTIC_STRONG.get(), mutableListOf(InternalConstants.BACTERIA_GLOWING_ID, InternalConstants.BACTERIA_BLACK_ID))
     }
 
     fun loadDefaultEffectChances() {
@@ -288,6 +302,16 @@ object EffectRegistry {
 
     fun loadDefaultBacteriaCures() {
         //todo add mappings here
+        registerBacteriaCure(InternalConstants.BACTERIA_BLACK_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.SPIDER_EYE.get()), ItemStack(Items.SPIDER_EYE)))
+        registerBacteriaCure(InternalConstants.BACTERIA_SWAMP_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.SNOW_WARDEN.get()), ItemStack(Blocks.LILY_PAD)))
+        registerBacteriaCure(InternalConstants.BACTERIA_GLOWING_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.NETHER_AMBER.get()), ItemStack(ItemRegistry.WEIRD_SEEDS.get())))
+        registerBacteriaCure(InternalConstants.BACTERIA_WATER_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.SPECTRAL_LILY.get()), ItemStack(Items.NAUTILUS_SHELL)))
+        registerBacteriaCure(InternalConstants.BACTERIA_ENDER_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.ENDER_FLOWER.get()), ItemStack(Items.ENDER_EYE)))
+        registerBacteriaCure(InternalConstants.BACTERIA_CACTUS_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.DESERT_BONE.get()), ItemStack(Blocks.CACTUS)))
+        registerBacteriaCure(InternalConstants.BACTERIA_BONE_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.RED_FLOWER.get()), ItemStack(ItemRegistry.WOLF_TOOTH.get())))
+        registerBacteriaCure(InternalConstants.BACTERIA_TERRA_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.CAVE_LANTERN.get()), ItemStack(Items.BEETROOT)))
+        registerBacteriaCure(InternalConstants.BACTERIA_MYCELIUM_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.CREEPER_SOUL.get()), ItemStack(Blocks.MYCELIUM)))
+        registerBacteriaCure(InternalConstants.BACTERIA_SEA_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.FIRE_LILY.get()), ItemStack(Items.TROPICAL_FISH)))
     }
 
     fun registerEffectClass(id: Int, clazz: Class<out AbstractEffect>) {
@@ -344,6 +368,12 @@ object EffectRegistry {
         GENE_VIALS[id] = vial
     }
 
+    fun registerAntibiotic(item: Item, list: MutableList<Int>) {
+        if(ANTIBIOTICS.containsKey(item))
+            throw IllegalStateException("Antibiotic is already registered!")
+        ANTIBIOTICS[item] = list
+    }
+
     fun registerSymbiosis(data: Triple<Int, Int, Int>) {
         if(EFFECT_SYMBIOSIS.any { it.first == data.first && it.second == data.second })
             throw IllegalStateException("Specified input for symbiosis is already registered!")
@@ -367,6 +397,7 @@ object EffectRegistry {
     fun getOccasionsClass() = EFFECT_OCCASIONS_CLASS
     fun getBacteriaCures() = BACTERIA_CURES
     fun getRandomVirusGenes() = RANDOM_VIRUS_GENES
+    fun getAntibiotics() = ANTIBIOTICS
 
 
     fun getEffectInstance(id: Int): AbstractEffect {

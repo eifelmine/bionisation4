@@ -11,6 +11,7 @@ object ClientRegistry {
     private val PARTICLE_GENERATORS = mutableMapOf<Int, (LivingEntity) -> Unit>()
 
     fun loadDefaultParticleGenerators() {
+        PARTICLE_GENERATORS.clear()
         //todo add mappings here
         registerParticleGenerator(InternalConstants.EFFECT_BLEEDING_ID){
             entity ->

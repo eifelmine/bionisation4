@@ -17,14 +17,14 @@ import com.eifel.bionisation4.world.generation.flower.FlowerFeatures
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
-import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.loading.FMLPaths
 import thedarkcolour.kotlinforforge.KotlinModLoadingContext
+import thedarkcolour.kotlinforforge.forge.FORGE_BUS
+import thedarkcolour.kotlinforforge.forge.callWhenOn
 
 
 @Mod(Info.MOD_ID)
@@ -46,12 +46,10 @@ object Bionisation4 {
 
         BlockRegistry.BLOCKS.register(bus)
         ItemRegistry.ITEMS.register(bus)
+        ParticleRegistry.PARTICLES.register(bus)
 
-        DistExecutor.safeRunWhenOn(Dist.CLIENT) {
-            DistExecutor.SafeRunnable {
-                ParticleRegistry.PARTICLES.register(bus)
-                bus.register(ClientModLoadingEvents.javaClass)
-            }
+        callWhenOn(Dist.CLIENT){
+            bus.register(ClientModLoadingEvents.javaClass)
         }
 
         EffectTriggers.init()
@@ -75,17 +73,13 @@ object Bionisation4 {
             //features
             FlowerFeatures.loadFlowerFeatures()
             //events
-            MinecraftForge.EVENT_BUS.register(CommonEvents.javaClass)
-            MinecraftForge.EVENT_BUS.register(GenerationEvents.javaClass)
-            DistExecutor.safeRunWhenOn(Dist.DEDICATED_SERVER) {
-                DistExecutor.SafeRunnable {
-                    MinecraftForge.EVENT_BUS.register(ServerEvents.javaClass)
-                }
+            FORGE_BUS.register(CommonEvents.javaClass)
+            FORGE_BUS.register(GenerationEvents.javaClass)
+            callWhenOn(Dist.DEDICATED_SERVER){
+                FORGE_BUS.register(ServerEvents.javaClass)
             }
-            DistExecutor.safeRunWhenOn(Dist.CLIENT) {
-                DistExecutor.SafeRunnable {
-                    MinecraftForge.EVENT_BUS.register(ClientEvents.javaClass)
-                }
+            callWhenOn(Dist.CLIENT){
+                FORGE_BUS.register(ClientEvents.javaClass)
             }
             LocalizationRegistry.loadDefaultGeneDescs()
             LocalizationRegistry.loadDefaultEffectDescs()

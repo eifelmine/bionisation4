@@ -56,8 +56,17 @@
   "item.bionisation4.redflower": "Red flower",
   "item.bionisation4.cavelantern": "Stone lantern",
 
+  "item.bionisation4.bioarmor_boots": "Bio boots",
+  "item.bionisation4.bioarmor_leggings": "Bio leggings",
+  "item.bionisation4.bioarmor_chest": "Bio chest",
+  "item.bionisation4.bioarmor_helmet": "Bio helmet",
+
+  "item.bionisation4.bioanalyzer": "Bio analyzer",
+
   "item.bionisation4.splint": "Splint",
   "splint.usage.desc": "Right click to prevent fracture (with shift on others)",
+
+  "bioanalyzer.usage.desc": "Right click to open analyzer GUI",
 
   "vial.effect.name": "Effect: ",
   "vial.usage.desc": "Right click to treat yourself and with shift for others around",
@@ -119,6 +128,8 @@
   "effect.Clone.name": "Clone",
 
   "effect.Antibiotic.name": "Antibiotic",
+
+  "armor.info.desc": "Grants defence against air-spread effects and some kind of bacteria",
 
   "gene.Unknown Gene.name": "Unknown Gene",
   "gene.Default Gene.name": "Default Gene (Internal)",

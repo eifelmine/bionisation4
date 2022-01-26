@@ -2,10 +2,7 @@ package com.eifel.bionisation4.util.lab
 
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
-import com.eifel.bionisation4.common.extensions.addEffect
-import com.eifel.bionisation4.common.extensions.expire
-import com.eifel.bionisation4.common.extensions.isEffectActive
-import com.eifel.bionisation4.common.extensions.toTypedList
+import com.eifel.bionisation4.common.extensions.*
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.util.math.AxisAlignedBB
@@ -17,7 +14,8 @@ object EffectUtils {
     fun spreadEffect(effect: AbstractEffect, world: World, pos: BlockPos, radius: Double, predicate: (Entity) -> Boolean = { e -> e is LivingEntity }) =
         world.getEntities(null, AxisAlignedBB(pos).inflate(radius)) { predicate(it) }
             .toTypedList<LivingEntity>().forEach {
-                it.addEffect(effect.getCopy())
+                if(!it.hasBioArmor(true))
+                    it.addEffect(effect.getCopy())
             }
 
     fun applyToEntities(world: World, pos: BlockPos, radius: Double, predicate: (Entity) -> Boolean = { e -> e is LivingEntity }, action: (Entity) -> Unit = {_ ->}) =

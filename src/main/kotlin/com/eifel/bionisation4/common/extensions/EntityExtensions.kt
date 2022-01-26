@@ -1,6 +1,7 @@
 package com.eifel.bionisation4.common.extensions
 
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
+import com.eifel.bionisation4.common.item.armor.BioArmor
 import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatProvider
 import net.minecraft.entity.LivingEntity
@@ -78,6 +79,6 @@ inline fun LivingEntity.isInBiome(type: Biome.Category) = this.level.getBiome(th
 
 inline fun LivingEntity.hasArmor(isFull: Boolean) = if(isFull) this.armorSlots.all { !it.isEmpty } else this.armorSlots.any { !it.isEmpty }
 
-inline fun LivingEntity.hasBioArmor(isFull: Boolean) = if(isFull) this.armorSlots.all { !it.isEmpty /*//todo */ } else this.armorSlots.any { !it.isEmpty  /*//todo */ }
+inline fun LivingEntity.hasBioArmor(isFull: Boolean) = if(isFull) this.armorSlots.all { it.item is BioArmor } else this.armorSlots.any { it.item is BioArmor }
 
 

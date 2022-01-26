@@ -51,8 +51,6 @@ object Bionisation4 {
             DistExecutor.SafeRunnable {
                 ParticleRegistry.PARTICLES.register(bus)
                 bus.register(ClientModLoadingEvents.javaClass)
-                //load particle generators
-                ClientRegistry.loadDefaultParticleGenerators()
             }
         }
 
@@ -96,6 +94,8 @@ object Bionisation4 {
 
     fun onClientSetup(event: FMLClientSetupEvent) {
         event.enqueueWork {
+            //load particle generators
+            ClientRegistry.loadDefaultParticleGenerators()
             //todo move this to other class
             RenderTypeLookup.setRenderLayer(BlockRegistry.GARLIC.get(), RenderType.cutout())
             RenderTypeLookup.setRenderLayer(BlockRegistry.FIRE_LILY.get(), RenderType.cutout())

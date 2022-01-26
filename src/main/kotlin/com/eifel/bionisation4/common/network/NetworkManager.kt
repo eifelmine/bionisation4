@@ -1,6 +1,7 @@
 package com.eifel.bionisation4.common.network
 
 import com.eifel.bionisation4.Info
+import com.eifel.bionisation4.common.network.message.common.PacketAnalyzerGUI
 import com.eifel.bionisation4.common.network.message.mob.PacketMobEffectStates
 import com.eifel.bionisation4.common.network.message.mob.PacketMobPropertySync
 import com.eifel.bionisation4.common.network.message.mob.PacketMobSimpleEffectStates
@@ -28,5 +29,6 @@ object NetworkManager {
         INSTANCE.registerMessage(3, PacketMobPropertySync::class.java, PacketMobPropertySync.toBytes, PacketMobPropertySync.fromBytes, PacketMobPropertySync.handler)
         INSTANCE.registerMessage(4, PacketMobEffectStates::class.java, PacketMobEffectStates.toBytes, PacketMobEffectStates.fromBytes, PacketMobEffectStates.handler)
         INSTANCE.registerMessage(5, PacketMobSimpleEffectStates::class.java, PacketMobSimpleEffectStates.toBytes, PacketMobSimpleEffectStates.fromBytes, PacketMobSimpleEffectStates.handler)
+        INSTANCE.registerMessage(6, PacketAnalyzerGUI::class.java, PacketAnalyzerGUI.toBytes, PacketAnalyzerGUI.fromBytes, PacketAnalyzerGUI.handler)
     }
 }

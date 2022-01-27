@@ -71,6 +71,10 @@ object InternalConstants {
 
     val ANTIBIOTIC_AGAINST_KEY = getModIDString("ant_against")
 
+    val ANALYZER_NBT_ID = getModIDString("an_id")
+    val ANALYZER_NBT_NAME = getModIDString("an_name")
+    val ANALYZER_NBT_GENES = getModIDString("an_genes")
+    val ANALYZER_NBT_DATA = getModIDString("an_data")
 
     //effects
 

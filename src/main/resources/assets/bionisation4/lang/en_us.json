@@ -66,7 +66,7 @@
   "item.bionisation4.splint": "Splint",
   "splint.usage.desc": "Right click to prevent fracture (with shift on others)",
 
-  "bioanalyzer.usage.desc": "Right click to open analyzer GUI",
+  "bioanalyzer.usage.desc": "Right click to open analyzer GUI (with shift on others)",
 
   "vial.effect.name": "Effect: ",
   "vial.usage.desc": "Right click to treat yourself and with shift for others around",
@@ -201,5 +201,13 @@
   "block.bionisation4.spectrallily": "Spectral lily",
   "block.bionisation4.netheramber": "Nether amber",
   "block.bionisation4.redflower": "Red flower",
-  "block.bionisation4.cavelantern": "Stone lantern"
+  "block.bionisation4.cavelantern": "Stone lantern",
+
+  "analyzer.page.prev": "Prev",
+  "analyzer.page.next": "Next",
+  "analyzer.page.effect": "§6Sample:",
+  "analyzer.page.genes": "§3Genes:",
+  "analyzer.page.effects_empty": "§3No effects found",
+  "analyzer.page.genes_empty": "§3No genes found",
+  "analyzer.page.analyzer": "§bBio analyzer"
 }

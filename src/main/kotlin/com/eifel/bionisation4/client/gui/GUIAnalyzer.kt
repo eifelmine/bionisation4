@@ -67,8 +67,8 @@ class GUIAnalyzer(val nbt: CompoundNBT): Screen(NarratorChatListener.NO_TITLE) {
     fun updateButtons() {
         this.effNextButton.visible = data.isNotEmpty() && data.size > 1
         this.effPrevButton.visible = data.isNotEmpty() && data.size > 1
-        this.geneNextButton.visible = data.isNotEmpty() && data[effPage].genes.isNotEmpty()
-        this.genePrevButton.visible = data.isNotEmpty() && data[effPage].genes.isNotEmpty()
+        this.geneNextButton.visible = data.isNotEmpty() && data[effPage].genes.size > 1
+        this.genePrevButton.visible = data.isNotEmpty() && data[effPage].genes.size > 1
     }
 
     override fun render(stack: MatrixStack, x: Int, y: Int, ticks: Float) {

@@ -32,6 +32,7 @@ object InternalConstants {
 
 
     val EFFECT_SHOWTIME_KEY = getModIDString("eff_showtime")
+    val EFFECT_PRIORITY_KEY = getModIDString("eff_priority")
     val EFFECT_MAX_DURATION_KEY = getModIDString("eff_max_duration")
 
     val EFFECT_ID_KEY = getModIDString("eff_id")
@@ -75,6 +76,12 @@ object InternalConstants {
     val ANALYZER_NBT_NAME = getModIDString("an_name")
     val ANALYZER_NBT_GENES = getModIDString("an_genes")
     val ANALYZER_NBT_DATA = getModIDString("an_data")
+
+    val VIAL_GENES = getModIDString("vial_genes")
+    val VACCINE_INJECTOR_GENES = getModIDString("vaccine_injector_genes")
+
+    val VACCINE_VIRUS = getModIDString("vaccine_virus")
+    val VACCINE_IMMUNITY = getModIDString("vaccine_immunity")
 
     //effects
 
@@ -159,6 +166,8 @@ object InternalConstants {
     val EFFECT_DEBUG_ID = 15
 
     val EFFECT_ANTIBIOTIC_ID = 16
+    val EFFECT_VACCINE_ID = 17
+    val EFFECT_VACCINNE_IMMUNITY_ID = 18
 
     val VIRUS_RABIES_ID = 500
     val VIRUS_GIANT_ID = 501

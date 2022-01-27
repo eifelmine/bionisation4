@@ -16,6 +16,10 @@ object ConfigProperties {
     lateinit var randomVirusMobCount : ForgeConfigSpec.ConfigValue<Int>
 
     lateinit var defaultAntibioticDuration : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var defaultVaccineDuration : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var defaultImmunityDuration : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var defaultVaccineCureChance : ForgeConfigSpec.ConfigValue<Int>
+
 
     fun loadData() : ForgeConfigSpec {
         val builder = ForgeConfigSpec.Builder()
@@ -48,6 +52,12 @@ object ConfigProperties {
         builder.comment("Effect Settings").push("cures")
         builder.comment("Default antibiotic effect duration")
         defaultAntibioticDuration = builder.define("defaultAntibioticDuration", 12000)
+        builder.comment("Default vaccine effect duration")
+        defaultVaccineDuration = builder.define("defaultVaccineDuration", 12000)
+        builder.comment("Default vaccine cure chance")
+        defaultVaccineCureChance = builder.define("defaultVaccineCureChance", 50)
+        builder.comment("Default virus immunity effect duration")
+        defaultImmunityDuration = builder.define("defaultImmunityDuration", 72000)
 
         builder.pop()
 

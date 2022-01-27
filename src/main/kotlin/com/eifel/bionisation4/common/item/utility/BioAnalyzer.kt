@@ -1,7 +1,7 @@
 package com.eifel.bionisation4.common.item.utility
 
 import com.eifel.bionisation4.api.constant.InternalConstants
-import com.eifel.bionisation4.client.gui.EffectEntry
+import com.eifel.bionisation4.api.laboratory.util.EffectEntry
 import com.eifel.bionisation4.common.extensions.getEffects
 import com.eifel.bionisation4.common.item.CommonItem
 import com.eifel.bionisation4.common.network.NetworkManager
@@ -23,7 +23,7 @@ class BioAnalyzer(): CommonItem(desc = listOf(Triple("bioanalyzer", "usage", "de
     override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
         val stack = player.getItemInHand(hand)
         if(!player.level.isClientSide && !player.isShiftKeyDown) {
-            val data = player.getEffects().map { EffectEntry(it.effectID, it.effectName, it.effectGenes.map { gene -> EffectEntry(gene.id, gene.geneName, mutableListOf()) }.toMutableList()) }
+            val data = player.getEffects().filterNot { it.isHidden }.map { EffectEntry(it.effectID, it.effectName, it.effectGenes.map { gene -> EffectEntry(gene.id, gene.geneName, mutableListOf()) }.toMutableList()) }
             val nbt = CompoundNBT()
             NBTUtils.objectsToNBT(nbt, data, InternalConstants.ANALYZER_NBT_DATA)
             NetworkManager.INSTANCE.send(
@@ -37,7 +37,7 @@ class BioAnalyzer(): CommonItem(desc = listOf(Triple("bioanalyzer", "usage", "de
         val stack = player.getItemInHand(hand)
         if(!player.level.isClientSide && player.isShiftKeyDown) {
             target?.let { entity ->
-                val data = entity.getEffects().map { EffectEntry(it.effectID, it.effectName, it.effectGenes.map { gene -> EffectEntry(gene.id, gene.geneName, mutableListOf()) }.toMutableList()) }
+                val data = entity.getEffects().filterNot { it.isHidden }.map { EffectEntry(it.effectID, it.effectName, it.effectGenes.map { gene -> EffectEntry(gene.id, gene.geneName, mutableListOf()) }.toMutableList()) }
                 val nbt = CompoundNBT()
                 NBTUtils.objectsToNBT(nbt, data, InternalConstants.ANALYZER_NBT_DATA)
                 NetworkManager.INSTANCE.send(

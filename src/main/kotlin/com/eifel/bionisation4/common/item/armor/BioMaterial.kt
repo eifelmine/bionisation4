@@ -14,7 +14,7 @@ import java.util.function.Supplier
 enum class BioMaterial: IArmorMaterial {
 
     BIO_ARMOR("bioarmor", 7, intArrayOf( 2, 5, 6, 2 ), 12,
-        SoundEvents.ARMOR_EQUIP_LEATHER, 1.0f, 0.0f, { Ingredient.of(net.minecraft.item.Items.STRING)/*//todo make piece of cloth*/ });
+        SoundEvents.ARMOR_EQUIP_LEATHER, 1.0f, 0.0f, { Ingredient.of(com.eifel.bionisation4.common.item.ItemRegistry.CLOTH.get()) });
 
     private var MAX_DAMAGE_ARRAY = intArrayOf(13, 15, 16, 11)
     private var armorName: String = ""

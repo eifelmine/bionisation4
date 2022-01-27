@@ -61,6 +61,7 @@ class BioStat(): IBioStat {
             pending.clear()
         }
         if(!entity.level.isClientSide){
+            effects.sortByDescending { it.hasPriority }
             val it = effects.iterator()
             while(it.hasNext()){
                 val effect = it.next()

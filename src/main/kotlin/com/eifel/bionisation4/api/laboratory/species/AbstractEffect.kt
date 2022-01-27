@@ -44,6 +44,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     var isSyncable = false
     var isMultiple = false
 
+    var hasPriority = false
+
     constructor() : this(0)
 
     override fun toNBT(): CompoundNBT {
@@ -60,6 +62,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         nbtData.putInt(InternalConstants.EFFECT_TICKER_KEY, timeTicker)
 
         NBTUtils.objectsToNBT(nbtData, effectGenes, InternalConstants.EFFECT_GENES_KEY)
+
+        nbtData.putBoolean(InternalConstants.EFFECT_PRIORITY_KEY, hasPriority)
 
         nbtData.putBoolean(InternalConstants.EFFECT_CURE_KEY, isCure)
         nbtData.putBoolean(InternalConstants.EFFECT_INFINITE_KEY, isInfinite)
@@ -95,6 +99,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
 
         effectGenes.clear()
         NBTUtils.nbtToGenes(nbtData, effectGenes, InternalConstants.EFFECT_GENES_KEY)
+
+        hasPriority = nbtData.getBoolean(InternalConstants.EFFECT_PRIORITY_KEY)
 
         isCure = nbtData.getBoolean(InternalConstants.EFFECT_CURE_KEY)
         isInfinite = nbtData.getBoolean(InternalConstants.EFFECT_INFINITE_KEY)

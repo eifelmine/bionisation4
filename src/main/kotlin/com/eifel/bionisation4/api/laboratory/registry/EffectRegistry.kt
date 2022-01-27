@@ -16,6 +16,8 @@ import com.eifel.bionisation4.common.laboratory.gene.species.potion.*
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.Glowing
 import com.eifel.bionisation4.common.laboratory.gene.species.type.*
 import com.eifel.bionisation4.common.laboratory.treat.Antibiotic
+import com.eifel.bionisation4.common.laboratory.treat.Vaccine
+import com.eifel.bionisation4.common.laboratory.treat.VaccineImmunity
 import com.eifel.bionisation4.common.laboratory.virus.*
 import com.eifel.bionisation4.common.laboratory.virus.Ender
 import com.eifel.bionisation4.common.laboratory.virus.Wither
@@ -192,7 +194,8 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.BACTERIA_CLONE_ID, Clone::class.java)
         //cures
         registerEffectClass(InternalConstants.EFFECT_ANTIBIOTIC_ID, Antibiotic::class.java)
-
+        registerEffectClass(InternalConstants.EFFECT_VACCINE_ID, Vaccine::class.java)
+        registerEffectClass(InternalConstants.EFFECT_VACCINNE_IMMUNITY_ID, VaccineImmunity::class.java)
     }
 
     fun loadDefaultAntibiotics() {

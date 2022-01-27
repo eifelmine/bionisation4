@@ -22,6 +22,7 @@ class Wild(): AbstractEffect(InternalConstants.VIRUS_WILD_ID, "Wild", EffectType
         maxDuration = effectDuration
         canChangePower = Utils.random.nextBoolean()
         isSyncable = false
+        isMultiple = true
         isHidden = Utils.random.nextBoolean()
 
         val genes = mutableListOf<Gene>()

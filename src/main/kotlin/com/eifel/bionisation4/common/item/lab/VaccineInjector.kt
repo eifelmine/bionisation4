@@ -3,7 +3,6 @@ package com.eifel.bionisation4.common.item.lab
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.util.EffectEntry
 import com.eifel.bionisation4.common.extensions.addEffect
-import com.eifel.bionisation4.common.extensions.getEffects
 import com.eifel.bionisation4.common.item.CommonItem
 import com.eifel.bionisation4.common.laboratory.treat.Vaccine
 import com.eifel.bionisation4.util.nbt.NBTUtils
@@ -50,9 +49,7 @@ class VaccineInjector(): CommonItem(desc = listOf(Triple("vaccine_injector", "us
             val genes = mutableListOf<EffectEntry>()
             NBTUtils.nbtToObjects(data, genes, InternalConstants.VACCINE_INJECTOR_GENES, EffectEntry::class.java)
             if(genes.isNotEmpty()) {
-                entity.getEffects().filter { effect -> effect.effectGenes.map { it.id }.containsAll(genes.map { it.id }) }.forEach { effect ->
-                    entity.addEffect(Vaccine().setExpirationId(effect.effectName))
-                }
+                entity.addEffect(Vaccine().setExpirationData(genes))
                 data.remove(InternalConstants.VACCINE_INJECTOR_GENES)
             }
         }

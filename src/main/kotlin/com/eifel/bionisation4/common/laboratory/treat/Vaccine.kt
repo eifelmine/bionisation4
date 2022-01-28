@@ -2,18 +2,20 @@ package com.eifel.bionisation4.common.laboratory.treat
 
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
+import com.eifel.bionisation4.api.laboratory.util.EffectEntry
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.extensions.addEffect
-import com.eifel.bionisation4.common.extensions.expire
+import com.eifel.bionisation4.common.extensions.getEffects
+import com.eifel.bionisation4.util.nbt.NBTUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.DamageSource
 
 class Vaccine(): AbstractEffect(InternalConstants.EFFECT_VACCINE_ID, "Vaccine", EffectType.COMMON) {
 
-    var against = ""
+    var against = mutableListOf<EffectEntry>()
 
     init {
         isInfinite = false
@@ -23,8 +25,8 @@ class Vaccine(): AbstractEffect(InternalConstants.EFFECT_VACCINE_ID, "Vaccine", 
         isSyncable = false
     }
 
-    fun setExpirationId(name: String): Vaccine {
-        against = name
+    fun setExpirationData(list: MutableList<EffectEntry>): Vaccine {
+        against = list
         return this
     }
 
@@ -32,8 +34,10 @@ class Vaccine(): AbstractEffect(InternalConstants.EFFECT_VACCINE_ID, "Vaccine", 
         super.onTick(entity, isLastTick)
         if(isLastTick){
             if(Utils.chance( ConfigProperties.defaultVaccineCureChance.get())) {
-                entity.expire(against)
-                entity.addEffect(VaccineImmunity().setExpirationId(against))
+                entity.getEffects().filter { it.effectGenes.size == against.size && it.effectGenes.map { gene -> gene.id }.containsAll(against.map { ef -> ef.id }) }.forEach {
+                    it.isExpired = true
+                    entity.addEffect(VaccineImmunity().setExpirationData(against))
+                }
             }else
                 entity.hurt(DamageSource.MAGIC, 10f)
         }
@@ -41,13 +45,14 @@ class Vaccine(): AbstractEffect(InternalConstants.EFFECT_VACCINE_ID, "Vaccine", 
 
     override fun toNBT(): CompoundNBT {
         val data = super.toNBT()
-        data.putString(InternalConstants.VACCINE_VIRUS, against)
+        NBTUtils.objectsToNBT(data, against, InternalConstants.VACCINE_VIRUS)
         return data
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {
         super.fromNBT(nbtData)
-        this.against = nbtData.getString(InternalConstants.VACCINE_VIRUS)
+        this.against.clear()
+        NBTUtils.nbtToObjects(nbtData, against, InternalConstants.VACCINE_VIRUS, EffectEntry::class.java)
     }
 
     override fun getCopy() = Vaccine()

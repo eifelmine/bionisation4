@@ -57,7 +57,7 @@ object ConfigProperties {
         builder.comment("Default vaccine cure chance")
         defaultVaccineCureChance = builder.define("defaultVaccineCureChance", 50)
         builder.comment("Default virus immunity effect duration")
-        defaultImmunityDuration = builder.define("defaultImmunityDuration", 72000)
+        defaultImmunityDuration = builder.define("defaultImmunityDuration", 360000)
 
         builder.pop()
 

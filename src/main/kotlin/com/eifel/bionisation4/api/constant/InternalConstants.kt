@@ -81,7 +81,9 @@ object InternalConstants {
     val VACCINE_INJECTOR_GENES = getModIDString("vaccine_injector_genes")
 
     val VACCINE_VIRUS = getModIDString("vaccine_virus")
+    val VACCINE_VIRUS_GENES = getModIDString("vaccine_virus_genes")
     val VACCINE_IMMUNITY = getModIDString("vaccine_immunity")
+    val VACCINE_IMMUNITY_GENES = getModIDString("vaccine_immunity_genes")
 
     //effects
 

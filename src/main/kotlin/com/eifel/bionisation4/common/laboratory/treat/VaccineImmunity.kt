@@ -32,7 +32,7 @@ class VaccineImmunity(): AbstractEffect(InternalConstants.EFFECT_VACCINNE_IMMUNI
     override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         super.onTick(entity, isLastTick)
         if(entity.getBioTicker() % 1200 == 0){
-            entity.getEffects().filter { it.effectGenes.size == against.size && it.effectGenes.map { gene -> gene.id }.containsAll(against.map { ef -> ef.id }) }.forEach {
+            entity.getEffects().filter { it.effectType == EffectType.VIRUS && it.effectGenes.size == against.size && it.effectGenes.map { gene -> gene.id }.containsAll(against.map { ef -> ef.id }) }.forEach {
                 it.isExpired = true
             }
         }

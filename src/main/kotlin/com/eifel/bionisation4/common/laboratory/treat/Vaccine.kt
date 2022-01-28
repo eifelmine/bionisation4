@@ -34,7 +34,7 @@ class Vaccine(): AbstractEffect(InternalConstants.EFFECT_VACCINE_ID, "Vaccine", 
         super.onTick(entity, isLastTick)
         if(isLastTick){
             if(Utils.chance( ConfigProperties.defaultVaccineCureChance.get())) {
-                entity.getEffects().filter { it.effectGenes.size == against.size && it.effectGenes.map { gene -> gene.id }.containsAll(against.map { ef -> ef.id }) }.forEach {
+                entity.getEffects().filter { it.effectType == EffectType.VIRUS && it.effectGenes.size == against.size && it.effectGenes.map { gene -> gene.id }.containsAll(against.map { ef -> ef.id }) }.forEach {
                     it.isExpired = true
                     entity.addEffect(VaccineImmunity().setExpirationData(against))
                 }

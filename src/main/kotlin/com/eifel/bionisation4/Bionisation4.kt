@@ -6,6 +6,7 @@ import com.eifel.bionisation4.api.laboratory.registry.EffectTriggers
 import com.eifel.bionisation4.api.laboratory.registry.LocalizationRegistry
 import com.eifel.bionisation4.client.particle.ParticleRegistry
 import com.eifel.bionisation4.common.block.BlockRegistry
+import com.eifel.bionisation4.common.block.BlockShapes
 import com.eifel.bionisation4.common.config.Config
 import com.eifel.bionisation4.common.event.*
 import com.eifel.bionisation4.common.item.ItemRegistry
@@ -14,8 +15,6 @@ import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatStorage
 import com.eifel.bionisation4.common.storage.capability.entity.IBioStat
 import com.eifel.bionisation4.world.generation.flower.FlowerFeatures
-import net.minecraft.client.renderer.RenderType
-import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.fml.common.Mod
@@ -90,19 +89,8 @@ object Bionisation4 {
         event.enqueueWork {
             //load particle generators
             ClientRegistry.loadDefaultParticleGenerators()
-            //todo move this to other class
-            RenderTypeLookup.setRenderLayer(BlockRegistry.GARLIC.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.FIRE_LILY.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.WITHER_EYE.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.CREEPER_SOUL.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.ENDER_FLOWER.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.SNOW_WARDEN.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.DESERT_BONE.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.SPIDER_EYE.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.NETHER_AMBER.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.RED_FLOWER.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.CAVE_LANTERN.get(), RenderType.cutout())
-            RenderTypeLookup.setRenderLayer(BlockRegistry.SPECTRAL_LILY.get(), RenderType.cutout())
+            //render layers
+            BlockShapes.setupRenderLayers()
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.eifel.bionisation4.common.block
 
 import com.eifel.bionisation4.Info
+import com.eifel.bionisation4.common.block.machine.vaccine.VaccineCreator
 import com.eifel.bionisation4.common.block.plant.CommonFlower
 import com.eifel.bionisation4.common.block.plant.Garlic
 import com.eifel.bionisation4.common.core.BionisationTab
@@ -24,6 +25,10 @@ object BlockRegistry {
 
     val BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Info.MOD_ID)
 
+    //machines
+    val VACCINE_CREATOR = registerBlock("vaccine_creator") { VaccineCreator() }
+
+    //crops
     val GARLIC = BLOCKS.register("garlic") { Garlic() }
 
     val FIRE_LILY = registerBlock("firelily") {CommonFlower(Effects.FIRE_RESISTANCE, shape = FlowerBlock.box(

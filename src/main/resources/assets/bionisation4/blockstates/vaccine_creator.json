@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "bionisation4:block/vaccine_creator",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bionisation4:block/vaccine_creator"
+    },
+    "facing=south": {
+      "model": "bionisation4:block/vaccine_creator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bionisation4:block/vaccine_creator",
+      "y": 270
+    }
+  }
+}

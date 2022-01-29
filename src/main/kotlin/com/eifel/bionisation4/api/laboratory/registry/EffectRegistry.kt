@@ -180,6 +180,7 @@ object EffectRegistry {
         registerEffectClass(InternalConstants.VIRUS_DESERT_ID, Desert::class.java)
         registerEffectClass(InternalConstants.VIRUS_PTERO_ID, Ptero::class.java)
         registerEffectClass(InternalConstants.VIRUS_WILD_ID, Wild::class.java)
+        registerEffectClass(InternalConstants.VIRUS_CUSTOM_ID, Custom::class.java)
         //bacteria
         registerEffectClass(InternalConstants.BACTERIA_BLACK_ID, Black::class.java)
         registerEffectClass(InternalConstants.BACTERIA_SWAMP_ID, Swamp::class.java)

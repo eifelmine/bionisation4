@@ -13,7 +13,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.text.TextFormatting
 import net.minecraft.world.World
 
-class ImmunityChecker(): CommonItem(desc = listOf(Triple("checker", "usage", "desc"))) {
+class ImmunityChecker(): CommonItem(desc = listOf(Triple("checker", "usage", "desc")), size = 1) {
 
     override fun getUseDuration(stack: ItemStack) = 72000
     override fun getUseAnimation(stack: ItemStack) = UseAction.BOW

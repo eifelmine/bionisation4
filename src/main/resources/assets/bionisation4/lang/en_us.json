@@ -62,17 +62,30 @@
   "item.bionisation4.bioarmor_helmet": "Bio helmet",
 
   "item.bionisation4.cloth": "Cloth",
-  "item.bionisation4.blood_vial": "Blood vial",
+  "item.bionisation4.antibiotic_vial": "Antibiotic vial",
   "item.bionisation4.vaccine_injector": "Vaccine injector",
+  "item.bionisation4.dna_pattern": "DNA pattern",
 
-  "blood_vial.info.genes": "§3Applied genes:",
-  "blood_vial.info.no_genes": "§cNo genes applied",
-  "blood_vial.usage.desc": "Used to make vaccine with specified DNA in Vaccine Creator",
+  "dna_pattern.info.genes": "§3Applied genes:",
+  "dna_pattern.info.no_genes": "§cNo genes applied",
+  "dna_pattern.usage.desc": "Used to make vaccine/custom sample with specified DNA in Vaccine Creator/Virus Replicator",
+
+  "antibiotic_vial.info.bacteria": "§3Bacteria:",
+  "antibiotic_vial.info.no_bacteria": "§cNo bacteria found",
+  "antibiotic_vial.usage.desc": "Right click to get antibiotic effect (with shift on others)",
+  "antibiotic_vial.usage.injected": "Cure injected!",
 
   "vaccine_injector.info.genes": "§3Applied genes:",
   "vaccine_injector.info.no_genes": "§cNo genes applied",
   "vaccine_injector.usage.desc": "Right click to inject vaccine (with shift on others)",
   "vaccine_injector.usage.injected": "Vaccine injected!",
+
+  "item.bionisation4.virus_spreader": "Virus spreader",
+
+  "virus_spreader.info.genes": "§3Applied genes:",
+  "virus_spreader.info.no_genes": "§cNo genes applied",
+  "virus_spreader.usage.desc": "Right click to spread virus (with shift on others)",
+  "virus_spreader.usage.spread": "Virus spread out!",
 
   "item.bionisation4.bioanalyzer": "Bio analyzer",
 
@@ -127,18 +140,19 @@
   "effect.Desert.name": "Desert",
   "effect.Ptero.name": "Ptero",
   "effect.Wild.name": "Wild",
+  "effect.Custom.name": "Custom",
 
-  "effect.Black.name": "Black",
-  "effect.Swamp.name": "Swamp",
-  "effect.Glowing.name": "Glowing",
-  "effect.Water.name": "Water",
-  "effect.Ender.name": "Ender",
-  "effect.Cactus.name": "Cactus",
-  "effect.Bone.name": "Bone",
-  "effect.Terra.name": "Terra",
-  "effect.Mycelium.name": "Mycelium",
-  "effect.Sea.name": "Sea",
-  "effect.Clone.name": "Clone",
+  "effect.Black.name": "Black bacteria",
+  "effect.Swamp.name": "Swamp bacteria",
+  "effect.Glowing.name": "Glowing bacteria",
+  "effect.Water.name": "Water bacteria",
+  "effect.Ender.name": "Ender bacteria",
+  "effect.Cactus.name": "Cactus bacteria",
+  "effect.Bone.name": "Bone bacteria",
+  "effect.Terra.name": "Terra bacteria",
+  "effect.Mycelium.name": "Mycelium bacteria",
+  "effect.Sea.name": "Sea bacteria",
+  "effect.Clone.name": "Clone bacteria",
 
   "effect.Antibiotic.name": "Antibiotic",
   "effect.Vaccine.name": "Vaccine",
@@ -204,7 +218,6 @@
   "gene.Random words.name": "Random words",
   "gene.Shadow.name": "Shadow",
 
-
   "block.bionisation4.garlic": "Garlic",
   "block.bionisation4.firelily": "Fire Lily",
   "block.bionisation4.witherflower": "Wither hand",
@@ -219,6 +232,9 @@
   "block.bionisation4.cavelantern": "Stone lantern",
 
   "block.bionisation4.vaccine_creator": "Vaccine creator",
+  "block.bionisation4.dna_modifier": "DNA modifier",
+  "block.bionisation4.cure_station": "Cure station",
+  "block.bionisation4.virus_replicator": "Virus replicator",
 
   "analyzer.page.prev": "Prev",
   "analyzer.page.next": "Next",

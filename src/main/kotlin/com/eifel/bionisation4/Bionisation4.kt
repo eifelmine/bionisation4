@@ -7,6 +7,12 @@ import com.eifel.bionisation4.api.laboratory.registry.LocalizationRegistry
 import com.eifel.bionisation4.client.particle.ParticleRegistry
 import com.eifel.bionisation4.common.block.BlockRegistry
 import com.eifel.bionisation4.common.block.BlockShapes
+import com.eifel.bionisation4.common.block.machine.ContainerRegistry
+import com.eifel.bionisation4.common.block.machine.TileRegistry
+import com.eifel.bionisation4.common.block.machine.cure_station.ScreenCureStation
+import com.eifel.bionisation4.common.block.machine.dna_modifier.ScreenDNAModifier
+import com.eifel.bionisation4.common.block.machine.vaccine.ScreenVaccineCreator
+import com.eifel.bionisation4.common.block.machine.virus_replicator.ScreenVirusReplicator
 import com.eifel.bionisation4.common.config.Config
 import com.eifel.bionisation4.common.event.*
 import com.eifel.bionisation4.common.item.ItemRegistry
@@ -15,6 +21,7 @@ import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatStorage
 import com.eifel.bionisation4.common.storage.capability.entity.IBioStat
 import com.eifel.bionisation4.world.generation.flower.FlowerFeatures
+import net.minecraft.client.gui.ScreenManager
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.fml.common.Mod
@@ -44,6 +51,8 @@ object Bionisation4 {
         EffectRegistry.loadRandomVirusGenes()
 
         BlockRegistry.BLOCKS.register(bus)
+        TileRegistry.TILE_ENTITIES.register(bus)
+        ContainerRegistry.CONTAINERS.register(bus)
         ItemRegistry.ITEMS.register(bus)
         ParticleRegistry.PARTICLES.register(bus)
 
@@ -91,6 +100,11 @@ object Bionisation4 {
             ClientRegistry.loadDefaultParticleGenerators()
             //render layers
             BlockShapes.setupRenderLayers()
+            //guis
+            ScreenManager.register(ContainerRegistry.VACCINE_CREATOR_CONTAINER.get(), ::ScreenVaccineCreator)
+            ScreenManager.register(ContainerRegistry.DNA_MODIFIER_CONTAINER.get(), ::ScreenDNAModifier)
+            ScreenManager.register(ContainerRegistry.CURE_STATION_CONTAINER.get(), ::ScreenCureStation)
+            ScreenManager.register(ContainerRegistry.VIRUS_REPLICATOR_CONTAINER.get(), ::ScreenVirusReplicator)
         }
     }
 }

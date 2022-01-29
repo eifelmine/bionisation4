@@ -80,7 +80,10 @@ class GUIAnalyzer(val nbt: CompoundNBT): Screen(NarratorChatListener.NO_TITLE) {
         if(effPage in data.indices){
             AbstractGui.drawString(stack, mc.font, TranslationUtils.getTranslatedText("analyzer", "page", "effect"), (width - 122) / 2, 31, 0xffffff)
             val data = this.data[effPage]
-            AbstractGui.drawString(stack, mc.font, "§d" + TranslationUtils.getTranslatedText("effect", data.unlocName, "name"), (width - 122) / 2, 43, 0xffffff)
+            var name = "§d" + TranslationUtils.getTranslatedText("effect", data.unlocName, "name") + data.genes.joinToString(":", "(", ")") { it.id.toString() }
+            if(name.length > 27)
+                name = name.substring(0, 25) + ".."
+            AbstractGui.drawString(stack, mc.font, name, (width - 122) / 2, 43, 0xffffff)
             if(data.genes.isNotEmpty()){
                 AbstractGui.drawString(stack, mc.font, TranslationUtils.getTranslatedText("analyzer", "page", "genes"), (width - 122) / 2, 55, 0xffffff)
                 val gene = data.genes[genePage]

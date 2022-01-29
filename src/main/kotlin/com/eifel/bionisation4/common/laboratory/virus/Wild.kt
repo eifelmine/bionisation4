@@ -69,6 +69,8 @@ class Wild(): AbstractEffect(InternalConstants.VIRUS_WILD_ID, "Wild", EffectType
         this.maxDuration = nbtData.getLong(InternalConstants.EFFECT_MAX_DURATION_KEY)
     }
 
+    override fun getTranslationName() = effectGenes.joinToString ("-"){ it.id.toString() }
+
     override fun getCopy(): AbstractEffect {
         val wild = Wild()
         wild.isInfinite = isInfinite

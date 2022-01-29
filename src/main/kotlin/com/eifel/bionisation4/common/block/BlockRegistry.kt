@@ -1,7 +1,10 @@
 package com.eifel.bionisation4.common.block
 
 import com.eifel.bionisation4.Info
+import com.eifel.bionisation4.common.block.machine.cure_station.CureStation
+import com.eifel.bionisation4.common.block.machine.dna_modifier.DNAModifier
 import com.eifel.bionisation4.common.block.machine.vaccine.VaccineCreator
+import com.eifel.bionisation4.common.block.machine.virus_replicator.VirusReplicator
 import com.eifel.bionisation4.common.block.plant.CommonFlower
 import com.eifel.bionisation4.common.block.plant.Garlic
 import com.eifel.bionisation4.common.core.BionisationTab
@@ -27,6 +30,9 @@ object BlockRegistry {
 
     //machines
     val VACCINE_CREATOR = registerBlock("vaccine_creator") { VaccineCreator() }
+    val DNA_MODIFIER = registerBlock("dna_modifier") { DNAModifier() }
+    val CURE_STATION = registerBlock("cure_station") { CureStation() }
+    val VIRUS_REPLICATOR = registerBlock("virus_replicator") { VirusReplicator() }
 
     //crops
     val GARLIC = BLOCKS.register("garlic") { Garlic() }

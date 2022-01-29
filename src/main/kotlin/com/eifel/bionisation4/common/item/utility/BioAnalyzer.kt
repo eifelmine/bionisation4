@@ -18,7 +18,7 @@ import net.minecraft.util.Hand
 import net.minecraft.world.World
 import net.minecraftforge.fml.network.PacketDistributor
 
-class BioAnalyzer(): CommonItem(desc = listOf(Triple("bioanalyzer", "usage", "desc"))) {
+class BioAnalyzer(): CommonItem(desc = listOf(Triple("bioanalyzer", "usage", "desc")), size = 1) {
 
     override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
         val stack = player.getItemInHand(hand)

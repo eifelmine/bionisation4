@@ -77,13 +77,23 @@ object InternalConstants {
     val ANALYZER_NBT_GENES = getModIDString("an_genes")
     val ANALYZER_NBT_DATA = getModIDString("an_data")
 
-    val VIAL_GENES = getModIDString("vial_genes")
+    val VIAL_BACTERIA = getModIDString("vial_bacteria")
     val VACCINE_INJECTOR_GENES = getModIDString("vaccine_injector_genes")
+    val SPREADER_GENES = getModIDString("spreader_genes")
 
     val VACCINE_VIRUS = getModIDString("vaccine_virus")
     val VACCINE_VIRUS_GENES = getModIDString("vaccine_virus_genes")
     val VACCINE_IMMUNITY = getModIDString("vaccine_immunity")
     val VACCINE_IMMUNITY_GENES = getModIDString("vaccine_immunity_genes")
+
+    val TILE_SAVE_ITEMS = getModIDString("tile_save_items")
+
+    val TILE_MACHINE_TIME = getModIDString("tile_machine_time")
+    val TILE_PROCESS_TIME = getModIDString("tile_process_time")
+    val TILE_TOTAL_PROCESS_TIME = getModIDString("tile_total_process_time")
+    val TILE_CURRENT_PROCESS_TIME = getModIDString("tile_current_process_time")
+
+    val PATTERN_GENES = getModIDString("pattern_genes")
 
     //effects
 
@@ -186,6 +196,7 @@ object InternalConstants {
     val VIRUS_DESERT_ID = 512
     val VIRUS_PTERO_ID = 513
     val VIRUS_WILD_ID = 514
+    val VIRUS_CUSTOM_ID = 515
 
     val BACTERIA_BLACK_ID = 700
     val BACTERIA_SWAMP_ID = 701

@@ -238,5 +238,5 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     fun deactivateGene(name: String) { effectGenes.find { it.geneName == name }?.isGeneActive = false }
 
     abstract fun getCopy(): AbstractEffect
-    fun getTranslationName() = TranslationUtils.getTranslatedText("effect", effectName, "name")
+    open fun getTranslationName() = TranslationUtils.getTranslatedText("effect", effectName, "name")
 }

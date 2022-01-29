@@ -14,19 +14,19 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-class BloodVial(): CommonItem(desc = listOf(Triple("blood_vial", "usage", "desc")), rarity = Rarity.RARE) {
+class DNAPattern(): CommonItem(desc = listOf(Triple("dna_pattern", "usage", "desc")), rarity = Rarity.RARE, size = 1) {
 
     @OnlyIn(Dist.CLIENT)
     override fun appendHoverText(stack: ItemStack, world: World?, info: MutableList<ITextComponent>, flag: ITooltipFlag) {
         val data = NBTUtils.getNBT(stack)
         var noGenes = true
-        if(data.contains(InternalConstants.VIAL_GENES)) {
+        if(data.contains(InternalConstants.PATTERN_GENES)) {
             val genes = mutableListOf<EffectEntry>()
-            NBTUtils.nbtToObjects(data, genes, InternalConstants.VIAL_GENES, EffectEntry::class.java)
+            NBTUtils.nbtToObjects(data, genes, InternalConstants.PATTERN_GENES, EffectEntry::class.java)
             if(genes.isNotEmpty()) {
                 noGenes = false
                 info.add(TranslationUtils.getText(" "))
-                info.add(TranslationUtils.getTranslatedTextComponent("blood_vial", "info", "genes"))
+                info.add(TranslationUtils.getTranslatedTextComponent("dna_pattern", "info", "genes"))
                 genes.forEach { gene ->
                     info.add(TranslationUtils.getText("    ${TextFormatting.GRAY}-${TextFormatting.YELLOW} ${TranslationUtils.getTranslatedText("gene", gene.unlocName, "name")}"))
                 }
@@ -34,7 +34,7 @@ class BloodVial(): CommonItem(desc = listOf(Triple("blood_vial", "usage", "desc"
         }
         if(noGenes){
             info.add(TranslationUtils.getText(" "))
-            info.add(TranslationUtils.getTranslatedTextComponent("blood_vial", "info", "no_genes"))
+            info.add(TranslationUtils.getTranslatedTextComponent("dna_pattern", "info", "no_genes"))
         }
         super.appendHoverText(stack, world, info, flag)
     }

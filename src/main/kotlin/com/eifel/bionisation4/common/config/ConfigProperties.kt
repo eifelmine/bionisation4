@@ -20,6 +20,10 @@ object ConfigProperties {
     lateinit var defaultImmunityDuration : ForgeConfigSpec.ConfigValue<Int>
     lateinit var defaultVaccineCureChance : ForgeConfigSpec.ConfigValue<Int>
 
+    lateinit var defaultVaccineCreatorProcessTime : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var defaultDNAModifierProcessTime : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var defaultCureStationProcessTime : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var defaultVirusReplicatorProcessTime : ForgeConfigSpec.ConfigValue<Int>
 
     fun loadData() : ForgeConfigSpec {
         val builder = ForgeConfigSpec.Builder()
@@ -39,6 +43,11 @@ object ConfigProperties {
         saveAfterDeath = builder.define("saveAfterDeath", true)
         builder.pop()
 
+        builder.comment("General Settings").push("item")
+        builder.comment("Default effect spread radius for vial")
+        vialSpreadRadius = builder.define("vialSpreadRadius", 10.0)
+        builder.pop()
+
         builder.comment("Effect Settings").push("general")
         builder.comment("Enables random virus creation with random genes applied")
         randomVirusCreation = builder.define("randomVirusCreation", true)
@@ -48,22 +57,28 @@ object ConfigProperties {
         randomVirusGeneCount = builder.define("randomVirusGeneCount", 8)
         builder.comment("Every N mobs there will be chance to spawn random wild virus")
         randomVirusMobCount = builder.define("randomVirusMobCount", 20)
+        builder.pop()
 
         builder.comment("Effect Settings").push("cures")
         builder.comment("Default antibiotic effect duration")
-        defaultAntibioticDuration = builder.define("defaultAntibioticDuration", 12000)
+        defaultAntibioticDuration = builder.define("defaultAntibioticDuration", 3200)
         builder.comment("Default vaccine effect duration")
-        defaultVaccineDuration = builder.define("defaultVaccineDuration", 12000)
+        defaultVaccineDuration = builder.define("defaultVaccineDuration", 3200)
         builder.comment("Default vaccine cure chance")
         defaultVaccineCureChance = builder.define("defaultVaccineCureChance", 50)
         builder.comment("Default virus immunity effect duration")
         defaultImmunityDuration = builder.define("defaultImmunityDuration", 360000)
-
         builder.pop()
 
-        builder.comment("General Settings").push("item")
-        builder.comment("Default effect spread radius for vial")
-        vialSpreadRadius = builder.define("vialSpreadRadius", 10.0)
+        builder.comment("Machine settings").push("timers")
+        builder.comment("Default machine total work time")
+        defaultVaccineCreatorProcessTime = builder.define("defaultVaccineCreatorProcessTime", 1200)
+        builder.comment("Default machine total work time")
+        defaultDNAModifierProcessTime = builder.define("defaultDNAModifierProcessTime", 1200)
+        builder.comment("Default machine total work time")
+        defaultCureStationProcessTime = builder.define("defaultCureStationProcessTime", 1200)
+        builder.comment("Default machine total work time")
+        defaultVirusReplicatorProcessTime = builder.define("defaultVirusReplicatorProcessTime", 12000)
         builder.pop()
 
         return builder.build()

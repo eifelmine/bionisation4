@@ -3,9 +3,7 @@ package com.eifel.bionisation4.common.item
 import com.eifel.bionisation4.Info
 import com.eifel.bionisation4.common.item.armor.BioArmor
 import com.eifel.bionisation4.common.item.armor.BioMaterial
-import com.eifel.bionisation4.common.item.lab.BloodVial
-import com.eifel.bionisation4.common.item.lab.ItemEffectVial
-import com.eifel.bionisation4.common.item.lab.VaccineInjector
+import com.eifel.bionisation4.common.item.lab.*
 import com.eifel.bionisation4.common.item.utility.*
 import net.minecraft.inventory.EquipmentSlotType
 import net.minecraftforge.registries.DeferredRegister
@@ -26,8 +24,10 @@ object ItemRegistry {
     val ANTIBIOTIC_STRONG = ITEMS.register("antibiotic_strong") { Antibiotic() }
 
     val BIO_ANALYZER = ITEMS.register("bioanalyzer") { BioAnalyzer() }
-    val BLOOD_VIAL = ITEMS.register("blood_vial") { BloodVial() }
+    val ANTIBIOTIC_VIAL = ITEMS.register("antibiotic_vial") { AntibioticVial() }
+    val DNA_PATTERN = ITEMS.register("dna_pattern") { DNAPattern() }
     val VACCINE_INJECTOR = ITEMS.register("vaccine_injector") { VaccineInjector() }
+    val VIRUS_SPREADER = ITEMS.register("virus_spreader") { VirusSpreader() }
 
     val CLOTH = ITEMS.register("cloth") { CommonItem() }
     val BIO_BOOTS = ITEMS.register("bioarmor_boots") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.FEET, ) }

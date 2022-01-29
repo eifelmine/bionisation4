@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "bionisation4:block/dna_modifier",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bionisation4:block/dna_modifier"
+    },
+    "facing=south": {
+      "model": "bionisation4:block/dna_modifier",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bionisation4:block/dna_modifier",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "bionisation4:block/virus_replicator",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bionisation4:block/virus_replicator"
+    },
+    "facing=south": {
+      "model": "bionisation4:block/virus_replicator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bionisation4:block/virus_replicator",
+      "y": 270
+    }
+  }
+}

@@ -311,5 +311,10 @@
   "jei.title.cure_station": "Cure station",
   "jei.title.dna_modifier": "DNA modifier",
   "jei.title.vaccine_creator": "Vaccine creator",
-  "jei.title.virus_replicator": "Virus replicator"
+  "jei.title.virus_replicator": "Virus replicator",
+
+  "checker.message.version": "A new version of Bionisation 4",
+  "checker.message.av": "is available:",
+  "checker.message.changes": "Changes:",
+  "checker.message.cant": "Could not check updates for Bionisation 4"
 }

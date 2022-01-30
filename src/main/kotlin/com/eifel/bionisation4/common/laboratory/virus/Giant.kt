@@ -14,7 +14,7 @@ class Giant(): AbstractEffect(InternalConstants.VIRUS_GIANT_ID, "Giant", EffectT
 
     init {
         isInfinite = false
-        effectDuration = 6000
+        effectDuration = 12000
         canChangePower = false
         isSyncable = true
         isHidden = false

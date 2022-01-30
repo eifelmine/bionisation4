@@ -3,7 +3,7 @@ package com.eifel.bionisation4.common.block
 import com.eifel.bionisation4.Info
 import com.eifel.bionisation4.common.block.machine.cure_station.CureStation
 import com.eifel.bionisation4.common.block.machine.dna_modifier.DNAModifier
-import com.eifel.bionisation4.common.block.machine.vaccine.VaccineCreator
+import com.eifel.bionisation4.common.block.machine.vaccine_creator.VaccineCreator
 import com.eifel.bionisation4.common.block.machine.virus_replicator.VirusReplicator
 import com.eifel.bionisation4.common.block.plant.CommonFlower
 import com.eifel.bionisation4.common.block.plant.Garlic

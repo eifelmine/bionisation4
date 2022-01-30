@@ -13,7 +13,7 @@ class InternalBleeding(): AbstractEffect(InternalConstants.EFFECT_INTERNAL_BLEED
 
     init {
         isInfinite = false
-        effectDuration = 6000
+        effectDuration = 12000
         canChangePower = false
         isSyncable = false
     }

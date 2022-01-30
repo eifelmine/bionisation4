@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AA ",
+    "AA ",
+    "   "
+  ],
+  "key": {
+    "A": {
+      "item": "bionisation4:cloth"
+    }
+  },
+  "result": {
+    "item": "bionisation4:bandage"
+  }
+}

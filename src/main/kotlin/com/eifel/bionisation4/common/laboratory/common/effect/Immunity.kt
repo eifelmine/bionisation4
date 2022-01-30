@@ -10,7 +10,7 @@ class Immunity(): AbstractEffect(InternalConstants.EFFECT_IMMUNITY_ID, "Immunity
 
     init {
         isInfinite = false
-        effectDuration = 1200
+        effectDuration = 2400
         canChangePower = false
         isSyncable = false
     }

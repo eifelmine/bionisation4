@@ -1,4 +1,4 @@
-package com.eifel.bionisation4.common.block.machine.default
+package com.eifel.bionisation4.common.block.machine.default_machine
 
 import net.minecraft.block.Block
 import net.minecraft.entity.player.PlayerEntity

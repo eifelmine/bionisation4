@@ -10,7 +10,7 @@ class Water(): AbstractEffect(InternalConstants.BACTERIA_WATER_ID, "Water", Effe
 
     init {
         isInfinite = false
-        effectDuration = 18000
+        effectDuration = 36000
         canChangePower = true
         isSyncable = false
         isHidden = false

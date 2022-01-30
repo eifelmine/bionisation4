@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AVA",
+    "DFD",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:polished_andesite"
+    },
+    "V": {
+      "item": "bionisation4:dna_pattern"
+    },
+    "D": {
+      "item": "bionisation4:withercore"
+    },
+    "F": {
+      "item": "minecraft:blast_furnace"
+    },
+    "B": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "item": "bionisation4:virus_replicator"
+  }
+}

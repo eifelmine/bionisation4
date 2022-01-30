@@ -1,5 +1,6 @@
 package com.eifel.bionisation4
 
+import com.eifel.bionisation4.api.jei.RecipeHolder
 import com.eifel.bionisation4.api.laboratory.registry.ClientRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectTriggers
@@ -11,9 +12,10 @@ import com.eifel.bionisation4.common.block.machine.ContainerRegistry
 import com.eifel.bionisation4.common.block.machine.TileRegistry
 import com.eifel.bionisation4.common.block.machine.cure_station.ScreenCureStation
 import com.eifel.bionisation4.common.block.machine.dna_modifier.ScreenDNAModifier
-import com.eifel.bionisation4.common.block.machine.vaccine.ScreenVaccineCreator
+import com.eifel.bionisation4.common.block.machine.vaccine_creator.ScreenVaccineCreator
 import com.eifel.bionisation4.common.block.machine.virus_replicator.ScreenVirusReplicator
 import com.eifel.bionisation4.common.config.Config
+import com.eifel.bionisation4.common.config.OverrideHandler
 import com.eifel.bionisation4.common.event.*
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.network.NetworkManager
@@ -42,7 +44,7 @@ object Bionisation4 {
 
         val bus = KotlinModLoadingContext.get().getKEventBus()
 
-        //load default
+        //load default_machine
         EffectRegistry.loadDefaultGenes()
         EffectRegistry.loadDefaultGeneMutations()
         EffectRegistry.loadDefaultEffects()
@@ -74,6 +76,9 @@ object Bionisation4 {
             EffectRegistry.loadDefaultBacteriaCures()
             EffectRegistry.loadDefaultEffectOccasions()
             EffectRegistry.loadDefaultAntibiotics()
+            EffectRegistry.loadDefaultDrops()
+            //Overrides
+            OverrideHandler.loadOverrides()
             //network
             NetworkManager.init()
             //init capability
@@ -100,6 +105,8 @@ object Bionisation4 {
             ClientRegistry.loadDefaultParticleGenerators()
             //render layers
             BlockShapes.setupRenderLayers()
+            //recipes
+            RecipeHolder.initRecipes()
             //guis
             ScreenManager.register(ContainerRegistry.VACCINE_CREATOR_CONTAINER.get(), ::ScreenVaccineCreator)
             ScreenManager.register(ContainerRegistry.DNA_MODIFIER_CONTAINER.get(), ::ScreenDNAModifier)

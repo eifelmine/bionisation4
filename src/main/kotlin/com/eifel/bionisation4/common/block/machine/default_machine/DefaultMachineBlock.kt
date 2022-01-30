@@ -1,4 +1,4 @@
-package com.eifel.bionisation4.common.block.machine.default
+package com.eifel.bionisation4.common.block.machine.default_machine
 
 import com.eifel.bionisation4.api.machine.IBioMachine
 import com.eifel.bionisation4.common.extensions.getAllItems

@@ -1,4 +1,4 @@
-package com.eifel.bionisation4.common.block.machine.default
+package com.eifel.bionisation4.common.block.machine.default_machine
 
 import com.mojang.blaze3d.matrix.MatrixStack
 import com.mojang.blaze3d.systems.RenderSystem

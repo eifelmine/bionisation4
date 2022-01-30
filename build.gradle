@@ -1,7 +1,9 @@
 buildscript {
 	ext.kotlin_version = "1.5.31"
     repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
+        maven {
+            url = 'https://maven.minecraftforge.net'
+        }
         mavenCentral()
     }
     dependencies {
@@ -71,10 +73,21 @@ repositories {
         name = 'kotlinforforge'
         url = 'https://thedarkcolour.github.io/KotlinForForge/'
     }
+    maven {
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
 }
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.23'
 	fg.deobf(implementation('thedarkcolour:kotlinforforge:1.16.0'))
+
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 }
 compileJava {
     options.encoding = 'UTF-8'

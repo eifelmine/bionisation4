@@ -5,6 +5,7 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.block.BlockRegistry
+import com.eifel.bionisation4.common.config.OverrideHandler
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.laboratory.bacteria.*
 import com.eifel.bionisation4.common.laboratory.bacteria.Clone
@@ -53,6 +54,8 @@ object EffectRegistry {
     private val GENE_VIALS = mutableMapOf<Int, ItemStack>()
     //list of 3 stacks used in Cure Station
     private val BACTERIA_CURES = mutableMapOf<Int, Triple<ItemStack, ItemStack, ItemStack>>()
+
+    private val DROPS = mutableMapOf<EntityType<*>, Pair<Int, ItemStack>>()
 
     fun loadDefaultGenes() {
         //todo add mappings here
@@ -318,6 +321,31 @@ object EffectRegistry {
         registerBacteriaCure(InternalConstants.BACTERIA_SEA_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.FIRE_LILY.get()), ItemStack(Items.TROPICAL_FISH)))
     }
 
+    fun loadDefaultDrops() {
+        //todo add mappings here
+        registerDrop(EntityType.BAT, Pair(15, ItemStack(ItemRegistry.BAT_WING.get(), 1)))
+        registerDrop(EntityType.CREEPER, Pair(25, ItemStack(ItemRegistry.CREEPER_HEART.get(), 1)))
+        registerDrop(EntityType.BLAZE, Pair(15, ItemStack(ItemRegistry.BLAZE_CORE.get(), 1)))
+        registerDrop(EntityType.DROWNED, Pair(20, ItemStack(ItemRegistry.DROWNED_TOOTH.get(), 1)))
+        registerDrop(EntityType.CHICKEN, Pair(35, ItemStack(ItemRegistry.CHICKEN_HEAD.get(), 1)))
+        registerDrop(EntityType.STRIDER, Pair(45, ItemStack(ItemRegistry.STRIDER_SKIN.get(), 1)))
+        registerDrop(EntityType.SQUID, Pair(15, ItemStack(ItemRegistry.OCT_TENTACLE.get(), 1)))
+        registerDrop(EntityType.ZOMBIE_HORSE, Pair(45, ItemStack(ItemRegistry.ZOMBIE_HORSE_BONE.get(), 1)))
+        registerDrop(EntityType.PIGLIN, Pair(25, ItemStack(ItemRegistry.PIGLIN_FANG.get(), 1)))
+        registerDrop(EntityType.ZOGLIN, Pair(80, ItemStack(ItemRegistry.ZOGLIN_SKULL.get(), 1)))
+        registerDrop(EntityType.EVOKER, Pair(35, ItemStack(ItemRegistry.EVOKER_POTION.get(), 1)))
+        registerDrop(EntityType.ENDERMAN, Pair(35, ItemStack(ItemRegistry.SPECTRAL_DUST.get(), 1)))
+        registerDrop(EntityType.SPIDER, Pair(40, ItemStack(ItemRegistry.SPIDER_LEG.get(), 1)))
+        registerDrop(EntityType.SKELETON, Pair(15, ItemStack(ItemRegistry.SKELETON_DUST.get(), 1)))
+        registerDrop(EntityType.WITCH, Pair(25, ItemStack(ItemRegistry.WITCH_POTION.get(), 1)))
+        registerDrop(EntityType.VEX, Pair(35, ItemStack(ItemRegistry.VEX_WING.get(), 1)))
+        registerDrop(EntityType.PHANTOM, Pair(25, ItemStack(ItemRegistry.PHANTOM_TAIL.get(), 1)))
+        registerDrop(EntityType.SHULKER, Pair(45, ItemStack(ItemRegistry.SHULKER_ESSENCE.get(), 1)))
+        registerDrop(EntityType.HUSK, Pair(35, ItemStack(ItemRegistry.HUSK_BRAIN.get(), 1)))
+        registerDrop(EntityType.WITHER_SKELETON, Pair(45, ItemStack(ItemRegistry.WITHER_CORE.get(), 1)))
+        registerDrop(EntityType.VINDICATOR, Pair(35, ItemStack(ItemRegistry.WEIRD_SEEDS.get(), 1)))
+    }
+
     fun registerEffectClass(id: Int, clazz: Class<out AbstractEffect>) {
         if(EFFECTS.containsKey(id))
             throw IllegalStateException("Effect with id $id is already registered!")
@@ -378,6 +406,10 @@ object EffectRegistry {
         ANTIBIOTICS[item] = list
     }
 
+    fun registerDrop(entity: EntityType<*>, data: Pair<Int, ItemStack>) {
+        DROPS.put(entity, data)
+    }
+
     fun registerSymbiosis(data: Triple<Int, Int, Int>) {
         if(EFFECT_SYMBIOSIS.any { it.first == data.first && it.second == data.second })
             throw IllegalStateException("Specified input for symbiosis is already registered!")
@@ -386,7 +418,11 @@ object EffectRegistry {
 
     fun getEffectClassById(id: Int) = EFFECTS.getOrDefault(id, DefaultEffect::class.java)
     fun getGeneClassById(id: Int) = GENES.getOrDefault(id, DefaultGene::class.java)
-    fun getEffectChance(id: Int) = EFFECT_CHANCES.getOrDefault(id, 0)
+    fun getEffectChance(id: Int): Int {
+        return if(OverrideHandler.CHANCES.containsKey(id))
+            OverrideHandler.CHANCES[id]!!
+        else EFFECT_CHANCES.getOrDefault(id, 0)
+    }
     fun getGeneMutationsById(id: Int) = GENE_MUTATIONS.getOrDefault(id, null)
     fun getBacteriaCureById(id: Int) = BACTERIA_CURES.getOrDefault(id, Triple(ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY))
     fun getGeneVialByID(id: Int) = GENE_VIALS.getOrDefault(id, ItemStack.EMPTY)
@@ -402,7 +438,7 @@ object EffectRegistry {
     fun getBacteriaCures() = BACTERIA_CURES
     fun getRandomVirusGenes() = RANDOM_VIRUS_GENES
     fun getAntibiotics() = ANTIBIOTICS
-
+    fun getDrops() = DROPS
 
     fun getEffectInstance(id: Int): AbstractEffect {
         if(EFFECT_INSTANCES.containsKey(id))

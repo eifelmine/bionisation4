@@ -5,6 +5,7 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.extensions.expire
+import com.eifel.bionisation4.common.extensions.modifyImmunity
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.CompoundNBT
@@ -31,6 +32,7 @@ class Antibiotic(): AbstractEffect(InternalConstants.EFFECT_ANTIBIOTIC_ID, "Anti
         if(isLastTick){
             against.map { it.toInt() }.forEach {
                 entity.expire(it)
+                entity.modifyImmunity(-10)
             }
         }
     }

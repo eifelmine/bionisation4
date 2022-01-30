@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "1K2",
+    "D3D",
+    "CBC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "D": {
+      "item": "minecraft:emerald"
+    },
+    "B": {
+      "item": "minecraft:glass_bottle"
+    },
+    "K": {
+      "item": "bionisation4:cloth"
+    },
+    "1": {
+      "item": "bionisation4:redflower"
+    },
+    "2": {
+      "item": "bionisation4:creepersoul"
+    },
+    "3": {
+      "item": "bionisation4:enderflower"
+    }
+  },
+  "result": {
+    "item": "bionisation4:antibiotic_mid"
+  }
+}

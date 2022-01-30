@@ -12,7 +12,7 @@ class LackOfAir(): AbstractEffect(InternalConstants.EFFECT_LACK_OF_AIR_ID, "Lack
 
     init {
         isInfinite = false
-        effectDuration = 2400
+        effectDuration = 4800
         canChangePower = false
         isSyncable = false
     }

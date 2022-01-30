@@ -13,7 +13,7 @@ class Bleeding(): AbstractEffect(InternalConstants.EFFECT_BLEEDING_ID, "Bleeding
 
     init {
         isInfinite = false
-        effectDuration = 6000
+        effectDuration = 12000
         canChangePower = false
         isSyncable = true
     }

@@ -11,7 +11,7 @@ class Glowing(): AbstractEffect(InternalConstants.BACTERIA_GLOWING_ID, "Glowing"
 
     init {
         isInfinite = false
-        effectDuration = 12000
+        effectDuration = 24000
         canChangePower = true
         isSyncable = false
         isHidden = false

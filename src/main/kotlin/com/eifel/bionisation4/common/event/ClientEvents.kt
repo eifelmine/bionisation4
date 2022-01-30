@@ -10,6 +10,7 @@ import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.Minecraft
+import net.minecraft.client.resources.I18n
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
@@ -32,6 +33,10 @@ object ClientEvents {
     @JvmStatic
     @SubscribeEvent
     fun onRenderTooltip(event: ItemTooltipEvent){
+        EffectRegistry.getDrops().filterValues { ItemStack.isSame(it.second, event.itemStack) }.forEach { key, value ->
+            event.toolTip.add(StringTextComponent(""))
+            event.toolTip.add(TranslationUtils.getText(TranslationUtils.getTranslatedText("item", "drop", "tooltip1") + " §e${I18n.get(key.toString())} " + TranslationUtils.getTranslatedText("item", "drop", "tooltip2") + "§b${value.first}%"))
+        }
         val data = EffectRegistry.getGeneVials().filter { ItemStack.isSame(it.value, event.itemStack) }
         if(data.isNotEmpty()) {
             event.toolTip.add(StringTextComponent(""))

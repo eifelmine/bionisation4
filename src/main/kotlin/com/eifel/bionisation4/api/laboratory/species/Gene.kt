@@ -2,6 +2,7 @@ package com.eifel.bionisation4.api.laboratory.species
 
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.util.INBTSerializable
+import com.eifel.bionisation4.common.config.OverrideHandler
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.entity.LivingEntity
@@ -23,6 +24,7 @@ abstract class Gene() : INBTSerializable {
 
     var deactivateAfter = false
     var playerOnly = false
+    var disabled = false
 
     val potions = mutableListOf<GenePotionEffect>()
 
@@ -30,6 +32,7 @@ abstract class Gene() : INBTSerializable {
         this.id = id
         this.geneName = name
         this.isGeneActive = isActive
+        this.disabled = OverrideHandler.DISABLED_GENES.contains(this.geneName)
     }
 
     fun setPower(power: Int): Gene {
@@ -105,7 +108,7 @@ abstract class Gene() : INBTSerializable {
 
     abstract fun getCopy(): Gene
 
-    fun isActive() = isGeneActive
+    fun isActive() = !disabled && isGeneActive
     fun clear(entity: LivingEntity) {
         if(!entity.level.isClientSide) {
             potions.forEach { it.clear(entity) }

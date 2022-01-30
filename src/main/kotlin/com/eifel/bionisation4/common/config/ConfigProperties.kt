@@ -25,6 +25,11 @@ object ConfigProperties {
     lateinit var defaultCureStationProcessTime : ForgeConfigSpec.ConfigValue<Int>
     lateinit var defaultVirusReplicatorProcessTime : ForgeConfigSpec.ConfigValue<Int>
 
+    lateinit var disabledEffects : ForgeConfigSpec.ConfigValue<List<String>>
+    lateinit var disabledGenes : ForgeConfigSpec.ConfigValue<List<String>>
+    lateinit var effectDurations : ForgeConfigSpec.ConfigValue<List<String>>
+    lateinit var effectChances : ForgeConfigSpec.ConfigValue<List<String>>
+
     fun loadData() : ForgeConfigSpec {
         val builder = ForgeConfigSpec.Builder()
         //load data
@@ -32,9 +37,9 @@ object ConfigProperties {
         //timings
         builder.comment("Time Settings").push("timings")
         builder.comment("Default mutation period for every B4 effect (ticks)")
-        defaultMutationPeriod = builder.define("defaultMutationPeriod", 12000)
+        defaultMutationPeriod = builder.define("defaultMutationPeriod", 24000)
         builder.comment("Default Bionisation effect sync period (only for specific effects) (ticks)")
-        defaultEffectSyncPeriod = builder.define("defaultEffectSyncPeriod", 20)
+        defaultEffectSyncPeriod = builder.define("defaultEffectSyncPeriod", 35)
         builder.pop()
 
         //general
@@ -62,9 +67,9 @@ object ConfigProperties {
         builder.comment("Effect Settings").push("cures")
         builder.comment("Default antibiotic effect duration")
         defaultAntibioticDuration = builder.define("defaultAntibioticDuration", 3200)
-        builder.comment("Default vaccine effect duration")
+        builder.comment("Default vaccine_creator effect duration")
         defaultVaccineDuration = builder.define("defaultVaccineDuration", 3200)
-        builder.comment("Default vaccine cure chance")
+        builder.comment("Default vaccine_creator cure chance")
         defaultVaccineCureChance = builder.define("defaultVaccineCureChance", 50)
         builder.comment("Default virus immunity effect duration")
         defaultImmunityDuration = builder.define("defaultImmunityDuration", 360000)
@@ -79,6 +84,17 @@ object ConfigProperties {
         defaultCureStationProcessTime = builder.define("defaultCureStationProcessTime", 1200)
         builder.comment("Default machine total work time")
         defaultVirusReplicatorProcessTime = builder.define("defaultVirusReplicatorProcessTime", 12000)
+        builder.pop()
+
+        builder.comment("Override settings").push("overrides")
+        builder.comment("Effect names that should be disabled (they wont tick)")
+        disabledEffects = builder.defineList("disabledEffects", listOf()){ true }
+        builder.comment("Gene names that should be disabled (they wont tick)")
+        disabledGenes = builder.defineList("disabledGenes", listOf()){ true }
+        builder.comment("Modify effect durations (will be applied to all new instances). Format: name:duration. Example: Rabies:60000. Leave -1 for infinity")
+        effectDurations = builder.defineList("effectDurations", listOf()){ true }
+        builder.comment("Modify effect trigger chances. Format: id:chance. Example: 2:90 (2 i.e. Bleeding Effect, 90 - chance (0-100))")
+        effectChances = builder.defineList("effectChances", listOf()){ true }
         builder.pop()
 
         return builder.build()

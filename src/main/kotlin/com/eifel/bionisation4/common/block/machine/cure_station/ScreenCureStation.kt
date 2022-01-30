@@ -1,7 +1,7 @@
 package com.eifel.bionisation4.common.block.machine.cure_station
 
 import com.eifel.bionisation4.Info
-import com.eifel.bionisation4.common.block.machine.default.DefaultMachineScreen
+import com.eifel.bionisation4.common.block.machine.default_machine.DefaultMachineScreen
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent

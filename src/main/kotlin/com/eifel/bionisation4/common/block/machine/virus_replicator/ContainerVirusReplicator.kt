@@ -2,7 +2,7 @@ package com.eifel.bionisation4.common.block.machine.virus_replicator
 
 import com.eifel.bionisation4.common.block.BlockRegistry
 import com.eifel.bionisation4.common.block.machine.ContainerRegistry
-import com.eifel.bionisation4.common.block.machine.default.DefaultMachineContainer
+import com.eifel.bionisation4.common.block.machine.default_machine.DefaultMachineContainer
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.util.IIntArray
 import net.minecraft.util.math.BlockPos

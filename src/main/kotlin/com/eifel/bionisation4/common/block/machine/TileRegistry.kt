@@ -4,7 +4,7 @@ import com.eifel.bionisation4.Info
 import com.eifel.bionisation4.common.block.BlockRegistry
 import com.eifel.bionisation4.common.block.machine.cure_station.TileCureStation
 import com.eifel.bionisation4.common.block.machine.dna_modifier.TileDNAModifier
-import com.eifel.bionisation4.common.block.machine.vaccine.TileVaccineCreator
+import com.eifel.bionisation4.common.block.machine.vaccine_creator.TileVaccineCreator
 import com.eifel.bionisation4.common.block.machine.virus_replicator.TileVirusReplicator
 import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.registries.DeferredRegister

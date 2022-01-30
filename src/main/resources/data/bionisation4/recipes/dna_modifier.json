@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AVA",
+    "DFD",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:polished_andesite"
+    },
+    "V": {
+      "item": "bionisation4:dna_pattern"
+    },
+    "D": {
+      "item": "minecraft:emerald"
+    },
+    "F": {
+      "item": "minecraft:blast_furnace"
+    },
+    "B": {
+      "item": "bionisation4:shulkeressence"
+    }
+  },
+  "result": {
+    "item": "bionisation4:dna_modifier"
+  }
+}

@@ -160,7 +160,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     open fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         recalculatePower(entity)
         mutate()
-        effectGenes.filter { it.isGeneActive && (if(it.playerOnly) entity is PlayerEntity else true ) }.filter { if(it.cyclicDelay > 0) entity.getBioTicker() % it.cyclicDelay == 0 else true }.forEach { gene ->
+        effectGenes.filter { it.isActive() && (if(it.playerOnly) entity is PlayerEntity else true ) }.filter { if(it.cyclicDelay > 0) entity.getBioTicker() % it.cyclicDelay == 0 else true }.forEach { gene ->
             try {
                 gene.perform(entity, this)
             }catch (e: Exception){
@@ -174,7 +174,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     }
 
     open fun onHurt(event: LivingHurtEvent, victim: LivingEntity) {
-        effectGenes.filter { it.isGeneActive }.forEach { gene ->
+        effectGenes.filter { it.isActive() }.forEach { gene ->
             gene.onHurt(event, victim, this)
             if(gene.deactivateAfter)
                 gene.isGeneActive = false
@@ -182,7 +182,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     }
 
     open fun onAttack(event: LivingAttackEvent, victim: LivingEntity, attacker: LivingEntity) {
-        effectGenes.filter { it.isGeneActive }.forEach { gene ->
+        effectGenes.filter { it.isActive() }.forEach { gene ->
             gene.onAttack(event, victim, attacker, this)
             if(gene.deactivateAfter)
                 gene.isGeneActive = false
@@ -190,7 +190,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     }
 
     open fun onDeath(event: LivingDeathEvent, entity: LivingEntity) {
-        effectGenes.filter { it.isGeneActive && (if(it.playerOnly) entity is PlayerEntity else true ) }.forEach { gene ->
+        effectGenes.filter { it.isActive() && (if(it.playerOnly) entity is PlayerEntity else true ) }.forEach { gene ->
             gene.onDeath(event, entity, this)
             if(gene.deactivateAfter)
                 gene.isGeneActive = false

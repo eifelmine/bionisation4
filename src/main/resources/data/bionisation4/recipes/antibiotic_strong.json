@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "1K2",
+    "D3D",
+    "CBC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "D": {
+      "item": "minecraft:gold_ingot"
+    },
+    "B": {
+      "item": "minecraft:glass_bottle"
+    },
+    "K": {
+      "item": "bionisation4:cloth"
+    },
+    "1": {
+      "item": "bionisation4:netheramber"
+    },
+    "2": {
+      "item": "bionisation4:cavelantern"
+    },
+    "3": {
+      "item": "bionisation4:spidereye"
+    }
+  },
+  "result": {
+    "item": "bionisation4:antibiotic_strong"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " AS",
+    "ASA",
+    "SA "
+  ],
+  "key": {
+    "A": {
+      "item": "bionisation4:cloth"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "bionisation4:splint"
+  }
+}

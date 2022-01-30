@@ -14,14 +14,17 @@ object ItemRegistry {
 
     val ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Info.MOD_ID)
 
+    val GARLIC_BULB = ITEMS.register("garlicbulb") { GarlicBulb() }
+
+    val CLOTH = ITEMS.register("cloth") { CommonItem() }
+    val BIO_BOOTS = ITEMS.register("bioarmor_boots") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.FEET, ) }
+    val BIO_LEGGINGS = ITEMS.register("bioarmor_leggings") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.LEGS) }
+    val BIO_CHEST = ITEMS.register("bioarmor_chest") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.CHEST) }
+    val BIO_HELMET = ITEMS.register("bioarmor_helmet") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.HEAD) }
+
     val BANDAGE = ITEMS.register("bandage") { Bandage() }
     val SPLINT = ITEMS.register("splint") { Splint() }
     val IMMUNITY_CHECKER = ITEMS.register("immunitychecker") { ImmunityChecker() }
-    val GARLIC_BULB = ITEMS.register("garlicbulb") { GarlicBulb() }
-
-    val ANTIBIOTIC_WEAK = ITEMS.register("antibiotic_weak") { Antibiotic() }
-    val ANTIBIOTIC_MID = ITEMS.register("antibiotic_mid") { Antibiotic() }
-    val ANTIBIOTIC_STRONG = ITEMS.register("antibiotic_strong") { Antibiotic() }
 
     val BIO_ANALYZER = ITEMS.register("bioanalyzer") { BioAnalyzer() }
     val ANTIBIOTIC_VIAL = ITEMS.register("antibiotic_vial") { AntibioticVial() }
@@ -29,11 +32,9 @@ object ItemRegistry {
     val VACCINE_INJECTOR = ITEMS.register("vaccine_injector") { VaccineInjector() }
     val VIRUS_SPREADER = ITEMS.register("virus_spreader") { VirusSpreader() }
 
-    val CLOTH = ITEMS.register("cloth") { CommonItem() }
-    val BIO_BOOTS = ITEMS.register("bioarmor_boots") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.FEET, ) }
-    val BIO_LEGGINGS = ITEMS.register("bioarmor_leggings") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.LEGS) }
-    val BIO_CHEST = ITEMS.register("bioarmor_chest") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.CHEST) }
-    val BIO_HELMET = ITEMS.register("bioarmor_helmet") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.HEAD) }
+    val ANTIBIOTIC_WEAK = ITEMS.register("antibiotic_weak") { Antibiotic() }
+    val ANTIBIOTIC_MID = ITEMS.register("antibiotic_mid") { Antibiotic() }
+    val ANTIBIOTIC_STRONG = ITEMS.register("antibiotic_strong") { Antibiotic() }
 
     //utility
     val BAT_WING = ITEMS.register("batwing") { CommonItem() }

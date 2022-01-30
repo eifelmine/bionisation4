@@ -16,7 +16,7 @@ class Alienation(): AbstractEffect(InternalConstants.EFFECT_ALIENATION_ID, "Alie
 
     init {
         isInfinite = false
-        effectDuration = 2400
+        effectDuration = 4800
         canChangePower = false
         isSyncable = false
     }

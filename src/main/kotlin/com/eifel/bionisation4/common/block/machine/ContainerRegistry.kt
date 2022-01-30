@@ -3,7 +3,7 @@ package com.eifel.bionisation4.common.block.machine
 import com.eifel.bionisation4.Info
 import com.eifel.bionisation4.common.block.machine.cure_station.ContainerCureStation
 import com.eifel.bionisation4.common.block.machine.dna_modifier.ContainerDNAModifier
-import com.eifel.bionisation4.common.block.machine.vaccine.ContainerVaccineCreator
+import com.eifel.bionisation4.common.block.machine.vaccine_creator.ContainerVaccineCreator
 import com.eifel.bionisation4.common.block.machine.virus_replicator.ContainerVirusReplicator
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.ContainerType

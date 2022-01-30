@@ -11,7 +11,7 @@ class Sea(): AbstractEffect(InternalConstants.BACTERIA_SEA_ID, "Sea", EffectType
 
     init {
         isInfinite = false
-        effectDuration = 32000
+        effectDuration = 48000
         canChangePower = true
         isSyncable = false
         isHidden = false

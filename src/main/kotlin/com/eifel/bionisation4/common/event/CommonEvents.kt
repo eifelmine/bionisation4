@@ -10,6 +10,7 @@ import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatProvider
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
+import net.minecraft.inventory.InventoryHelper
 import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.player.PlayerEvent
@@ -170,6 +171,12 @@ object CommonEvents {
                 victim.doWithCap { cap ->
                     cap.effects.forEach {
                         it.onDeath(event, victim)
+                    }
+                }
+                if(EffectRegistry.getDrops().containsKey(victim.type)){
+                    val data = EffectRegistry.getDrops()[victim.type]!!
+                    if(Utils.chance(data.first)){
+                        InventoryHelper.dropItemStack(victim.level, victim.x, victim.y, victim.z, data.second.copy())
                     }
                 }
             }

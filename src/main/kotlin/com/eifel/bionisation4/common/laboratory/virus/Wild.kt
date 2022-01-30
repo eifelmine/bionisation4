@@ -43,7 +43,7 @@ class Wild(): AbstractEffect(InternalConstants.VIRUS_WILD_ID, "Wild", EffectType
         }
         effectGenes.addAll(genes)
         if(isHidden) {
-            showTime = Utils.random.nextInt(12000)
+            showTime = Utils.random.nextInt(24000)
             deactivateGenes()
         }
     }

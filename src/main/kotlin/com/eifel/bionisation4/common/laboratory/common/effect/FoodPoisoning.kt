@@ -18,7 +18,7 @@ class FoodPoisoning(): AbstractEffect(InternalConstants.EFFECT_FOOD_POISONING_ID
 
     init {
         isInfinite = false
-        effectDuration = 32000
+        effectDuration = 72000
         canChangePower = false
         isSyncable = false
     }

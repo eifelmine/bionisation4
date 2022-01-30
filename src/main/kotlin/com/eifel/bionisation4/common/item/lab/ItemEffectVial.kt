@@ -3,6 +3,7 @@ package com.eifel.bionisation4.common.item.lab
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.common.config.ConfigProperties
+import com.eifel.bionisation4.common.config.OverrideHandler
 import com.eifel.bionisation4.common.core.BionisationTab
 import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.item.CommonItem
@@ -78,6 +79,10 @@ class ItemEffectVial(): CommonItem(rarity = Rarity.EPIC, size = 1) {
             genes.forEach {
                 info.add(TranslationUtils.getText("    ${TextFormatting.GRAY}-${TextFormatting.YELLOW} $it"))
             }
+        }
+        if(OverrideHandler.DISABLED_EFFECTS.contains(effect.effectName)) {
+            info.add(TranslationUtils.getText(" "))
+            info.add(TranslationUtils.getText(TranslationUtils.getTranslatedText("override", "info", "eff_disabled")))
         }
         info.add(TranslationUtils.getText(" "))
         info.add(TranslationUtils.getText("${TextFormatting.GOLD}${TranslationUtils.getTranslatedText("vial", "usage", "desc")}"))

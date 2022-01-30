@@ -13,7 +13,7 @@ class Desert(): AbstractEffect(InternalConstants.VIRUS_DESERT_ID, "Desert", Effe
 
     init {
         isInfinite = false
-        effectDuration = 16000
+        effectDuration = 32000
         canChangePower = true
         isSyncable = false
         isHidden = false

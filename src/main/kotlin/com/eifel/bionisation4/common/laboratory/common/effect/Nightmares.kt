@@ -9,7 +9,7 @@ class Nightmares(): AbstractEffect(InternalConstants.EFFECT_NIGHTMARES_ID, "Nigh
 
     init {
         isInfinite = false
-        effectDuration = 6000
+        effectDuration = 12000
         canChangePower = false
         isSyncable = false
     }

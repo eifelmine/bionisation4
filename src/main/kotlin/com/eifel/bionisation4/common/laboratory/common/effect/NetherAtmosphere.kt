@@ -11,7 +11,7 @@ class NetherAtmosphere(): AbstractEffect(InternalConstants.EFFECT_NETHER_ATMOSPH
 
     init {
         isInfinite = false
-        effectDuration = 1200
+        effectDuration = 2400
         canChangePower = false
         isSyncable = false
     }

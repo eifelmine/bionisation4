@@ -4,7 +4,7 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.util.EffectEntry
 import com.eifel.bionisation4.common.block.machine.TileRegistry
-import com.eifel.bionisation4.common.block.machine.default.DefaultMachineTile
+import com.eifel.bionisation4.common.block.machine.default_machine.DefaultMachineTile
 import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.extensions.getAllItems
 import com.eifel.bionisation4.common.item.ItemRegistry

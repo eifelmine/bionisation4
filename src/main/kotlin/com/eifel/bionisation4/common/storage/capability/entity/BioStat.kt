@@ -4,6 +4,7 @@ import com.eifel.bionisation4.Info
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.common.config.ConfigProperties
+import com.eifel.bionisation4.common.config.OverrideHandler
 import com.eifel.bionisation4.common.network.NetworkManager
 import com.eifel.bionisation4.common.network.message.mob.PacketMobPropertySync
 import com.eifel.bionisation4.common.network.message.mob.PacketMobSimpleEffectStates
@@ -65,7 +66,7 @@ class BioStat(): IBioStat {
             val it = effects.iterator()
             while(it.hasNext()){
                 val effect = it.next()
-                if(effect.isExpired){
+                if(effect.isExpired || OverrideHandler.DISABLED_EFFECTS.contains(effect.effectName)){
                     it.remove()
                     if(entity is ServerPlayerEntity)
                         NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ entity }, PacketPlayerSimpleEffectStates(
@@ -163,8 +164,14 @@ class BioStat(): IBioStat {
     }
 
     fun addEffect(effect: AbstractEffect){
-        if(effect.isMultiple || !isActive(effect))
+        if(!OverrideHandler.DISABLED_EFFECTS.contains(effect.effectName) && (effect.isMultiple || !isActive(effect))) {
+            if (OverrideHandler.DURATIONS.containsKey(effect.effectName)) {
+                effect.effectDuration = OverrideHandler.DURATIONS[effect.effectName]!!
+                if(effect.effectDuration == -1L)
+                    effect.isInfinite = true
+            }
             this.pending.add(effect)
+        }
     }
 
     fun expire(effect: AbstractEffect) = this.effects.filter { it.isSame(effect) }.forEach { it.isExpired = true }

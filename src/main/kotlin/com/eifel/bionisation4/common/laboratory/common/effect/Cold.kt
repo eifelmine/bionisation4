@@ -14,7 +14,7 @@ class Cold(): AbstractEffect(InternalConstants.EFFECT_COLD_ID, "Cold", EffectTyp
 
     init {
         isInfinite = false
-        effectDuration = 32000
+        effectDuration = 72000
         canChangePower = false
         isSyncable = false
     }

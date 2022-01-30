@@ -44,6 +44,9 @@
   "antibiotic.usage.desc": "Eat to get antibiotic effect",
   "antibiotic.info.against": "Effective against:",
 
+  "override.info.eff_disabled": "§cEffect disabled",
+  "override.info.gene_disabled": "§cGene disabled",
+
   "item.bionisation4.firelily": "Fire Lily",
   "item.bionisation4.witherflower": "Wither hand",
   "item.bionisation4.creepersoul": "Creeper soul",
@@ -101,6 +104,9 @@
   "vial.info.type": "Type: ",
 
   "item.gene.tooltip": "§6Applicable for genes:",
+
+  "item.drop.tooltip1": "§3Drops from",
+  "item.drop.tooltip2": "§3with chance: ",
 
   "effect.COMMON.type": "Common",
   "effect.BACTERIA.type": "Bacteria",
@@ -300,5 +306,10 @@
   "gene.Mutagen.desc": "Makes mutations possible",
   "gene.Undead.desc": "Entity can not death",
   "gene.Random words.desc": "Entity(player) spams random phrases in chat",
-  "gene.Shadow.desc": "Gives positive effect in the shadows"
+  "gene.Shadow.desc": "Gives positive effect in the shadows",
+
+  "jei.title.cure_station": "Cure station",
+  "jei.title.dna_modifier": "DNA modifier",
+  "jei.title.vaccine_creator": "Vaccine creator",
+  "jei.title.virus_replicator": "Virus replicator"
 }

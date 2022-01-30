@@ -14,7 +14,7 @@ class Black(): AbstractEffect(InternalConstants.BACTERIA_BLACK_ID, "Black", Effe
 
     init {
         isInfinite = false
-        effectDuration = 36000
+        effectDuration = 72000
         canChangePower = true
         isSyncable = false
         isHidden = false

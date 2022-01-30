@@ -11,7 +11,7 @@ class Cactus(): AbstractEffect(InternalConstants.BACTERIA_CACTUS_ID, "Cactus", E
 
     init {
         isInfinite = false
-        effectDuration = 12000
+        effectDuration = 24000
         canChangePower = true
         isSyncable = false
         isHidden = false

@@ -13,7 +13,7 @@ class Terra(): AbstractEffect(InternalConstants.BACTERIA_TERRA_ID, "Terra", Effe
 
     init {
         isInfinite = false
-        effectDuration = 12000
+        effectDuration = 24000
         canChangePower = true
         isSyncable = false
         isHidden = false

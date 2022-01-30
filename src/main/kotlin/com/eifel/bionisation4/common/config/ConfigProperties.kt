@@ -8,6 +8,8 @@ object ConfigProperties {
     lateinit var defaultEffectSyncPeriod : ForgeConfigSpec.ConfigValue<Int>
     lateinit var saveAfterDeath : ForgeConfigSpec.ConfigValue<Boolean>
 
+    lateinit var showUpdates : ForgeConfigSpec.ConfigValue<Boolean>
+
     lateinit var vialSpreadRadius : ForgeConfigSpec.ConfigValue<Double>
 
     lateinit var randomVirusCreation : ForgeConfigSpec.ConfigValue<Boolean>
@@ -46,6 +48,11 @@ object ConfigProperties {
         builder.comment("General Settings").push("death")
         builder.comment("Save Bionisation effects and stats after player death")
         saveAfterDeath = builder.define("saveAfterDeath", true)
+        builder.pop()
+
+        builder.comment("General Settings").push("settings")
+        builder.comment("Enable version checker")
+        showUpdates = builder.define("showUpdates", true)
         builder.pop()
 
         builder.comment("General Settings").push("item")

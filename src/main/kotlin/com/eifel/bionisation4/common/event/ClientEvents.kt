@@ -3,6 +3,8 @@ package com.eifel.bionisation4.common.event
 import com.eifel.bionisation4.Info
 import com.eifel.bionisation4.api.laboratory.registry.ClientRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
+import com.eifel.bionisation4.common.config.ConfigProperties
+import com.eifel.bionisation4.common.core.VersionChecker
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.common.extensions.getBlood
 import com.eifel.bionisation4.common.extensions.getEffects
@@ -15,11 +17,14 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.StringTextComponent
+import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.client.event.RenderGameOverlayEvent
+import net.minecraftforge.event.TickEvent.PlayerTickEvent
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.client.gui.GuiUtils.drawTexturedModalRect
+
 
 object ClientEvents {
 
@@ -76,6 +81,27 @@ object ClientEvents {
                 ClientRegistry.getParticleGenerators().forEach { (key, value) ->
                     if(entity.getEffects().any { it is DefaultStateEffect && it.effectID == key })
                         value(entity)
+                }
+            }
+        }
+    }
+
+    @JvmStatic
+    @SubscribeEvent
+    fun onUpdateEvent(event: PlayerTickEvent) {
+        VersionChecker.checker?.let { checker ->
+            if (ConfigProperties.showUpdates.get() && !VersionChecker.wasWarned && !checker.isLatestVersion) {
+                if (checker.latestVersion.isEmpty() || checker.newVersionURL.isEmpty() || checker.changes.isEmpty()) {
+                    event.player.sendMessage(TranslationUtils.getText("${TextFormatting.RED}${TranslationUtils.getTranslatedText("checker", "message", "cant")}"), null)
+                    VersionChecker.wasWarned = true
+                } else {
+                    event.player.sendMessage(TranslationUtils.getText("${TextFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker","message","version")} ${TextFormatting.AQUA}${checker.latestVersion} ${TextFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message", "av")} ${TextFormatting.BLUE}${checker.newVersionURL}"), null)
+                    event.player.sendMessage(TranslationUtils.getText(" "), null)
+                    event.player.sendMessage(TranslationUtils.getText("${TextFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message","changes")}"), null)
+                    checker.changes.forEach { change ->
+                        event.player.sendMessage(TranslationUtils.getText("${TextFormatting.GRAY}$change"), null)
+                    }
+                    VersionChecker.wasWarned = true
                 }
             }
         }

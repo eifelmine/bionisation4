@@ -15,7 +15,9 @@ import com.eifel.bionisation4.common.block.machine.dna_modifier.ScreenDNAModifie
 import com.eifel.bionisation4.common.block.machine.vaccine_creator.ScreenVaccineCreator
 import com.eifel.bionisation4.common.block.machine.virus_replicator.ScreenVirusReplicator
 import com.eifel.bionisation4.common.config.Config
+import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.config.OverrideHandler
+import com.eifel.bionisation4.common.core.VersionChecker
 import com.eifel.bionisation4.common.event.*
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.network.NetworkManager
@@ -112,6 +114,11 @@ object Bionisation4 {
             ScreenManager.register(ContainerRegistry.DNA_MODIFIER_CONTAINER.get(), ::ScreenDNAModifier)
             ScreenManager.register(ContainerRegistry.CURE_STATION_CONTAINER.get(), ::ScreenCureStation)
             ScreenManager.register(ContainerRegistry.VIRUS_REPLICATOR_CONTAINER.get(), ::ScreenVirusReplicator)
+            if (ConfigProperties.showUpdates.get()) {
+                VersionChecker.checker = VersionChecker()
+                val versionCheckThread = Thread(VersionChecker.checker, "B4 Version Check Thread")
+                versionCheckThread.start()
+            }
         }
     }
 }

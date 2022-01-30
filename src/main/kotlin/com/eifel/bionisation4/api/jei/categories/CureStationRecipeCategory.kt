@@ -18,7 +18,6 @@ import net.minecraft.client.resources.I18n
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.ITextComponent
 
 class CureStationRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<CureStationRecipe> {
 
@@ -56,18 +55,6 @@ class CureStationRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<CureSt
     override fun draw(recipe: CureStationRecipe, matrixStack: MatrixStack, mouseX: Double, mouseY: Double) {
         super.draw(recipe, matrixStack, mouseX, mouseY)
         Minecraft.getInstance().font.draw(matrixStack, I18n.get("gui.jei.category.smelting.time.seconds", ConfigProperties.defaultCureStationProcessTime.get() / 20), 88f, 8f, 0x000000)
-    }
-
-    override fun getTooltipStrings(recipe: CureStationRecipe, mouseX: Double, mouseY: Double): List<ITextComponent> {
-        return super.getTooltipStrings(recipe, mouseX, mouseY)
-    }
-
-    override fun handleClick(recipe: CureStationRecipe, mouseX: Double, mouseY: Double, mouseButton: Int): Boolean {
-        return super.handleClick(recipe, mouseX, mouseY, mouseButton)
-    }
-
-    override fun isHandled(recipe: CureStationRecipe): Boolean {
-        return super.isHandled(recipe)
     }
 }
 

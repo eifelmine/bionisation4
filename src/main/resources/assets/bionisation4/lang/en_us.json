@@ -44,8 +44,8 @@
   "antibiotic.usage.desc": "Eat to get antibiotic effect",
   "antibiotic.info.against": "Effective against:",
 
-  "override.info.eff_disabled": "§cEffect disabled",
-  "override.info.gene_disabled": "§cGene disabled",
+  "override.info.eff_disabled": "§4[§cEffect disabled§4]",
+  "override.info.gene_disabled": "§4[§cGene disabled§4]",
 
   "item.bionisation4.firelily": "Fire Lily",
   "item.bionisation4.witherflower": "Wither hand",

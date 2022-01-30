@@ -73,11 +73,11 @@ class ItemEffectVial(): CommonItem(rarity = Rarity.EPIC, size = 1) {
         info.add(TranslationUtils.getText(" "))
         info.add(TranslationUtils.getText( "${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "effect", "name")} ${TextFormatting.GREEN}${effect.getTranslationName()}"))
         info.add(TranslationUtils.getText( "${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "info", "type")} ${TextFormatting.DARK_AQUA}${effect.effectType.getTranslatedName()}"))
-        val genes = effect.getDNATranslated().removeSurrounding("[", "]").split("-")
-        if(genes.isNotEmpty() && genes.any { it.isNotEmpty() }) {
+        val genes = effect.effectGenes
+        if(genes.isNotEmpty()) {
             info.add(TranslationUtils.getText("${TextFormatting.GRAY}${TranslationUtils.getTranslatedText("vial", "info", "genes")}"))
             genes.forEach {
-                info.add(TranslationUtils.getText("    ${TextFormatting.GRAY}-${TextFormatting.YELLOW} $it"))
+                info.add(TranslationUtils.getText("    ${TextFormatting.GRAY}-${TextFormatting.YELLOW} ${it.getTranslationName()} ${if(OverrideHandler.DISABLED_GENES.contains(it.geneName)) TranslationUtils.getTranslatedText("override", "info", "gene_disabled") else "" }"))
             }
         }
         if(OverrideHandler.DISABLED_EFFECTS.contains(effect.effectName)) {

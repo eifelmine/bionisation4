@@ -1,3 +1,5 @@
 Bionisation 4 is a mod about viruses and bacteria in Minecraft.
 
-All rights reserved.
+MIT.
+
+Project page: https://www.curseforge.com/minecraft/mc-mods/bionisation-4

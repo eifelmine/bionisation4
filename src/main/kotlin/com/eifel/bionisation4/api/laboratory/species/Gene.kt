@@ -102,7 +102,7 @@ abstract class Gene() : INBTSerializable {
     fun getName() = geneName
     fun getTranslationName() = TranslationUtils.getTranslatedText("gene", geneName, "name")
 
-    fun isSame(gene: Gene) = gene.getID() == id
+    fun isSame(gene: Gene) = isSame(gene.id)
     fun isSame(id: Int) = id == id
     fun isSame(name: String) = name == geneName
 

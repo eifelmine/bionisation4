@@ -5,15 +5,12 @@ import com.eifel.bionisation4.api.laboratory.registry.ClientRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectTriggers
 import com.eifel.bionisation4.api.laboratory.registry.LocalizationRegistry
+import com.eifel.bionisation4.client.ScreenRegistry
 import com.eifel.bionisation4.client.particle.ParticleRegistry
 import com.eifel.bionisation4.common.block.BlockRegistry
 import com.eifel.bionisation4.common.block.BlockShapes
 import com.eifel.bionisation4.common.block.machine.ContainerRegistry
 import com.eifel.bionisation4.common.block.machine.TileRegistry
-import com.eifel.bionisation4.common.block.machine.cure_station.ScreenCureStation
-import com.eifel.bionisation4.common.block.machine.dna_modifier.ScreenDNAModifier
-import com.eifel.bionisation4.common.block.machine.vaccine_creator.ScreenVaccineCreator
-import com.eifel.bionisation4.common.block.machine.virus_replicator.ScreenVirusReplicator
 import com.eifel.bionisation4.common.config.Config
 import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.config.OverrideHandler
@@ -25,7 +22,6 @@ import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatStorage
 import com.eifel.bionisation4.common.storage.capability.entity.IBioStat
 import com.eifel.bionisation4.world.generation.flower.FlowerFeatures
-import net.minecraft.client.gui.ScreenManager
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.fml.common.Mod
@@ -110,10 +106,7 @@ object Bionisation4 {
             //recipes
             RecipeHolder.initRecipes()
             //guis
-            ScreenManager.register(ContainerRegistry.VACCINE_CREATOR_CONTAINER.get(), ::ScreenVaccineCreator)
-            ScreenManager.register(ContainerRegistry.DNA_MODIFIER_CONTAINER.get(), ::ScreenDNAModifier)
-            ScreenManager.register(ContainerRegistry.CURE_STATION_CONTAINER.get(), ::ScreenCureStation)
-            ScreenManager.register(ContainerRegistry.VIRUS_REPLICATOR_CONTAINER.get(), ::ScreenVirusReplicator)
+            ScreenRegistry.registerScreens()
             if (ConfigProperties.showUpdates.get()) {
                 VersionChecker.checker = VersionChecker()
                 val versionCheckThread = Thread(VersionChecker.checker, "B4 Version Check Thread")

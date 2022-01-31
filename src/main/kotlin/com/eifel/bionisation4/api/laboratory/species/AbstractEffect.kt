@@ -218,22 +218,22 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         }
     }
 
-    fun isSame(effect: AbstractEffect) = effect.effectID == effectID
+    fun isSame(effect: AbstractEffect) = isSame(effect.effectID)
     fun isSame(id: Int) = id == effectID
     fun isSame(name: String) = name == effectName
 
-    fun hasGene(gene: Gene) = effectGenes.any { it.id == gene.id }
+    fun hasGene(gene: Gene) = hasGene(gene.id)
     fun hasGene(id: Int) = effectGenes.any { it.id == id }
     fun hasGene(name: String) = effectGenes.any { it.geneName == name }
 
     fun deactivateGenes() = effectGenes.forEach { it.isGeneActive = false }
     fun activateGenes() = effectGenes.forEach { it.isGeneActive = true }
 
-    fun activateGene(gene: Gene) { effectGenes.find { it.id == gene.id }?.isGeneActive = true }
+    fun activateGene(gene: Gene) { activateGene(gene.id) }
     fun activateGene(id: Int) { effectGenes.find { it.id == id }?.isGeneActive = true }
     fun activateGene(name: String) { effectGenes.find { it.geneName == name }?.isGeneActive = true }
 
-    fun deactivateGene(gene: Gene) { effectGenes.find { it.id == gene.id }?.isGeneActive = false }
+    fun deactivateGene(gene: Gene) { deactivateGene(gene.id) }
     fun deactivateGene(id: Int) { effectGenes.find { it.id == id }?.isGeneActive = false }
     fun deactivateGene(name: String) { effectGenes.find { it.geneName == name }?.isGeneActive = false }
 

@@ -5,6 +5,7 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.api.util.Utils
+import com.eifel.bionisation4.common.config.ConfigProperties
 import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.CompoundNBT
 
@@ -14,7 +15,8 @@ class Custom(): AbstractEffect(InternalConstants.VIRUS_CUSTOM_ID, "Custom", Effe
 
     fun loadProperties(genes: List<Gene>){
 
-        isInfinite = true
+        isInfinite = false
+        effectDuration = ConfigProperties.defaultCustomVirusDuration.get().toLong()
         canChangePower = Utils.random.nextBoolean()
         isSyncable = false
         isMultiple = true

@@ -223,6 +223,7 @@
   "gene.Undead.name": "Undead",
   "gene.Random words.name": "Random words",
   "gene.Shadow.name": "Shadow",
+  "gene.Infinity.name": "Infinity",
 
   "block.bionisation4.garlic": "Garlic",
   "block.bionisation4.firelily": "Fire Lily",
@@ -307,6 +308,7 @@
   "gene.Undead.desc": "Entity can not death",
   "gene.Random words.desc": "Entity(player) spams random phrases in chat",
   "gene.Shadow.desc": "Gives positive effect in the shadows",
+  "gene.Infinity.desc": "Makes virus infinity",
 
   "jei.title.cure_station": "Cure station",
   "jei.title.dna_modifier": "DNA modifier",

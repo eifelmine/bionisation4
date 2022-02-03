@@ -156,7 +156,7 @@ object InternalConstants {
     val GENE_BURN_ID = 54
     val GENE_RANDOM_WORDS_ID = 55
     val GENE_SHADOW_ID = 56
-
+    val GENE_INFINITY_ID = 57
 
     val EFFECT_DEFAULT_ID = 0
     val EFFECT_DEFAULT_STATE_ID = 1

@@ -21,6 +21,7 @@ object ConfigProperties {
     lateinit var defaultVaccineDuration : ForgeConfigSpec.ConfigValue<Int>
     lateinit var defaultImmunityDuration : ForgeConfigSpec.ConfigValue<Int>
     lateinit var defaultVaccineCureChance : ForgeConfigSpec.ConfigValue<Int>
+    lateinit var defaultCustomVirusDuration : ForgeConfigSpec.ConfigValue<Int>
 
     lateinit var defaultVaccineCreatorProcessTime : ForgeConfigSpec.ConfigValue<Int>
     lateinit var defaultDNAModifierProcessTime : ForgeConfigSpec.ConfigValue<Int>
@@ -40,6 +41,8 @@ object ConfigProperties {
         builder.comment("Time Settings").push("timings")
         builder.comment("Default mutation period for every B4 effect (ticks)")
         defaultMutationPeriod = builder.define("defaultMutationPeriod", 24000)
+        builder.comment("Default custom virus random duration (without Infinity Gene)")
+        defaultCustomVirusDuration = builder.define("defaultCustomVirusDuration", 2720000)
         builder.comment("Default Bionisation effect sync period (only for specific effects) (ticks)")
         defaultEffectSyncPeriod = builder.define("defaultEffectSyncPeriod", 35)
         builder.pop()

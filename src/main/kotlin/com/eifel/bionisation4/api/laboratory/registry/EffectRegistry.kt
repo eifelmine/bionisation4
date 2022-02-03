@@ -115,6 +115,7 @@ object EffectRegistry {
         registerGeneClass(InternalConstants.GENE_BURN_ID, Burn::class.java)
         registerGeneClass(InternalConstants.GENE_RANDOM_WORDS_ID, RandomWords::class.java)
         registerGeneClass(InternalConstants.GENE_SHADOW_ID, Shadow::class.java)
+        registerGeneClass(InternalConstants.GENE_INFINITY_ID, Infinity::class.java)
     }
 
     fun loadDefaultGeneMutations() {
@@ -301,10 +302,11 @@ object EffectRegistry {
         registerGeneVial(InternalConstants.GENE_FIRE_ID, ItemStack(Items.BLAZE_ROD))
         registerGeneVial(InternalConstants.GENE_RADIUS_ID, ItemStack(Items.SLIME_BALL))
         registerGeneVial(InternalConstants.GENE_MUTAGEN_ID, ItemStack(Items.BONE_MEAL))
-        registerGeneVial(InternalConstants.GENE_UNDEAD_ID, ItemStack(Items.DRAGON_BREATH))
+        registerGeneVial(InternalConstants.GENE_UNDEAD_ID, ItemStack(Items.MILK_BUCKET))
         registerGeneVial(InternalConstants.GENE_BURN_ID, ItemStack(Items.FIRE_CORAL))
         registerGeneVial(InternalConstants.GENE_RANDOM_WORDS_ID, ItemStack(Items.PUFFERFISH))
         registerGeneVial(InternalConstants.GENE_SHADOW_ID, ItemStack(Items.ZOMBIE_HEAD))
+        registerGeneVial(InternalConstants.GENE_INFINITY_ID, ItemStack(Items.DRAGON_BREATH))
     }
 
     fun loadDefaultBacteriaCures() {

@@ -223,6 +223,7 @@
   "gene.Undead.name": "Бессмертный",
   "gene.Random words.name": "Случайные слова",
   "gene.Shadow.name": "Тень",
+  "gene.Infinity.name": "Бесконечность",
 
   "block.bionisation4.garlic": "Бульба чеснока",
   "block.bionisation4.firelily": "Огненная лилия",
@@ -307,6 +308,7 @@
   "gene.Undead.desc": "Дает эффект бессмертия",
   "gene.Random words.desc": "Дает эффект случайных сообщений в чат (только игроку)",
   "gene.Shadow.desc": "Дает положительные эффекты в тени",
+  "gene.Infinity.desc": "Делает вирус бесконечным",
 
   "jei.title.cure_station": "Целебная станция",
   "jei.title.dna_modifier": "ДНК модификатор",

@@ -1,1 +1,1 @@
-1.0.0.2_https://www.curseforge.com/minecraft/mc-mods/bionisation-4/files_Added infinity gene and gene vial for virus creation
+1.0.0.3_https://www.curseforge.com/minecraft/mc-mods/bionisation-4/files_Major refactoring, release version. Ready for compendium update.

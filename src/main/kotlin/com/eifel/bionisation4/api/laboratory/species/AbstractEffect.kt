@@ -48,41 +48,37 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
 
     constructor() : this(0)
 
-    override fun toNBT(): CompoundNBT {
-        val nbtData = CompoundNBT()
+    override fun toNBT() = CompoundNBT().apply {
+        putInt(InternalConstants.EFFECT_ID_KEY, effectID)
+        putString(InternalConstants.EFFECT_NAME_KEY, effectName)
 
-        nbtData.putInt(InternalConstants.EFFECT_ID_KEY, effectID)
-        nbtData.putString(InternalConstants.EFFECT_NAME_KEY, effectName)
+        NBTUtils.enumToNBT(this, effectType, InternalConstants.EFFECT_TYPE_KEY)
 
-        NBTUtils.enumToNBT(nbtData, effectType, InternalConstants.EFFECT_TYPE_KEY)
+        putLong(InternalConstants.EFFECT_DURATION_KEY, effectDuration)
+        putInt(InternalConstants.EFFECT_POWER_KEY, effectPower)
 
-        nbtData.putLong(InternalConstants.EFFECT_DURATION_KEY, effectDuration)
-        nbtData.putInt(InternalConstants.EFFECT_POWER_KEY, effectPower)
+        putInt(InternalConstants.EFFECT_TICKER_KEY, timeTicker)
 
-        nbtData.putInt(InternalConstants.EFFECT_TICKER_KEY, timeTicker)
+        NBTUtils.objectsToNBT(this, effectGenes, InternalConstants.EFFECT_GENES_KEY)
 
-        NBTUtils.objectsToNBT(nbtData, effectGenes, InternalConstants.EFFECT_GENES_KEY)
+        putBoolean(InternalConstants.EFFECT_PRIORITY_KEY, hasPriority)
 
-        nbtData.putBoolean(InternalConstants.EFFECT_PRIORITY_KEY, hasPriority)
+        putBoolean(InternalConstants.EFFECT_CURE_KEY, isCure)
+        putBoolean(InternalConstants.EFFECT_INFINITE_KEY, isInfinite)
+        putBoolean(InternalConstants.EFFECT_HIDDEN_KEY, isHidden)
+        putBoolean(InternalConstants.EFFECT_EXPIRED_KEY, isExpired)
+        putBoolean(InternalConstants.EFFECT_MUTATE_KEY, canMutate)
+        putBoolean(InternalConstants.EFFECT_MULTIPLE_KEY, isMultiple)
 
-        nbtData.putBoolean(InternalConstants.EFFECT_CURE_KEY, isCure)
-        nbtData.putBoolean(InternalConstants.EFFECT_INFINITE_KEY, isInfinite)
-        nbtData.putBoolean(InternalConstants.EFFECT_HIDDEN_KEY, isHidden)
-        nbtData.putBoolean(InternalConstants.EFFECT_EXPIRED_KEY, isExpired)
-        nbtData.putBoolean(InternalConstants.EFFECT_MUTATE_KEY, canMutate)
-        nbtData.putBoolean(InternalConstants.EFFECT_MULTIPLE_KEY, isMultiple)
+        putBoolean(InternalConstants.EFFECT_POWER_CHANGE_KEY, canChangePower)
 
-        nbtData.putBoolean(InternalConstants.EFFECT_POWER_CHANGE_KEY, canChangePower)
+        putInt(InternalConstants.EFFECT_MUTATE_PERIOD_KEY, mutationPeriod)
 
-        nbtData.putInt(InternalConstants.EFFECT_MUTATE_PERIOD_KEY, mutationPeriod)
+        putBoolean(InternalConstants.EFFECT_INFECT_ITEMS_KEY, canInfectItems)
+        putBoolean(InternalConstants.EFFECT_ANTIBIOTIC_VULNERABLE_KEY, isAntibioticVulnerable)
+        putDouble(InternalConstants.EFFECT_ANTIBIOTIC_RESISTANCE_KEY, antibioticResistancePercent)
 
-        nbtData.putBoolean(InternalConstants.EFFECT_INFECT_ITEMS_KEY, canInfectItems)
-        nbtData.putBoolean(InternalConstants.EFFECT_ANTIBIOTIC_VULNERABLE_KEY, isAntibioticVulnerable)
-        nbtData.putDouble(InternalConstants.EFFECT_ANTIBIOTIC_RESISTANCE_KEY, antibioticResistancePercent)
-
-        nbtData.putBoolean(InternalConstants.EFFECT_SYNCABLE_KEY, isSyncable)
-
-        return nbtData
+        putBoolean(InternalConstants.EFFECT_SYNCABLE_KEY, isSyncable)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {
@@ -124,9 +120,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         if(canChangePower) {
             val prev = effectPower
             effectPower = EffectUtils.getPowerFromImmunity(entity.getImmunity())
-            if(prev != effectPower){
+            if(prev != effectPower)
                 effectGenes.forEach { if(it.canModifyPower) it.overriddenPower = effectPower }
-            }
         }
     }
 

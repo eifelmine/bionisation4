@@ -58,7 +58,6 @@ object EffectRegistry {
     private val DROPS = mutableMapOf<EntityType<*>, Pair<Int, ItemStack>>()
 
     fun loadDefaultGenes() {
-        //todo add mappings here
         registerGeneClass(InternalConstants.GENE_DEFAULT_ID, DefaultGene::class.java)
         registerGeneClass(InternalConstants.GENE_MOVEMENT_SPEED_ID, MovementSpeed::class.java)
         registerGeneClass(InternalConstants.GENE_MOVEMENT_SLOWDOWN_ID, MovementSlowdown::class.java)
@@ -119,7 +118,6 @@ object EffectRegistry {
     }
 
     fun loadDefaultGeneMutations() {
-        //todo add mappings here
         //just make all genes can mutate into each other
         getGenes().keys.forEach { id ->
             registerGeneMutation(id, getGenes().keys.toList())
@@ -128,7 +126,6 @@ object EffectRegistry {
     }
 
     fun loadDefaultEffectOccasions() {
-        //todo add mappings here
         registerEffectOccasion(EntityType.FOX, InternalConstants.VIRUS_RABIES_ID, 30)
         registerEffectOccasion(EntityType.WOLF, InternalConstants.VIRUS_RABIES_ID, 10)
         registerEffectOccasion(EntityType.POLAR_BEAR, InternalConstants.VIRUS_RABIES_ID, 10)
@@ -150,7 +147,6 @@ object EffectRegistry {
     }
 
     fun loadDefaultEffects() {
-        //todo add mappings here
         //effect
         registerEffectClass(InternalConstants.EFFECT_DEFAULT_ID, DefaultEffect::class.java)
         registerEffectClass(InternalConstants.EFFECT_DEFAULT_STATE_ID, DefaultStateEffect::class.java)
@@ -210,7 +206,6 @@ object EffectRegistry {
     }
 
     fun loadDefaultEffectChances() {
-        //todo add mappings here
         registerEffectChance(InternalConstants.EFFECT_BLEEDING_ID, 5)
         registerEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID, 35)
         registerEffectChance(InternalConstants.EFFECT_COLD_ID, 20)
@@ -236,7 +231,6 @@ object EffectRegistry {
     }
 
     fun loadRandomVirusGenes() {
-        //todo add mappings here
         //im too lazy to do it myself, so
         getGenes().keys.forEach { id ->
             registerRandomVirusGene(id, Utils.random.nextInt(1, 15))
@@ -245,11 +239,9 @@ object EffectRegistry {
     }
 
     fun loadDefaultSymbiosis() {
-        //todo add mappings here
     }
 
     fun loadDefaultGeneVials() {
-        //todo add mappings here
         registerGeneVial(InternalConstants.GENE_DEFAULT_ID, ItemStack.EMPTY)
         registerGeneVial(InternalConstants.GENE_MOVEMENT_SPEED_ID, ItemStack(Items.SUGAR))
         registerGeneVial(InternalConstants.GENE_MOVEMENT_SLOWDOWN_ID, ItemStack(Items.BONE))
@@ -310,7 +302,6 @@ object EffectRegistry {
     }
 
     fun loadDefaultBacteriaCures() {
-        //todo add mappings here
         registerBacteriaCure(InternalConstants.BACTERIA_BLACK_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.SPIDER_EYE.get()), ItemStack(Items.SPIDER_EYE)))
         registerBacteriaCure(InternalConstants.BACTERIA_SWAMP_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.SNOW_WARDEN.get()), ItemStack(Blocks.LILY_PAD)))
         registerBacteriaCure(InternalConstants.BACTERIA_GLOWING_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.NETHER_AMBER.get()), ItemStack(ItemRegistry.WEIRD_SEEDS.get())))
@@ -324,7 +315,6 @@ object EffectRegistry {
     }
 
     fun loadDefaultDrops() {
-        //todo add mappings here
         registerDrop(EntityType.BAT, Pair(15, ItemStack(ItemRegistry.BAT_WING.get(), 1)))
         registerDrop(EntityType.CREEPER, Pair(25, ItemStack(ItemRegistry.CREEPER_HEART.get(), 1)))
         registerDrop(EntityType.BLAZE, Pair(15, ItemStack(ItemRegistry.BLAZE_CORE.get(), 1)))

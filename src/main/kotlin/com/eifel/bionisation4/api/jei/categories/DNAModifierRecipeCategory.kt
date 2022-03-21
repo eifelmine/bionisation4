@@ -8,8 +8,6 @@ import com.eifel.bionisation4.util.translation.TranslationUtils
 import com.mojang.blaze3d.matrix.MatrixStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
-import mezz.jei.api.gui.drawable.IDrawable
-import mezz.jei.api.gui.drawable.IDrawableStatic
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
@@ -25,8 +23,8 @@ class DNAModifierRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<DNAMod
         val UUID = ResourceLocation(Info.MOD_ID, "jei_dna_modifier")
     }
 
-    private var GUI: IDrawableStatic = helper.createDrawable(ResourceLocation(Info.MOD_ID, "textures/gui/gui_dnamodifier.png"), 49, 14, 124, 69)
-    private var ICON: IDrawable = helper.createDrawableIngredient(ItemStack(BlockRegistry.DNA_MODIFIER.get()))
+    private var GUI = helper.createDrawable(ResourceLocation(Info.MOD_ID, "textures/gui/gui_dnamodifier.png"), 49, 14, 124, 69)
+    private var ICON = helper.createDrawableIngredient(ItemStack(BlockRegistry.DNA_MODIFIER.get()))
 
     override fun getUid() = UUID
     override fun getRecipeClass() = DNAModifierRecipe::class.java

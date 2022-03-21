@@ -19,17 +19,19 @@ class Peaceful(): Gene(InternalConstants.GENE_PEACEFUL_ID, "Peaceful", true) {
         if(!wasAIReplaced){
             when(entity){
                 is CreatureEntity -> {
-                    entity.targetSelector.runningGoals.toList().filter { it is NearestAttackableTargetGoal<*> || it is HurtByTargetGoal }.forEach {
-                        entity.targetSelector.removeGoal(it)
-                    }
+                    applier(entity)
                 }
                 is MobEntity -> {
-                    entity.targetSelector.runningGoals.toList().filter { it is NearestAttackableTargetGoal<*> || it is HurtByTargetGoal }.forEach {
-                        entity.targetSelector.removeGoal(it)
-                    }
+                    applier(entity)
                 }
             }
             wasAIReplaced = true
+        }
+    }
+
+    private val applier: (MobEntity) -> Unit = { entity ->
+        entity.targetSelector.runningGoals.toList().filter { it is NearestAttackableTargetGoal<*> || it is HurtByTargetGoal }.forEach {
+            entity.targetSelector.removeGoal(it)
         }
     }
 

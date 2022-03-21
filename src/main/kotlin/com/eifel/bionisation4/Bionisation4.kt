@@ -1,6 +1,6 @@
 package com.eifel.bionisation4
 
-import com.eifel.bionisation4.api.jei.RecipeHolder
+import com.eifel.bionisation4.api.jei.RecipeDataHolder
 import com.eifel.bionisation4.api.laboratory.registry.ClientRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectTriggers
@@ -15,7 +15,10 @@ import com.eifel.bionisation4.common.config.Config
 import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.config.OverrideHandler
 import com.eifel.bionisation4.common.core.VersionChecker
-import com.eifel.bionisation4.common.event.*
+import com.eifel.bionisation4.common.event.ClientEvents
+import com.eifel.bionisation4.common.event.ClientModLoadingEvents
+import com.eifel.bionisation4.common.event.CommonEvents
+import com.eifel.bionisation4.common.event.GenerationEvents
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.network.NetworkManager
 import com.eifel.bionisation4.common.storage.capability.entity.BioStat
@@ -86,9 +89,6 @@ object Bionisation4 {
             //events
             FORGE_BUS.register(CommonEvents.javaClass)
             FORGE_BUS.register(GenerationEvents.javaClass)
-            callWhenOn(Dist.DEDICATED_SERVER){
-                FORGE_BUS.register(ServerEvents.javaClass)
-            }
             callWhenOn(Dist.CLIENT){
                 FORGE_BUS.register(ClientEvents.javaClass)
             }
@@ -104,7 +104,7 @@ object Bionisation4 {
             //render layers
             BlockShapes.setupRenderLayers()
             //recipes
-            RecipeHolder.initRecipes()
+            RecipeDataHolder.initRecipes()
             //guis
             ScreenRegistry.registerScreens()
             if (ConfigProperties.showUpdates.get()) {

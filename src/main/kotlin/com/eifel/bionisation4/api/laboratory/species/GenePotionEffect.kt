@@ -19,9 +19,8 @@ class GenePotionEffect(var potion: Int, var duration: Int, var power: Int): IGen
                 if(canReplaceExisting) {
                     entity.addEffect(EffectInstance(it, this.duration, if (power >= 0) power else this.power))
                     return@let
-                }else if(!entity.hasEffect(Effect.byId(this.potion))) {
+                }else if(!entity.hasEffect(Effect.byId(this.potion)))
                     entity.addEffect(EffectInstance(it, this.duration, if (power >= 0) power else this.power))
-                }
             }
         }
     }
@@ -31,13 +30,11 @@ class GenePotionEffect(var potion: Int, var duration: Int, var power: Int): IGen
         return this
     }
 
-    override fun toNBT(): CompoundNBT {
-        val baseData = CompoundNBT()
-        baseData.putInt(InternalConstants.GENE_POT_ID_KEY, this.potion)
-        baseData.putInt(InternalConstants.GENE_POT_DUR_KEY, this.duration)
-        baseData.putInt(InternalConstants.GENE_POT_POW_KEY, this.power)
-        baseData.putBoolean(InternalConstants.GENE_POT_REPL_KEY, this.canReplaceExisting)
-        return baseData
+    override fun toNBT() = CompoundNBT().apply {
+        putInt(InternalConstants.GENE_POT_ID_KEY, potion)
+        putInt(InternalConstants.GENE_POT_DUR_KEY, duration)
+        putInt(InternalConstants.GENE_POT_POW_KEY, power)
+        putBoolean(InternalConstants.GENE_POT_REPL_KEY, canReplaceExisting)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

@@ -27,10 +27,8 @@ class Clone(): Gene(InternalConstants.GENE_CLONE_ID, "Clone", true) {
         return this
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putInt(InternalConstants.GENE_COUNT_KEY, count)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putInt(InternalConstants.GENE_COUNT_KEY, count)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

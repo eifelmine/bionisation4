@@ -37,10 +37,8 @@ class Antibiotic(): AbstractEffect(InternalConstants.EFFECT_ANTIBIOTIC_ID, "Anti
         }
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        NBTUtils.stringsToNBT(data, against, InternalConstants.ANTIBIOTIC_AGAINST_KEY)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        NBTUtils.stringsToNBT(this, against, InternalConstants.ANTIBIOTIC_AGAINST_KEY)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

@@ -17,15 +17,11 @@ import net.minecraftforge.items.wrapper.InvWrapper
 abstract class DefaultMachineContainer <T: DefaultMachineTile> (type: ContainerType<*>, val block: Block, val world: World, val pos: BlockPos, val pInv: PlayerInventory, window: Int, val inputData: IIntArray): Container(
     type, window) {
 
-    var tileEntity: T
-    var player: PlayerEntity
-    var playerInventory: IItemHandler
+    var tileEntity: T = world.getBlockEntity(pos) as T
+    var player: PlayerEntity = pInv.player
+    var playerInventory: IItemHandler = InvWrapper(pInv)
 
     init {
-        tileEntity = world.getBlockEntity(pos) as T
-        playerInventory = InvWrapper(pInv)
-        player = pInv.player
-
         //setup
         for (i in 0..2) {
             for (j in 0..8)

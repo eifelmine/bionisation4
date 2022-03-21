@@ -4,7 +4,7 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.client.particle.ParticleRegistry
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.monster.EndermanEntity
+import net.minecraft.particles.IParticleData
 
 object ClientRegistry {
 
@@ -12,7 +12,6 @@ object ClientRegistry {
 
     fun loadDefaultParticleGenerators() {
         PARTICLE_GENERATORS.clear()
-        //todo add mappings here
         registerParticleGenerator(InternalConstants.EFFECT_BLEEDING_ID){
             entity ->
             if(entity.tickCount % 5 == 0)
@@ -20,43 +19,35 @@ object ClientRegistry {
         }
         registerParticleGenerator(InternalConstants.VIRUS_GIANT_ID){
                 entity ->
-            if(entity.tickCount % 5 == 0)
-                entity.level.addParticle(ParticleRegistry.GIANT_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+            defaultSpawner(entity, ParticleRegistry.GIANT_PARTICLE.get())
         }
         registerParticleGenerator(InternalConstants.VIRUS_ENDER_ID){
                 entity ->
-            if(entity !is EndermanEntity && entity.tickCount % 5 == 0)
-                entity.level.addParticle(ParticleRegistry.ENDER_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+            defaultSpawner(entity, ParticleRegistry.ENDER_PARTICLE.get())
         }
         registerParticleGenerator(InternalConstants.BACTERIA_ENDER_ID){
                 entity ->
-            if(entity.tickCount % 5 == 0)
-                entity.level.addParticle(ParticleRegistry.ENDER_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+            defaultSpawner(entity, ParticleRegistry.ENDER_PARTICLE.get())
         }
         registerParticleGenerator(InternalConstants.VIRUS_BAT_ID){
                 entity ->
-            if(entity.tickCount % 5 == 0)
-                entity.level.addParticle(ParticleRegistry.BLACK_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+            defaultSpawner(entity, ParticleRegistry.BLACK_PARTICLE.get())
         }
         registerParticleGenerator(InternalConstants.VIRUS_CREEPER_ID){
                 entity ->
-            if(entity.tickCount % 5 == 0)
-                entity.level.addParticle(ParticleRegistry.GREEN_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+            defaultSpawner(entity, ParticleRegistry.GREEN_PARTICLE.get())
         }
         registerParticleGenerator(InternalConstants.VIRUS_RED_ID){
                 entity ->
-            if(entity.tickCount % 5 == 0)
-                entity.level.addParticle(ParticleRegistry.RED_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+            defaultSpawner(entity, ParticleRegistry.RED_PARTICLE.get())
         }
         registerParticleGenerator(InternalConstants.BACTERIA_BONE_ID){
                 entity ->
-            if(entity.tickCount % 5 == 0)
-                entity.level.addParticle(ParticleRegistry.GRAY_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+            defaultSpawner(entity, ParticleRegistry.GRAY_PARTICLE.get())
         }
         registerParticleGenerator(InternalConstants.BACTERIA_MYCELIUM_ID){
                 entity ->
-            if(entity.tickCount % 5 == 0)
-                entity.level.addParticle(ParticleRegistry.BROWN_PARTICLE.get(),  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+            defaultSpawner(entity, ParticleRegistry.BROWN_PARTICLE.get())
         }
     }
 
@@ -68,4 +59,9 @@ object ClientRegistry {
 
     fun getParticleGenerators() = PARTICLE_GENERATORS
     fun getGeneratorById(id: Int) = PARTICLE_GENERATORS.getOrDefault(id) {}
+
+    private val defaultSpawner: (LivingEntity, IParticleData) -> Unit = { entity, data ->
+        if(entity.tickCount % 5 == 0)
+            entity.level.addParticle(data,  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
+    }
 }

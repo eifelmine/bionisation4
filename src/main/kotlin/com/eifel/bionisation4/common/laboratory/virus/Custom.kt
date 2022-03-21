@@ -39,10 +39,8 @@ class Custom(): AbstractEffect(InternalConstants.VIRUS_CUSTOM_ID, "Custom", Effe
         }
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putInt(InternalConstants.EFFECT_SHOWTIME_KEY, showTime)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putInt(InternalConstants.EFFECT_SHOWTIME_KEY, showTime)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

@@ -28,10 +28,10 @@ class JEIBionisationPlugin() : IModPlugin {
 
     override fun registerRecipes(registration: IRecipeRegistration) {
         super.registerRecipes(registration)
-        registration.addRecipes(RecipeHolder.CURE_STATION_RECIPES, CureStationRecipeCategory.UUID)
-        registration.addRecipes(RecipeHolder.VACCINE_CREATOR_RECIPES, VaccineCreatorRecipeCategory.UUID)
-        registration.addRecipes(RecipeHolder.DNA_MODIFIER_RECIPES, DNAModifierRecipeCategory.UUID)
-        registration.addRecipes(RecipeHolder.VIRUS_REPLICATOR_RECIPES, VirusReplicatorRecipeCategory.UUID)
+        registration.addRecipes(RecipeDataHolder.CURE_STATION_RECIPES, CureStationRecipeCategory.UUID)
+        registration.addRecipes(RecipeDataHolder.VACCINE_CREATOR_RECIPES, VaccineCreatorRecipeCategory.UUID)
+        registration.addRecipes(RecipeDataHolder.DNA_MODIFIER_RECIPES, DNAModifierRecipeCategory.UUID)
+        registration.addRecipes(RecipeDataHolder.VIRUS_REPLICATOR_RECIPES, VirusReplicatorRecipeCategory.UUID)
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

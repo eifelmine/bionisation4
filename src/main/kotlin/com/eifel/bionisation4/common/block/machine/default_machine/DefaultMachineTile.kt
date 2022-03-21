@@ -134,19 +134,14 @@ abstract class DefaultMachineTile(type: TileEntityType<*>, val size: Int): TileE
     private fun makeHandler(): ItemStackHandler {
         return object : ItemStackHandler(size) {
 
-            override fun onContentsChanged(slot: Int) {
-                setChanged()
-            }
-
             @Nonnull
-            override fun insertItem(slot: Int, @Nonnull stack: ItemStack, simulate: Boolean): ItemStack {
-                return if (!isItemValid(slot, stack)) {
-                    stack
-                } else super.insertItem(slot, stack, simulate)
-            }
+            override fun insertItem(slot: Int, @Nonnull stack: ItemStack, simulate: Boolean) = if (!isItemValid(slot, stack)) stack
+                else super.insertItem(slot, stack, simulate)
 
             override fun isItemValid(slot: Int, @Nonnull stack: ItemStack) = if(slot == 0) AbstractFurnaceTileEntity.isFuel(stack) else true
             override fun getSlotLimit(slot: Int) = 64
+
+            override fun onContentsChanged(slot: Int) = setChanged()
         }
     }
 

@@ -28,11 +28,9 @@ class Explosion(): Gene(InternalConstants.GENE_EXPLOSION_ID, "Explosion", true) 
         return this
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putInt(InternalConstants.GENE_DELAY_KEY, delay)
-        data.putFloat(InternalConstants.GENE_AMOUNT_KEY, amount)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putInt(InternalConstants.GENE_DELAY_KEY, delay)
+        putFloat(InternalConstants.GENE_AMOUNT_KEY, amount)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

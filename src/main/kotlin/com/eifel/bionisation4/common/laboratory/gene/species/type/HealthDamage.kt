@@ -29,11 +29,9 @@ class HealthDamage(): Gene(InternalConstants.GENE_HEALTH_DAMAGE_ID, "Health dama
         return this
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putFloat(InternalConstants.GENE_HEALTH_KEY, amount)
-        data.putInt(InternalConstants.GENE_DELAY_KEY, delay)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putFloat(InternalConstants.GENE_HEALTH_KEY, amount)
+        putInt(InternalConstants.GENE_DELAY_KEY, delay)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

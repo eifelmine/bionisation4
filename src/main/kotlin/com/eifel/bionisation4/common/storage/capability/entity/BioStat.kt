@@ -13,10 +13,12 @@ import com.eifel.bionisation4.common.network.message.player.PacketPlayerSimpleEf
 import com.eifel.bionisation4.common.storage.capability.handler.BloodHandler
 import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
+import com.eifel.bionisation4.util.translation.TranslationUtils
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.PacketDistributor
@@ -29,6 +31,8 @@ class BioStat(): IBioStat {
 
     val effects = mutableListOf<AbstractEffect>()
     val pending = mutableListOf<AbstractEffect>()
+
+    val discoveredEffects = mutableSetOf<Int>()
 
     var immunity = 100
     var blood = 100
@@ -58,6 +62,12 @@ class BioStat(): IBioStat {
                             pending.map { it.effectID }.toIntArray(), 1, entity.id
                         )
                     )
+            }
+            if(entity is ServerPlayerEntity) {
+                pending.filter { eff -> !discoveredEffects.contains(eff.effectID) }.forEach { effect ->
+                    discoveredEffects.add(effect.effectID)
+                    entity.sendMessage(TranslationUtils.getText("${TranslationUtils.getTranslatedText("discover", "message", "info")} ${TextFormatting.YELLOW}${effect.getTranslationName()}"), null)
+                }
             }
             pending.clear()
         }
@@ -174,18 +184,18 @@ class BioStat(): IBioStat {
         }
     }
 
-    fun expire(effect: AbstractEffect) = this.effects.filter { it.isSame(effect) }.forEach { it.isExpired = true }
+    fun expire(effect: AbstractEffect) = expire(effect.effectID)
     fun expire(id: Int) = this.effects.filter { it.isSame(id) }.forEach { it.isExpired = true }
     fun expire(name: String) = this.effects.filter { it.isSame(name) }.forEach { it.isExpired = true }
 
     @OnlyIn(Dist.CLIENT)
-    fun remove(effect: AbstractEffect) = this.effects.removeIf { it.isSame(effect) }
+    fun remove(effect: AbstractEffect) = remove(effect.effectID)
     @OnlyIn(Dist.CLIENT)
     fun remove(id: Int) = this.effects.removeIf { it.isSame(id) }
     @OnlyIn(Dist.CLIENT)
     fun remove(name: String) = this.effects.removeIf { it.isSame(name) }
 
-    fun isActive(effect: AbstractEffect) = this.effects.any { it.isSame(effect) }
+    fun isActive(effect: AbstractEffect) = isActive(effect.effectID)
     fun isActive(id: Int) = this.effects.any { it.isSame(id) }
     fun isActive(name: String) = this.effects.any { it.isSame(name) }
 
@@ -269,13 +279,12 @@ class BioStat(): IBioStat {
         }
     }
 
-    override fun writeToNBT(): CompoundNBT {
-        val nbtData = CompoundNBT()
-        nbtData.putInt(InternalConstants.PROP_IMMUNITY_KEY, immunity)
-        nbtData.putInt(InternalConstants.PROP_BLOOD_KEY, blood)
-        nbtData.putInt(InternalConstants.PROP_TICKER_KEY, ticker)
-        NBTUtils.objectsToNBT(nbtData, effects, InternalConstants.PROP_EFFECT_KEY)
-        return nbtData
+    override fun writeToNBT() = CompoundNBT().apply {
+        putInt(InternalConstants.PROP_IMMUNITY_KEY, immunity)
+        putInt(InternalConstants.PROP_BLOOD_KEY, blood)
+        putInt(InternalConstants.PROP_TICKER_KEY, ticker)
+        NBTUtils.objectsToNBT(this, effects, InternalConstants.PROP_EFFECT_KEY)
+        putIntArray(InternalConstants.DISCOVERED_EFFECTS, discoveredEffects.toMutableList())
     }
 
     override fun readFromNBT(nbtBase: CompoundNBT) {
@@ -283,5 +292,6 @@ class BioStat(): IBioStat {
         blood = nbtBase.getInt(InternalConstants.PROP_BLOOD_KEY)
         ticker = nbtBase.getInt(InternalConstants.PROP_TICKER_KEY)
         NBTUtils.nbtToEffects(nbtBase, effects, InternalConstants.PROP_EFFECT_KEY)
+        discoveredEffects.addAll(nbtBase.getIntArray(InternalConstants.DISCOVERED_EFFECTS).toList())
     }
 }

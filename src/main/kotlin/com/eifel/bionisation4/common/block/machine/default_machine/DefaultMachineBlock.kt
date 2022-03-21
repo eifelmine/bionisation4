@@ -27,9 +27,9 @@ abstract class DefaultMachineBlock(): ContainerBlock(Properties.of(Material.META
     }
 
     override fun use(state: BlockState, world: World, pos: BlockPos, playerEntity: PlayerEntity, hand: Hand, trace: BlockRayTraceResult?): ActionResultType {
-        return if (world.isClientSide) {
+        return if (world.isClientSide)
             ActionResultType.SUCCESS
-        } else {
+        else {
             (world.getBlockEntity(pos) as? IBioMachine)?.let { tile ->
                 NetworkHooks.openGui(playerEntity as ServerPlayerEntity, tile as INamedContainerProvider, pos)
             }

@@ -17,7 +17,6 @@ class Shadow(): Gene(InternalConstants.GENE_SHADOW_ID, "Shadow", true) {
             entity.addEffect(EffectInstance(Effects.MOVEMENT_SPEED, 100, 2))
             entity.addEffect(EffectInstance(Effects.NIGHT_VISION, 300, 1))
             entity.addEffect(EffectInstance(Effects.JUMP, 300, 1))
-
         }
     }
 

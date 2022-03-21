@@ -8,8 +8,6 @@ import com.eifel.bionisation4.util.translation.TranslationUtils
 import com.mojang.blaze3d.matrix.MatrixStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
-import mezz.jei.api.gui.drawable.IDrawable
-import mezz.jei.api.gui.drawable.IDrawableStatic
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
@@ -25,8 +23,8 @@ class VirusReplicatorRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<Vi
         val UUID = ResourceLocation(Info.MOD_ID, "jei_virus_replicator")
     }
 
-    private var GUI: IDrawableStatic = helper.createDrawable(ResourceLocation(Info.MOD_ID, "textures/gui/gui_virusreplicator.png"), 49, 14, 124, 69)
-    private var ICON: IDrawable = helper.createDrawableIngredient(ItemStack(BlockRegistry.VIRUS_REPLICATOR.get()))
+    private var GUI = helper.createDrawable(ResourceLocation(Info.MOD_ID, "textures/gui/gui_virusreplicator.png"), 49, 14, 124, 69)
+    private var ICON = helper.createDrawableIngredient(ItemStack(BlockRegistry.VIRUS_REPLICATOR.get()))
 
     override fun getUid() = UUID
     override fun getRecipeClass() = VirusReplicatorRecipe::class.java

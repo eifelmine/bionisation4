@@ -52,26 +52,21 @@ object CommonEvents {
             if(occasionsDefault.containsKey(event.entityLiving.type)){
                 val data = occasionsDefault[event.entityLiving.type]!!
                 data.forEach { (t, u) ->
-                    if(Utils.chance(u)){
+                    if(Utils.chance(u))
                         event.entityLiving.addEffect(EffectRegistry.getEffectInstance(t).getCopy())
-                    }
                 }
             }
             val occasionsClass = EffectRegistry.getOccasionsClass()
             occasionsClass.keys.filter { it.isAssignableFrom(event.entityLiving.javaClass) }.forEach {
                 val data = occasionsClass[it]!!
                 data.forEach { (t, u) ->
-                    if(Utils.chance(u)){
+                    if(Utils.chance(u))
                         event.entityLiving.addEffect(EffectRegistry.getEffectInstance(t).getCopy())
-                    }
                 }
             }
             if(spawnedEntities % ConfigProperties.randomVirusMobCount.get() == 0 && ConfigProperties.randomVirusCreation.get()){
-                if(Utils.chance(ConfigProperties.randomVirusSpawnChance.get())){
-                    val wild = Wild()
-                    wild.loadRandomProperties()
-                    event.entityLiving.addEffect(wild)
-                }
+                if(Utils.chance(ConfigProperties.randomVirusSpawnChance.get()))
+                    event.entityLiving.addEffect(Wild().apply { loadRandomProperties() })
             }
         }
     }
@@ -133,9 +128,8 @@ object CommonEvents {
     fun onEntityAttack(event: LivingAttackEvent) {
         val target = event.entityLiving
         target?.let { victim ->
-            if(!victim.level.isClientSide) {
+            if(!victim.level.isClientSide)
                 EffectTriggers.getTriggers<LivingAttackEvent>().forEach { it.trigger(event) }
-            }
         }
     }
 
@@ -144,9 +138,8 @@ object CommonEvents {
     fun onPlayerBreakBlock(event: BlockEvent.BreakEvent) {
         val source = event.player
         source?.let { player ->
-            if(!player.level.isClientSide) {
+            if(!player.level.isClientSide)
                 EffectTriggers.getTriggers<BlockEvent.BreakEvent>().forEach { it.trigger(event) }
-            }
         }
     }
 
@@ -155,9 +148,8 @@ object CommonEvents {
     fun onPlayerInteractEntity(event: PlayerInteractEvent.EntityInteract) {
         val source = event.player
         source?.let { player ->
-            if(!player.level.isClientSide) {
+            if(!player.level.isClientSide)
                 EffectTriggers.getTriggers<PlayerInteractEvent.EntityInteract>().forEach { it.trigger(event) }
-            }
         }
     }
 
@@ -175,9 +167,8 @@ object CommonEvents {
                 }
                 if(EffectRegistry.getDrops().containsKey(victim.type)){
                     val data = EffectRegistry.getDrops()[victim.type]!!
-                    if(Utils.chance(data.first)){
+                    if(Utils.chance(data.first))
                         InventoryHelper.dropItemStack(victim.level, victim.x, victim.y, victim.z, data.second.copy())
-                    }
                 }
             }
         }

@@ -11,7 +11,7 @@ import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import net.minecraft.item.ItemStack
 
-object RecipeHolder {
+object RecipeDataHolder {
 
     val CURE_STATION_RECIPES = mutableListOf<CureStationRecipe>()
     val VACCINE_CREATOR_RECIPES = mutableListOf<VaccineCreatorRecipe>()

@@ -26,9 +26,9 @@ abstract class BasicVirusParticle(worldIn: ClientWorld, xCoordIn: Double, yCoord
         xo = x
         yo = y
         zo = z
-        if (age++ >= lifetime) {
+        if (age++ >= lifetime)
             this.remove()
-        } else {
+        else {
             val f = age.toFloat() / lifetime.toFloat()
             val f1 = -f + f * f * 2.0f
             val f2 = 1.0f - f1

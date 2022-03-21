@@ -30,11 +30,9 @@ class Radius(): Gene(InternalConstants.GENE_RADIUS_ID, "Radius", true) {
         return this
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putDouble(InternalConstants.GENE_RADIUS_KEY, radius)
-        data.putFloat(InternalConstants.GENE_AMOUNT_KEY, amount)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putDouble(InternalConstants.GENE_RADIUS_KEY, radius)
+        putFloat(InternalConstants.GENE_AMOUNT_KEY, amount)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

@@ -11,7 +11,7 @@ import net.minecraftforge.fml.client.gui.GuiUtils
 
 abstract class DefaultMachineScreen <T: DefaultMachineContainer<*>> (val container: T, playerInv: PlayerInventory, title: ITextComponent): ContainerScreen<T>(container, playerInv, title) {
 
-    var mc: Minecraft = Minecraft.getInstance()
+    private var mc = Minecraft.getInstance()
 
     abstract fun getTexture(): ResourceLocation
 

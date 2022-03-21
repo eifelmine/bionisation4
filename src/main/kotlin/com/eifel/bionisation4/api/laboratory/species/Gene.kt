@@ -61,9 +61,8 @@ abstract class Gene() : INBTSerializable {
     }
 
     open fun perform(entity: LivingEntity, effect: AbstractEffect) {
-        if(!entity.level.isClientSide) {
+        if(!entity.level.isClientSide)
             potions.forEach { it.perform(entity, overriddenPower) }
-        }
     }
 
     open fun onHurt(event: LivingHurtEvent, victim: LivingEntity, effect: AbstractEffect) {}
@@ -71,18 +70,16 @@ abstract class Gene() : INBTSerializable {
 
     open fun onDeath(event: LivingDeathEvent, entity: LivingEntity, effect: AbstractEffect) {}
 
-    override fun toNBT(): CompoundNBT {
-        val nbtData = CompoundNBT()
-        nbtData.putInt(InternalConstants.GENE_ID_KEY, this.id)
-        nbtData.putInt(InternalConstants.GENE_POWER_KEY, this.overriddenPower)
-        nbtData.putInt(InternalConstants.GENE_CYCLIC_KEY, this.cyclicDelay)
-        nbtData.putString(InternalConstants.GENE_NAME_KEY, this.geneName)
-        nbtData.putBoolean(InternalConstants.GENE_ACTIVE_KEY, this.isGeneActive)
-        nbtData.putBoolean(InternalConstants.GENE_POWER_MODIFY_KEY, this.canModifyPower)
-        nbtData.putBoolean(InternalConstants.GENE_DEACTIVATE_KEY, this.deactivateAfter)
-        nbtData.putBoolean(InternalConstants.GENE_PLAYER_ONLY_KEY, this.playerOnly)
-        NBTUtils.objectsToNBT(nbtData, potions, InternalConstants.GENE_POTIONS_KEY)
-        return nbtData
+    override fun toNBT() = CompoundNBT().apply {
+        putInt(InternalConstants.GENE_ID_KEY, getID())
+        putInt(InternalConstants.GENE_POWER_KEY, overriddenPower)
+        putInt(InternalConstants.GENE_CYCLIC_KEY, cyclicDelay)
+        putString(InternalConstants.GENE_NAME_KEY, geneName)
+        putBoolean(InternalConstants.GENE_ACTIVE_KEY, isGeneActive)
+        putBoolean(InternalConstants.GENE_POWER_MODIFY_KEY, canModifyPower)
+        putBoolean(InternalConstants.GENE_DEACTIVATE_KEY, deactivateAfter)
+        putBoolean(InternalConstants.GENE_PLAYER_ONLY_KEY, playerOnly)
+        NBTUtils.objectsToNBT(this, potions, InternalConstants.GENE_POTIONS_KEY)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {
@@ -110,8 +107,7 @@ abstract class Gene() : INBTSerializable {
 
     fun isActive() = !disabled && isGeneActive
     fun clear(entity: LivingEntity) {
-        if(!entity.level.isClientSide) {
+        if(!entity.level.isClientSide)
             potions.forEach { it.clear(entity) }
-        }
     }
 }

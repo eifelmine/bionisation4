@@ -43,10 +43,8 @@ class Vaccine(): AbstractEffect(InternalConstants.EFFECT_VACCINE_ID, "Vaccine", 
         }
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        NBTUtils.objectsToNBT(data, against, InternalConstants.VACCINE_VIRUS)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        NBTUtils.objectsToNBT(this, against, InternalConstants.VACCINE_VIRUS)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

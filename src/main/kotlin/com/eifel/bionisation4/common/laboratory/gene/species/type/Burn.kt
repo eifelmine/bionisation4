@@ -20,10 +20,8 @@ class Burn(): Gene(InternalConstants.GENE_BURN_ID, "Burn", true) {
         return this
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putInt(InternalConstants.GENE_DURATION_KEY, duration)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putInt(InternalConstants.GENE_DURATION_KEY, duration)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

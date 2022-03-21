@@ -318,5 +318,7 @@
   "checker.message.version": "Новая версия Bionisation 4",
   "checker.message.av": "доступна:",
   "checker.message.changes": "Изменения:",
-  "checker.message.cant": "Не удалось проверить наличие обновлений для Bionisation 4"
+  "checker.message.cant": "Не удалось проверить наличие обновлений для Bionisation 4",
+
+  "discover.message.info": "§6Компендиум§7: §bВы обнаружили новый эффект:"
 }

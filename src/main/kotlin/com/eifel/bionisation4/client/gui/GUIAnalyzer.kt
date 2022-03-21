@@ -23,7 +23,7 @@ class GUIAnalyzer(val nbt: CompoundNBT): Screen(NarratorChatListener.NO_TITLE) {
         private val BACKGROUND = ResourceLocation(Info.MOD_ID, "textures/gui/analyzer_gui.png")
     }
 
-    var mc: Minecraft = Minecraft.getInstance()
+    var mc = Minecraft.getInstance()
     lateinit var effNextButton: Button
     lateinit var effPrevButton: Button
     lateinit var geneNextButton: Button

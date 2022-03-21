@@ -25,9 +25,8 @@ class Ocean(): AbstractEffect(InternalConstants.VIRUS_OCEAN_ID, "Ocean", EffectT
     override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         super.onTick(entity, isLastTick)
         if(entity is PlayerEntity) {
-            if (timeTicker == 10) {
+            if (timeTicker == 10)
                 activateGenes()
-            }
             if(entity.isInWater) {
                 entity.addEffect(EffectInstance(Effects.MOVEMENT_SPEED, 100, 2))
                 entity.addEffect(EffectInstance(Effects.REGENERATION, 100, 2))

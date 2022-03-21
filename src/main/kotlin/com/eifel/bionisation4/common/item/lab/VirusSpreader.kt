@@ -30,8 +30,9 @@ class VirusSpreader(): CommonItem(desc = listOf(Triple("virus_spreader", "usage"
             val data = NBTUtils.getNBT(stack)
             val genes = mutableListOf<EffectEntry>()
             NBTUtils.nbtToObjects(data, genes, InternalConstants.SPREADER_GENES, EffectEntry::class.java)
-            val effect = Custom()
-            effect.loadProperties(genes.map { EffectRegistry.getGeneInstance(it.id).getCopy() })
+            val effect = Custom().apply {
+                loadProperties(genes.map { EffectRegistry.getGeneInstance(it.id).getCopy() })
+            }
             if (player.isShiftKeyDown)
                 EffectUtils.spreadEffect(effect, player.level, player.blockPosition(), ConfigProperties.vialSpreadRadius.get())
             else

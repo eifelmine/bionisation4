@@ -29,11 +29,9 @@ class ImmunityDamage(): Gene(InternalConstants.GENE_IMMUNITY_DAMAGE_ID, "Immunit
         return this
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putInt(InternalConstants.GENE_IMMUNITY_KEY, amount)
-        data.putInt(InternalConstants.GENE_DELAY_KEY, delay)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putInt(InternalConstants.GENE_IMMUNITY_KEY, amount)
+        putInt(InternalConstants.GENE_DELAY_KEY, delay)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

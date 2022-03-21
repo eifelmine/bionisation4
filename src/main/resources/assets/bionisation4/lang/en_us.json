@@ -318,5 +318,7 @@
   "checker.message.version": "A new version of Bionisation 4",
   "checker.message.av": "is available:",
   "checker.message.changes": "Changes:",
-  "checker.message.cant": "Could not check updates for Bionisation 4"
+  "checker.message.cant": "Could not check updates for Bionisation 4",
+
+  "discover.message.info": "§6Compendium§7: §bYou have discovered a new effect:"
 }

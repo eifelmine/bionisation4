@@ -32,18 +32,10 @@ class Aggressive(): Gene(InternalConstants.GENE_AGGRESSIVE_ID, "Aggressive", tru
                     entity.targetSelector.addGoal(2, aggressiveGoal)
                 }
                 is CreatureEntity -> {
-                    val aggressiveGoal = NearestAttackableTargetGoal(entity, LivingEntity::class.java, radius, false, false) { it is LivingEntity }
-                    entity.targetSelector.runningGoals.toList().filter { it is NearestAttackableTargetGoal<*> || it is AvoidEntityGoal<*> }.forEach {
-                        entity.targetSelector.removeGoal(it)
-                    }
-                    entity.targetSelector.addGoal(4, aggressiveGoal)
+                    aggressiveApplier(entity)
                 }
                 is MobEntity -> {
-                    val aggressiveGoal = NearestAttackableTargetGoal(entity, LivingEntity::class.java, radius, false, false) { it is LivingEntity }
-                    entity.targetSelector.runningGoals.toList().filter { it is NearestAttackableTargetGoal<*> || it is AvoidEntityGoal<*> }.forEach {
-                        entity.targetSelector.removeGoal(it)
-                    }
-                    entity.targetSelector.addGoal(4, aggressiveGoal)
+                    aggressiveApplier(entity)
                 }
             }
             wasAIReplaced = true
@@ -55,15 +47,21 @@ class Aggressive(): Gene(InternalConstants.GENE_AGGRESSIVE_ID, "Aggressive", tru
         return this
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putInt(InternalConstants.GENE_RADIUS_KEY, radius)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putInt(InternalConstants.GENE_RADIUS_KEY, radius)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {
         super.fromNBT(nbtData)
         this.radius = nbtData.getInt(InternalConstants.GENE_RADIUS_KEY)
+    }
+
+    private val aggressiveApplier: (MobEntity) -> Unit = {  entity ->
+        val aggressiveGoal = NearestAttackableTargetGoal(entity, LivingEntity::class.java, radius, false, false) { it is LivingEntity }
+        entity.targetSelector.runningGoals.toList().filter { it is NearestAttackableTargetGoal<*> || it is AvoidEntityGoal<*> }.forEach {
+            entity.targetSelector.removeGoal(it)
+        }
+        entity.targetSelector.addGoal(4, aggressiveGoal)
     }
 
     override fun getCopy() = Aggressive()

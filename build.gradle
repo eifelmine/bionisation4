@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 apply plugin: 'idea'
 
-version = '1.0.0.2'
+version = '1.0.0.3'
 group = 'com.eifel.bionisation4'
 archivesBaseName = 'bionisation4'
 
@@ -76,10 +76,6 @@ repositories {
     maven {
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        name = "ModMaven"
-        url = "https://modmaven.dev"
     }
 }
 dependencies {

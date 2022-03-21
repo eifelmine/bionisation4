@@ -25,9 +25,8 @@ class Skull(): AbstractEffect(InternalConstants.VIRUS_SKULL_ID, "Skull", EffectT
     override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         super.onTick(entity, isLastTick)
         if(entity is PlayerEntity) {
-            if (timeTicker == 12000) {
+            if (timeTicker == 12000)
                 activateGenes()
-            }
         }
     }
 

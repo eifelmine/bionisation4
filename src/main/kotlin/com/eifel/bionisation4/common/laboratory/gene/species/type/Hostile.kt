@@ -32,11 +32,9 @@ class Hostile(): Gene(InternalConstants.GENE_HOSTILE_ID, "Hostile", true) {
         return this
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putDouble(InternalConstants.GENE_RADIUS_KEY, radius)
-        data.putInt(InternalConstants.GENE_DURATION_KEY, duration)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putDouble(InternalConstants.GENE_RADIUS_KEY, radius)
+        putInt(InternalConstants.GENE_DURATION_KEY, duration)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

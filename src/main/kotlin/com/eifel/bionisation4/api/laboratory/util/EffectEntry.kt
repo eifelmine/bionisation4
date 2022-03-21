@@ -8,12 +8,10 @@ class EffectEntry(var id: Int, var unlocName: String, var genes: MutableList<Eff
 
     constructor(): this(0, "", mutableListOf())
 
-    override fun toNBT(): CompoundNBT {
-        val nbt = CompoundNBT()
-        nbt.putInt(InternalConstants.ANALYZER_NBT_ID, id)
-        nbt.putString(InternalConstants.ANALYZER_NBT_NAME, unlocName)
-        NBTUtils.objectsToNBT(nbt, genes, InternalConstants.ANALYZER_NBT_GENES)
-        return nbt
+    override fun toNBT() = CompoundNBT().apply {
+        putInt(InternalConstants.ANALYZER_NBT_ID, getID())
+        putString(InternalConstants.ANALYZER_NBT_NAME, unlocName)
+        NBTUtils.objectsToNBT(this, genes, InternalConstants.ANALYZER_NBT_GENES)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {
@@ -22,4 +20,6 @@ class EffectEntry(var id: Int, var unlocName: String, var genes: MutableList<Eff
         genes.clear()
         NBTUtils.nbtToObjects(nbtData, genes, InternalConstants.ANALYZER_NBT_GENES, EffectEntry::class.java)
     }
+
+    fun getID() = id
 }

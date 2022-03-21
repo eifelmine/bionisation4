@@ -29,14 +29,14 @@ class Wild(): AbstractEffect(InternalConstants.VIRUS_WILD_ID, "Wild", EffectType
         EffectRegistry.getRandomVirusGenes().map { Pair(it.key, it.value) }.shuffled().forEach { pair ->
             if(genes.size < ConfigProperties.randomVirusGeneCount.get()){
                 if(Utils.chance(pair.second)){
-                    val gene = EffectRegistry.getGeneInstance(pair.first)
-                    gene.canModifyPower = Utils.random.nextBoolean()
-                    if(Utils.random.nextBoolean())
-                        gene.setCyclic(Utils.random.nextInt(6000))
-                    gene.setPlayerOnly(Utils.random.nextBoolean())
-                    gene.setDeactivateAfter(Utils.random.nextBoolean())
-                    gene.setPower(Utils.random.nextInt(1, 5))
-                    genes += gene
+                    genes += EffectRegistry.getGeneInstance(pair.first).apply {
+                        canModifyPower = Utils.random.nextBoolean()
+                        if(Utils.random.nextBoolean())
+                            setCyclic(Utils.random.nextInt(6000))
+                        setPlayerOnly(Utils.random.nextBoolean())
+                        setDeactivateAfter(Utils.random.nextBoolean())
+                        setPower(Utils.random.nextInt(1, 5))
+                    }
                 }
             }else
                 return@forEach
@@ -56,11 +56,9 @@ class Wild(): AbstractEffect(InternalConstants.VIRUS_WILD_ID, "Wild", EffectType
         }
     }
 
-    override fun toNBT(): CompoundNBT {
-        val data = super.toNBT()
-        data.putInt(InternalConstants.EFFECT_SHOWTIME_KEY, showTime)
-        data.putLong(InternalConstants.EFFECT_MAX_DURATION_KEY, maxDuration)
-        return data
+    override fun toNBT() = super.toNBT().apply {
+        putInt(InternalConstants.EFFECT_SHOWTIME_KEY, showTime)
+        putLong(InternalConstants.EFFECT_MAX_DURATION_KEY, maxDuration)
     }
 
     override fun fromNBT(nbtData: CompoundNBT) {

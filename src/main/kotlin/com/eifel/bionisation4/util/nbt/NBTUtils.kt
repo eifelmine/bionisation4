@@ -13,11 +13,7 @@ object NBTUtils {
 
     fun stringsToNBT(compound: CompoundNBT, list: Collection<String>, key: String) {
         val tags = ListNBT()
-        list.mapTo(tags){ string ->
-            val nbt = CompoundNBT()
-            nbt.putString("string", string)
-            nbt
-        }
+        list.mapTo(tags){ string -> CompoundNBT().apply { putString("string", string) } }
         compound.put(key, tags)
     }
 
@@ -94,11 +90,7 @@ object NBTUtils {
 
     fun enumsToNBT(compound: CompoundNBT, list: Collection<Enum<*>>, key: String) {
         val tags = ListNBT()
-        list.mapTo(tags){ ser ->
-            val nbt = CompoundNBT()
-            nbt.putString("enum", ser.name)
-            nbt
-        }
+        list.mapTo(tags){ ser -> CompoundNBT().apply { putString("enum", ser.name) } }
         compound.put(key, tags)
     }
 
@@ -130,7 +122,8 @@ object NBTUtils {
                 stack.tag = tag
                 tag
             }
-        }else CompoundNBT()
+        } else
+            CompoundNBT()
     }
 
     inline fun <reified T : Enum<*>> enumValueOrNull(name: String): T? = T::class.java.enumConstants.firstOrNull { it.name == name }

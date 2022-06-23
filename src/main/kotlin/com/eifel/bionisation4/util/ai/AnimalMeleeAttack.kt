@@ -6,9 +6,11 @@ import net.minecraft.entity.passive.AnimalEntity
 import net.minecraft.util.DamageSource
 import net.minecraft.util.Hand
 
-class AnimalMeleeAttack(animal: AnimalEntity): MeleeAttackGoal(animal, 10.0, true) {
+class AnimalMeleeAttack(val animal: AnimalEntity): MeleeAttackGoal(animal, 5.0, true) {
 
     override fun checkAndPerformAttack(entity: LivingEntity, damage: Double) {
+        if(entity.distanceTo(animal) > 8)
+            return
         val d0 = getAttackReachSqr(entity)
         if (damage <= d0 && ticksUntilNextAttack <= 0) {
             resetAttackCooldown()

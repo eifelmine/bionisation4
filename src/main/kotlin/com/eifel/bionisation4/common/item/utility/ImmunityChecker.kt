@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.UseAction
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
-import net.minecraft.util.text.TextFormatting
 import net.minecraft.world.World
 
 class ImmunityChecker(): CommonItem(desc = listOf(Triple("checker", "usage", "desc")), size = 1) {
@@ -31,7 +30,7 @@ class ImmunityChecker(): CommonItem(desc = listOf(Triple("checker", "usage", "de
         (entity as? PlayerEntity)?.let { player ->
             if(!player.level.isClientSide && (getUseDuration(stack) - duration) >= 20) {
                 val immunity = player.getImmunity()
-                player.sendMessage(TranslationUtils.getText("${TextFormatting.DARK_AQUA}${TranslationUtils.getTranslatedText("checker", "usage", "result")}${Utils.getColorFromValue(immunity)}$immunity ${TextFormatting.DARK_AQUA}%"), null)
+                player.sendMessage(TranslationUtils.getCommonTranslation("checker", "usage", "result").append("${Utils.getColorFromValue(immunity)}$immunity%"), entity.uuid)
             }
         }
     }

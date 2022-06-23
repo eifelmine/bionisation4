@@ -76,6 +76,7 @@ object Bionisation4 {
             EffectRegistry.loadDefaultGeneVials()
             EffectRegistry.loadDefaultBacteriaCures()
             EffectRegistry.loadDefaultEffectOccasions()
+            EffectRegistry.loadDefaultCleanEntities()
             EffectRegistry.loadDefaultAntibiotics()
             EffectRegistry.loadDefaultDrops()
             //Overrides

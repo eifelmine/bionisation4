@@ -32,8 +32,8 @@ class Antibiotic(): AbstractEffect(InternalConstants.EFFECT_ANTIBIOTIC_ID, "Anti
         if(isLastTick){
             against.map { it.toInt() }.forEach {
                 entity.expire(it)
-                entity.modifyImmunity(-10)
             }
+            entity.modifyImmunity(-10)
         }
     }
 

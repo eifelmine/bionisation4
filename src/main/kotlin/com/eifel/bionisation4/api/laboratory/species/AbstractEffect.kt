@@ -17,8 +17,9 @@ import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
+import java.util.*
 
-abstract class AbstractEffect(var effectID: Int, var effectName: String = "Default Effect", var effectType: EffectType = EffectType.COMMON) : INBTSerializable {
+abstract class AbstractEffect(var effectID: Int, var effectName: String = "Default Effect", var effectType: EffectType = EffectType.COMMON, var uuid: String = UUID.randomUUID().toString()) : INBTSerializable {
 
     var effectDuration = -1L
     var effectPower = 1
@@ -70,6 +71,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         putBoolean(InternalConstants.EFFECT_MUTATE_KEY, canMutate)
         putBoolean(InternalConstants.EFFECT_MULTIPLE_KEY, isMultiple)
 
+        putString(InternalConstants.EFFECT_UUID_KEY, uuid)
+
         putBoolean(InternalConstants.EFFECT_POWER_CHANGE_KEY, canChangePower)
 
         putInt(InternalConstants.EFFECT_MUTATE_PERIOD_KEY, mutationPeriod)
@@ -104,6 +107,8 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         isExpired = nbtData.getBoolean(InternalConstants.EFFECT_EXPIRED_KEY)
         canMutate = nbtData.getBoolean(InternalConstants.EFFECT_MUTATE_KEY)
         isMultiple = nbtData.getBoolean(InternalConstants.EFFECT_MULTIPLE_KEY)
+
+        uuid = nbtData.getString(InternalConstants.EFFECT_UUID_KEY)
 
         canChangePower = nbtData.getBoolean(InternalConstants.EFFECT_POWER_CHANGE_KEY)
 
@@ -217,6 +222,9 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     fun isSame(id: Int) = id == effectID
     fun isSame(name: String) = name == effectName
 
+    fun isGenesEqual(effect: AbstractEffect) = this.getDNA() == effect.getDNA()
+    fun distinctTag() = "${if(this.isMultiple && this.effectGenes.isEmpty()) uuid else this.getDNA()}$effectID"
+
     fun hasGene(gene: Gene) = hasGene(gene.id)
     fun hasGene(id: Int) = effectGenes.any { it.id == id }
     fun hasGene(name: String) = effectGenes.any { it.geneName == name }
@@ -234,4 +242,5 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
 
     abstract fun getCopy(): AbstractEffect
     open fun getTranslationName() = TranslationUtils.getTranslatedText("effect", effectName, "name")
+    open fun getCommonTranslationName() = TranslationUtils.getCommonTranslation("effect", effectName, "name")
 }

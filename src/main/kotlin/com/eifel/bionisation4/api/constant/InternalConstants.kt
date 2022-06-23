@@ -49,6 +49,7 @@ object InternalConstants {
     val EFFECT_CURE_KEY = getModIDString("eff_cure")
     val EFFECT_INFINITE_KEY = getModIDString("eff_infinite")
     val EFFECT_HIDDEN_KEY = getModIDString("eff_hidden")
+    val EFFECT_UUID_KEY = getModIDString("eff_uuid")
 
     val EFFECT_EXPIRED_KEY = getModIDString("eff_expired")
     val EFFECT_MUTATE_KEY = getModIDString("eff_mutate")
@@ -78,6 +79,7 @@ object InternalConstants {
     val ANALYZER_NBT_NAME = getModIDString("an_name")
     val ANALYZER_NBT_GENES = getModIDString("an_genes")
     val ANALYZER_NBT_DATA = getModIDString("an_data")
+    val COMPENDIUM_NBT_DATA = getModIDString("comp_data")
 
     val VIAL_BACTERIA = getModIDString("vial_bacteria")
     val VACCINE_INJECTOR_GENES = getModIDString("vaccine_injector_genes")

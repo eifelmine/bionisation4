@@ -1,1 +1,1 @@
-1.0.0.3_https://www.curseforge.com/minecraft/mc-mods/bionisation-4/files_Major refactoring, release version. Ready for compendium update.
+1.0.0.4_https://www.curseforge.com/minecraft/mc-mods/bionisation-4/files_Fixed immunity usage with antibiotic effect_Fixed some issues with Aggressive gene_Fixed issues with effect duplication causing massive lags (probably)_Fixed localization problems on servers_Added Compendium which accumulates data about all effects player ever got

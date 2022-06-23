@@ -50,7 +50,7 @@ class ItemEffectVial(): CommonItem(rarity = Rarity.EPIC, size = 1) {
                     EffectUtils.spreadEffect(effect, player.level, player.blockPosition(), ConfigProperties.vialSpreadRadius.get())
                 else
                     player.addEffect(effect)
-                player.sendMessage(TranslationUtils.getText("${TextFormatting.AQUA}${TranslationUtils.getTranslatedText("vial", "usage", "spread")}"), null)
+                player.sendMessage(TranslationUtils.getCommonTranslation("vial", "usage", "spread"), player.uuid)
             }
         }
         return ActionResult.pass(stack)

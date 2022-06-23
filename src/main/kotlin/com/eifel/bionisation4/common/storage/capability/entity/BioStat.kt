@@ -18,7 +18,6 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.PacketDistributor
@@ -66,12 +65,13 @@ class BioStat(): IBioStat {
             if(entity is ServerPlayerEntity) {
                 pending.filter { eff -> !discoveredEffects.contains(eff.effectID) }.forEach { effect ->
                     discoveredEffects.add(effect.effectID)
-                    entity.sendMessage(TranslationUtils.getText("${TranslationUtils.getTranslatedText("discover", "message", "info")} ${TextFormatting.YELLOW}${effect.getTranslationName()}"), null)
+                    entity.sendMessage(TranslationUtils.getCommonTranslation("discover", "message", "info").append(effect.getCommonTranslationName()), entity.uuid)
                 }
             }
             pending.clear()
         }
         if(!entity.level.isClientSide){
+            removeDuplicated(entity)
             effects.sortByDescending { it.hasPriority }
             val it = effects.iterator()
             while(it.hasNext()){
@@ -182,6 +182,10 @@ class BioStat(): IBioStat {
             }
             this.pending.add(effect)
         }
+    }
+
+    fun removeDuplicated(entity: LivingEntity){
+        effects.filter { e -> effects.count { e.distinctTag() == it.distinctTag() } > 1 }.forEach { expire(it) }
     }
 
     fun expire(effect: AbstractEffect) = expire(effect.effectID)

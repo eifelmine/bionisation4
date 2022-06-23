@@ -32,7 +32,7 @@
 
   "item.bionisation4.immunitychecker": "Тестер иммунитета",
   "checker.usage.desc": "Зажмите ПКМ для проверки уровня иммунитета",
-  "checker.usage.result": "Уровень иммунитета: ",
+  "checker.usage.result": "§3Уровень иммунитета: ",
 
   "item.bionisation4.bandage": "Повязка",
   "bandage.usage.desc": "ПКМ для предотвращения кровотечения (с шифтом на других)",
@@ -76,30 +76,32 @@
   "antibiotic_vial.info.bacteria": "§3Бактерия:",
   "antibiotic_vial.info.no_bacteria": "§cБактерий не найдено",
   "antibiotic_vial.usage.desc": "ПКМ для получения эффекта антибиотика (с шифтом на других)",
-  "antibiotic_vial.usage.injected": "Лекарство впрыскнуто!",
+  "antibiotic_vial.usage.injected": "§6Лекарство впрыскнуто!",
 
   "vaccine_injector.info.genes": "§3Гены:",
   "vaccine_injector.info.no_genes": "§cГенов не найдено",
   "vaccine_injector.usage.desc": "ПКМ для получения эффекта вакцины (с шифтом на других)",
-  "vaccine_injector.usage.injected": "Вакцина впрыскнута!",
+  "vaccine_injector.usage.injected": "§6Вакцина впрыскнута!",
 
   "item.bionisation4.virus_spreader": "Распостранитель вирусов",
 
   "virus_spreader.info.genes": "§3Гены:",
   "virus_spreader.info.no_genes": "§cГенов не найдено",
   "virus_spreader.usage.desc": "ПКМ для распостранения вируса (с шифтом на других)",
-  "virus_spreader.usage.spread": "Вырус выпущен!",
+  "virus_spreader.usage.spread": "§6Вырус выпущен!",
 
   "item.bionisation4.bioanalyzer": "Био анализатор",
+  "item.bionisation4.compendium": "Компендиум",
 
   "item.bionisation4.splint": "Шина",
   "splint.usage.desc": "ПКМ для лечения перелома (с шифтом на других)",
 
   "bioanalyzer.usage.desc": "ПКМ чтобы открыть анализатор (с шифтом на других)",
+  "compendium.usage.desc": "ПКМ чтобы открыть компендиум (с шифтом на других)",
 
   "vial.effect.name": "Эффект: ",
   "vial.usage.desc": "ПКМ чтобы распостранить эффект на себя и с шифтом если на других",
-  "vial.usage.spread": "Эффект распостранен! Будь осторожнее в следующий раз!",
+  "vial.usage.spread": "§bЭффект распостранен! Будь осторожнее в следующий раз!",
   "vial.info.genes": "Гены: ",
   "vial.info.type": "Тип: ",
 
@@ -224,6 +226,7 @@
   "gene.Random words.name": "Случайные слова",
   "gene.Shadow.name": "Тень",
   "gene.Infinity.name": "Бесконечность",
+  "gene.Burn.name": "Пождог",
 
   "block.bionisation4.garlic": "Бульба чеснока",
   "block.bionisation4.firelily": "Огненная лилия",
@@ -250,6 +253,14 @@
   "analyzer.page.effects_empty": "§3Образцов не найдено",
   "analyzer.page.genes_empty": "§3Генов не найдено",
   "analyzer.page.analyzer": "§bБио анализатор",
+
+  "compendium.page.prev": "Пред.",
+  "compendium.page.next": "След.",
+  "compendium.page.effect": "§6Образец:",
+  "compendium.page.genes": "§3Гены:",
+  "compendium.page.effects_empty": "§3Данных не найдено",
+  "compendium.page.genes_empty": "§3Генов не найдено",
+  "compendium.page.compendium": "§bКомпендиум",
 
   "gene.Unknown Gene.desc": "Внутренний системный ген",
   "gene.Default Gene.desc": "Обычный ген",
@@ -302,13 +313,14 @@
   "gene.Peaceful.desc": "Дает эффект миролюбства",
   "gene.Ground.desc": "Дает негативные эффекты на земле",
   "gene.Arrow immunity.desc": "Дает эффект защиты от стрел",
-  "gene.Fire.desc": "Дает эффект поджога",
+  "gene.Fire.desc": "Убивает цель если она будет в огне",
   "gene.Radius.desc": "Дает эффект урона сущностям вокруг цели после её смерти",
   "gene.Mutagen.desc": "Дает эффект мутирования",
   "gene.Undead.desc": "Дает эффект бессмертия",
   "gene.Random words.desc": "Дает эффект случайных сообщений в чат (только игроку)",
   "gene.Shadow.desc": "Дает положительные эффекты в тени",
   "gene.Infinity.desc": "Делает вирус бесконечным",
+  "gene.Burn.desc": "Дает эффект поджога",
 
   "jei.title.cure_station": "Целебная станция",
   "jei.title.dna_modifier": "ДНК модификатор",
@@ -320,5 +332,5 @@
   "checker.message.changes": "Изменения:",
   "checker.message.cant": "Не удалось проверить наличие обновлений для Bionisation 4",
 
-  "discover.message.info": "§6Компендиум§7: §bВы обнаружили новый эффект:"
+  "discover.message.info": "§6Компендиум§7: §bВы обнаружили новый эффект: §b"
 }

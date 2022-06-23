@@ -69,18 +69,16 @@ class Wild(): AbstractEffect(InternalConstants.VIRUS_WILD_ID, "Wild", EffectType
 
     override fun getTranslationName() = effectGenes.joinToString ("-"){ it.id.toString() }
 
-    override fun getCopy(): AbstractEffect {
-        val wild = Wild()
-        wild.isInfinite = isInfinite
-        wild.effectDuration = if(isInfinite) -1 else maxDuration
-        wild.canChangePower = canChangePower
-        wild.isHidden = isHidden
-        wild.showTime = showTime
-        wild.maxDuration = maxDuration
-        wild.effectGenes.clear()
-        wild.effectGenes.addAll(effectGenes.map { it.getCopy() })
-        if(isHidden)
-            wild.deactivateGenes()
-        return wild
+    override fun getCopy() = Wild().apply {
+        this.isInfinite = this@Wild.isInfinite
+        this.effectDuration = if(this@Wild.isInfinite) -1 else this@Wild.maxDuration
+        this.canChangePower = this@Wild.canChangePower
+        this.isHidden = this@Wild.isHidden
+        this.showTime = this@Wild.showTime
+        this.maxDuration = this@Wild.maxDuration
+        this.effectGenes.clear()
+        this.effectGenes.addAll(this@Wild.effectGenes.map { it.getCopy() })
+        if(this@Wild.isHidden)
+            this.deactivateGenes()
     }
 }

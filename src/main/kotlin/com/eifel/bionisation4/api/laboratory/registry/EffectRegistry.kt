@@ -42,6 +42,8 @@ object EffectRegistry {
     private val EFFECT_OCCASIONS = mutableMapOf<EntityType<*>, MutableMap<Int, Int>>()
     private val EFFECT_OCCASIONS_CLASS = mutableMapOf<Class<out LivingEntity>, MutableMap<Int, Int>>()
 
+    private val CLEAN_ENTITIES = mutableListOf<EntityType<*>>()
+
     private val RANDOM_VIRUS_GENES = mutableMapOf<Int, Int>()
     //list of gene ids it can mutate with
     private val GENE_MUTATIONS = mutableMapOf<Int, List<Int>>()
@@ -125,6 +127,13 @@ object EffectRegistry {
         //whoever wants to change this - go ahead
     }
 
+    fun loadDefaultCleanEntities() {
+        registerCleanType(EntityType.BAT)
+        registerCleanType(EntityType.GHAST)
+        registerCleanType(EntityType.WITHER)
+        registerCleanType(EntityType.ENDER_DRAGON)
+    }
+
     fun loadDefaultEffectOccasions() {
         registerEffectOccasion(EntityType.FOX, InternalConstants.VIRUS_RABIES_ID, 30)
         registerEffectOccasion(EntityType.WOLF, InternalConstants.VIRUS_RABIES_ID, 10)
@@ -136,7 +145,7 @@ object EffectRegistry {
         registerEffectOccasion(EntityType.ZOMBIE_VILLAGER, InternalConstants.VIRUS_BRAIN_ID, 15)
         registerEffectOccasion(EntityType.HUSK, InternalConstants.VIRUS_BRAIN_ID, 15)
         registerEffectOccasion(EntityType.WITHER_SKELETON, InternalConstants.VIRUS_WITHER_ID, 25)
-        registerEffectOccasion(EntityType.BAT, InternalConstants.VIRUS_BAT_ID, 25)
+        registerEffectOccasion(MonsterEntity::class.java, InternalConstants.VIRUS_BAT_ID, 5)
         registerEffectOccasion(EntityType.CREEPER, InternalConstants.VIRUS_CREEPER_ID, 15)
         registerEffectOccasion(EntityType.SPIDER, InternalConstants.VIRUS_RED_ID, 10)
         registerEffectOccasion(EntityType.GUARDIAN, InternalConstants.VIRUS_OCEAN_ID, 25)
@@ -362,6 +371,12 @@ object EffectRegistry {
         EFFECT_OCCASIONS[entity] = data
     }
 
+    fun registerCleanType(type: EntityType<*>) {
+        if(CLEAN_ENTITIES.contains(type))
+            throw IllegalStateException("Entity type ${type.descriptionId} already registered!")
+        CLEAN_ENTITIES.add(type)
+    }
+
     fun registerEffectOccasion(clazz: Class<out LivingEntity>, id: Int, chance: Int) {
         val data = EFFECT_OCCASIONS_CLASS.getOrDefault(clazz, mutableMapOf())
         data[id] = chance
@@ -431,6 +446,7 @@ object EffectRegistry {
     fun getRandomVirusGenes() = RANDOM_VIRUS_GENES
     fun getAntibiotics() = ANTIBIOTICS
     fun getDrops() = DROPS
+    fun getCleanTypes() = CLEAN_ENTITIES
 
     fun getEffectInstance(id: Int): AbstractEffect {
         if(EFFECT_INSTANCES.containsKey(id))

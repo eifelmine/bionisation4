@@ -50,15 +50,13 @@ class Custom(): AbstractEffect(InternalConstants.VIRUS_CUSTOM_ID, "Custom", Effe
 
     override fun getTranslationName() = effectGenes.joinToString ("-"){ it.id.toString() }
 
-    override fun getCopy(): Custom {
-        val custom = Custom()
-        custom.canChangePower = canChangePower
-        custom.isHidden = isHidden
-        custom.showTime = showTime
-        custom.effectGenes.clear()
-        custom.effectGenes.addAll(effectGenes.map { it.getCopy() })
-        if(isHidden)
-            custom.deactivateGenes()
-        return custom
+    override fun getCopy() = Custom().apply {
+        this.canChangePower = this@Custom.canChangePower
+        this.isHidden = this@Custom.isHidden
+        this.showTime = this@Custom.showTime
+        this.effectGenes.clear()
+        this.effectGenes.addAll(this@Custom.effectGenes.map { it.getCopy() })
+        if(this@Custom.isHidden)
+            this.deactivateGenes()
     }
 }

@@ -75,6 +75,10 @@ inline fun LivingEntity.getEffects() = this.getCapability(BioStatProvider.BIO_ST
     (it as BioStat).effects
 } ?: mutableListOf()
 
+inline fun LivingEntity.getDiscoveredEffects() = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).orElse(null)?.let {
+    (it as BioStat).discoveredEffects
+} ?: mutableListOf()
+
 inline fun LivingEntity.isInBiome(type: Biome.Category) = this.level.getBiome(this.blockPosition()).biomeCategory == type
 
 inline fun LivingEntity.hasArmor(isFull: Boolean) = if(isFull) this.armorSlots.all { !it.isEmpty } else this.armorSlots.any { !it.isEmpty }

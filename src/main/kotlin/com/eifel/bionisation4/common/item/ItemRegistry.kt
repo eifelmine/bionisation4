@@ -27,6 +27,7 @@ object ItemRegistry {
     val IMMUNITY_CHECKER = ITEMS.register("immunitychecker") { ImmunityChecker() }
 
     val BIO_ANALYZER = ITEMS.register("bioanalyzer") { BioAnalyzer() }
+    val COMPENDIUM = ITEMS.register("compendium") { Compendium() }
     val ANTIBIOTIC_VIAL = ITEMS.register("antibiotic_vial") { AntibioticVial() }
     val DNA_PATTERN = ITEMS.register("dna_pattern") { DNAPattern() }
     val VACCINE_INJECTOR = ITEMS.register("vaccine_injector") { VaccineInjector() }

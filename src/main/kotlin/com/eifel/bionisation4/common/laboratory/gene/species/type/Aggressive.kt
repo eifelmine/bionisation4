@@ -3,12 +3,13 @@ package com.eifel.bionisation4.common.laboratory.gene.species.type
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
-import com.eifel.bionisation4.util.ai.AnimalMeleeAttack
-import net.minecraft.entity.CreatureEntity
+import com.eifel.bionisation4.util.ai.NearestTargetGoal
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.MobEntity
-import net.minecraft.entity.ai.goal.*
+import net.minecraft.entity.ai.goal.AvoidEntityGoal
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal
+import net.minecraft.entity.monster.MonsterEntity
 import net.minecraft.entity.passive.AnimalEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import kotlin.streams.toList
 
@@ -21,20 +22,9 @@ class Aggressive(): Gene(InternalConstants.GENE_AGGRESSIVE_ID, "Aggressive", tru
         super.perform(entity, effect)
         if(!wasAIReplaced){
             when(entity){
-                is AnimalEntity -> {
-                    val aggressiveGoal = NearestAttackableTargetGoal(entity, LivingEntity::class.java, radius, false, false) { it is LivingEntity }
-                    entity.isAggressive = true
-                    entity.goalSelector.addGoal(1, LookAtGoal(entity, LivingEntity::class.java, radius.toFloat()))
-                    entity.goalSelector.addGoal(3, LeapAtTargetGoal(entity, 0.8f))
-                    entity.goalSelector.addGoal(1, LookRandomlyGoal(entity))
-                    entity.goalSelector.addGoal(2, AnimalMeleeAttack(entity))
-                    entity.targetSelector.addGoal(1, HurtByTargetGoal(entity))
-                    entity.targetSelector.addGoal(2, aggressiveGoal)
-                }
-                is CreatureEntity -> {
-                    aggressiveApplier(entity)
-                }
-                is MobEntity -> {
+                is MonsterEntity -> {
+                    if(entity.targetSelector.runningGoals.anyMatch { it.goal is NearestTargetGoal<*> })
+                        return
                     aggressiveApplier(entity)
                 }
             }
@@ -56,12 +46,16 @@ class Aggressive(): Gene(InternalConstants.GENE_AGGRESSIVE_ID, "Aggressive", tru
         this.radius = nbtData.getInt(InternalConstants.GENE_RADIUS_KEY)
     }
 
-    private val aggressiveApplier: (MobEntity) -> Unit = {  entity ->
-        val aggressiveGoal = NearestAttackableTargetGoal(entity, LivingEntity::class.java, radius, false, false) { it is LivingEntity }
+    private val aggressiveApplier: (MonsterEntity) -> Unit = {  entity ->
+        val aggressiveGoalMonster = NearestTargetGoal(entity, MonsterEntity::class.java, radius, canSee = true, canReach = true) { it is MonsterEntity }
+        val aggressiveGoalPlayer = NearestTargetGoal(entity, PlayerEntity::class.java, radius, canSee = true, canReach = true) { it is PlayerEntity }
+        val aggressiveGoalAnimal = NearestTargetGoal(entity, AnimalEntity::class.java, radius, canSee = true, canReach = true) { it is AnimalEntity }
         entity.targetSelector.runningGoals.toList().filter { it is NearestAttackableTargetGoal<*> || it is AvoidEntityGoal<*> }.forEach {
             entity.targetSelector.removeGoal(it)
         }
-        entity.targetSelector.addGoal(4, aggressiveGoal)
+        entity.targetSelector.addGoal(4, aggressiveGoalMonster)
+        entity.targetSelector.addGoal(4, aggressiveGoalPlayer)
+        entity.targetSelector.addGoal(4, aggressiveGoalAnimal)
     }
 
     override fun getCopy() = Aggressive()

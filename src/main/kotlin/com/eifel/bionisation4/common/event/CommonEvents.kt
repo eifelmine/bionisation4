@@ -65,8 +65,11 @@ object CommonEvents {
                 }
             }
             if(spawnedEntities % ConfigProperties.randomVirusMobCount.get() == 0 && ConfigProperties.randomVirusCreation.get()){
-                if(Utils.chance(ConfigProperties.randomVirusSpawnChance.get()))
-                    event.entityLiving.addEffect(Wild().apply { loadRandomProperties() })
+                if(Utils.chance(ConfigProperties.randomVirusSpawnChance.get())) {
+                    val wild = Wild().apply { loadRandomProperties() }
+                    if(wild.effectGenes.isNotEmpty())
+                        event.entityLiving.addEffect(wild)
+                }
             }
         }
     }
@@ -193,6 +196,10 @@ object CommonEvents {
                         cap.onUpdate(entity)
                         if (cap.ticker % 12000 == 0)
                             cap.modifyBlood(entity, 2)
+                        //run clean list
+                        val type = entity.type
+                        if(EffectRegistry.getCleanTypes().contains(type))
+                            entity.getEffects().forEach { cap.expire(it) }
                     }
                 }
             }

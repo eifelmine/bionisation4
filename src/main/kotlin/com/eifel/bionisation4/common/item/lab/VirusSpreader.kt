@@ -30,15 +30,17 @@ class VirusSpreader(): CommonItem(desc = listOf(Triple("virus_spreader", "usage"
             val data = NBTUtils.getNBT(stack)
             val genes = mutableListOf<EffectEntry>()
             NBTUtils.nbtToObjects(data, genes, InternalConstants.SPREADER_GENES, EffectEntry::class.java)
-            val effect = Custom().apply {
-                loadProperties(genes.map { EffectRegistry.getGeneInstance(it.id).getCopy() })
+            if(genes.isNotEmpty()) {
+                val effect = Custom().apply {
+                    loadProperties(genes.map { EffectRegistry.getGeneInstance(it.id).getCopy() })
+                }
+                if (player.isShiftKeyDown)
+                    EffectUtils.spreadEffect(effect, player.level, player.blockPosition(), ConfigProperties.vialSpreadRadius.get())
+                else
+                    player.addEffect(effect)
             }
-            if (player.isShiftKeyDown)
-                EffectUtils.spreadEffect(effect, player.level, player.blockPosition(), ConfigProperties.vialSpreadRadius.get())
-            else
-                player.addEffect(effect)
             data.remove(InternalConstants.SPREADER_GENES)
-            player.sendMessage(TranslationUtils.getText("${TextFormatting.AQUA}${TranslationUtils.getTranslatedText("virus_spreader", "usage", "spread")}"), null)
+            player.sendMessage(TranslationUtils.getCommonTranslation("virus_spreader", "usage", "spread"), player.uuid)
         }
         return ActionResult.pass(stack)
     }

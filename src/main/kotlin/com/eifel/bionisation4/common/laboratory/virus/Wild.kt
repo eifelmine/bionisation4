@@ -7,8 +7,8 @@ import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.config.ConfigProperties
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
 
 class Wild(): AbstractEffect(InternalConstants.VIRUS_WILD_ID, "Wild", EffectType.VIRUS) {
 
@@ -61,7 +61,7 @@ class Wild(): AbstractEffect(InternalConstants.VIRUS_WILD_ID, "Wild", EffectType
         putLong(InternalConstants.EFFECT_MAX_DURATION_KEY, maxDuration)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.showTime = nbtData.getInt(InternalConstants.EFFECT_SHOWTIME_KEY)
         this.maxDuration = nbtData.getLong(InternalConstants.EFFECT_MAX_DURATION_KEY)

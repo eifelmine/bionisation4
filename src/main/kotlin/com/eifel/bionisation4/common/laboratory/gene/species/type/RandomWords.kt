@@ -5,11 +5,11 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.extensions.getBioTicker
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.util.text.StringTextComponent
-import net.minecraftforge.fml.server.ServerLifecycleHooks
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.TextComponent
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.LivingEntity
+import net.minecraftforge.server.ServerLifecycleHooks
 
 class RandomWords(): Gene(InternalConstants.GENE_RANDOM_WORDS_ID, "Random words", true) {
 
@@ -18,7 +18,7 @@ class RandomWords(): Gene(InternalConstants.GENE_RANDOM_WORDS_ID, "Random words"
 
     override fun perform(entity: LivingEntity, effect: AbstractEffect) {
         super.perform(entity, effect)
-        if(entity is ServerPlayerEntity && entity.getBioTicker() % delay == 0){
+        if(entity is ServerPlayer && entity.getBioTicker() % delay == 0){
             val text = mutableListOf<String>()
             repeat (Utils.random.nextInt(1, 5)){
                 text += (1..Utils.random.nextInt(1, 15))
@@ -26,7 +26,7 @@ class RandomWords(): Gene(InternalConstants.GENE_RANDOM_WORDS_ID, "Random words"
                     .map(charPool::get)
                     .joinToString("")
             }
-            ServerLifecycleHooks.getCurrentServer().playerList.players.forEach { it.sendMessage(StringTextComponent("<${entity.name.contents}>: §6${text.joinToString(" ")}"), null) }
+            ServerLifecycleHooks.getCurrentServer().playerList.players.forEach { it.sendMessage(TextComponent("<${entity.name.contents}>: §6${text.joinToString(" ")}"), null) }
         }
     }
 
@@ -39,7 +39,7 @@ class RandomWords(): Gene(InternalConstants.GENE_RANDOM_WORDS_ID, "Random words"
         putInt(InternalConstants.GENE_DELAY_KEY, delay)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)
     }

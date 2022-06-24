@@ -8,15 +8,14 @@ import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntityType
+import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.items.ItemStackHandler
 
-class TileVaccineCreator(type: TileEntityType<*>, size: Int): DefaultMachineTile(type, size) {
-
-    constructor(): this(TileRegistry.VACCINE_CREATOR.get(), 4)
+class TileVaccineCreator(pos: BlockPos, state: BlockState, size: Int): DefaultMachineTile(TileRegistry.VACCINE_CREATOR.get(),  pos, state, size) {
 
     override fun getProcessTime(stack: ItemStack?) = ConfigProperties.defaultVaccineCreatorProcessTime.get()
 
@@ -52,6 +51,6 @@ class TileVaccineCreator(type: TileEntityType<*>, size: Int): DefaultMachineTile
         setChanged()
     }
 
-    override fun createMenu(p0: Int, p1: PlayerInventory, p2: PlayerEntity) = ContainerVaccineCreator(p2.level, this.blockPos, p1, p0, this.dataAccess)
+    override fun createMenu(p0: Int, p1: Inventory, p2: Player) = ContainerVaccineCreator(p2.level, this.blockPos, p1, p0, this.dataAccess)
     override fun getDisplayName() = TranslationUtils.getTranslatedTextComponent("block", "bionisation4", "vaccine_creator")
 }

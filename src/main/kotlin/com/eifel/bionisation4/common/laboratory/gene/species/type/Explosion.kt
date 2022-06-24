@@ -4,8 +4,8 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
 
 class Explosion(): Gene(InternalConstants.GENE_EXPLOSION_ID, "Explosion", true) {
 
@@ -15,7 +15,7 @@ class Explosion(): Gene(InternalConstants.GENE_EXPLOSION_ID, "Explosion", true) 
     override fun perform(entity: LivingEntity, effect: AbstractEffect) {
         super.perform(entity, effect)
         if(entity.getBioTicker() % delay == 0)
-            entity.level.explode(entity, entity.blockPosition().x.toDouble(), entity.blockPosition().y.toDouble(), entity.blockPosition().z.toDouble(), amount, net.minecraft.world.Explosion.Mode.BREAK)
+            entity.level.explode(entity, entity.blockPosition().x.toDouble(), entity.blockPosition().y.toDouble(), entity.blockPosition().z.toDouble(), amount, net.minecraft.world.level.Explosion.BlockInteraction.BREAK)
     }
 
     fun setDelay(delay: Int): Explosion {
@@ -33,7 +33,7 @@ class Explosion(): Gene(InternalConstants.GENE_EXPLOSION_ID, "Explosion", true) 
         putFloat(InternalConstants.GENE_AMOUNT_KEY, amount)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)
         this.amount = nbtData.getFloat(InternalConstants.GENE_AMOUNT_KEY)

@@ -5,8 +5,8 @@ import com.eifel.bionisation4.api.laboratory.util.INBTSerializable
 import com.eifel.bionisation4.common.config.OverrideHandler
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
@@ -70,7 +70,7 @@ abstract class Gene() : INBTSerializable {
 
     open fun onDeath(event: LivingDeathEvent, entity: LivingEntity, effect: AbstractEffect) {}
 
-    override fun toNBT() = CompoundNBT().apply {
+    override fun toNBT() = CompoundTag().apply {
         putInt(InternalConstants.GENE_ID_KEY, getID())
         putInt(InternalConstants.GENE_POWER_KEY, overriddenPower)
         putInt(InternalConstants.GENE_CYCLIC_KEY, cyclicDelay)
@@ -82,7 +82,7 @@ abstract class Gene() : INBTSerializable {
         NBTUtils.objectsToNBT(this, potions, InternalConstants.GENE_POTIONS_KEY)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         this.id = nbtData.getInt(InternalConstants.GENE_ID_KEY)
         this.overriddenPower = nbtData.getInt(InternalConstants.GENE_POWER_KEY)
         this.cyclicDelay = nbtData.getInt(InternalConstants.GENE_CYCLIC_KEY)

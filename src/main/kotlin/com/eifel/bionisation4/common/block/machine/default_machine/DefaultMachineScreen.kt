@@ -1,33 +1,36 @@
 package com.eifel.bionisation4.common.block.machine.default_machine
 
-import com.mojang.blaze3d.matrix.MatrixStack
 import com.mojang.blaze3d.systems.RenderSystem
+import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.screen.inventory.ContainerScreen
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.ITextComponent
-import net.minecraftforge.fml.client.gui.GuiUtils
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
+import net.minecraft.client.renderer.GameRenderer
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.player.Inventory
+import net.minecraftforge.client.gui.GuiUtils
 
-abstract class DefaultMachineScreen <T: DefaultMachineContainer<*>> (val container: T, playerInv: PlayerInventory, title: ITextComponent): ContainerScreen<T>(container, playerInv, title) {
+
+abstract class DefaultMachineScreen <T: DefaultMachineContainer<*>> (val container: T, playerInv: Inventory, title: Component): AbstractContainerScreen<T>(container, playerInv, title) {
 
     private var mc = Minecraft.getInstance()
 
     abstract fun getTexture(): ResourceLocation
 
-    override fun renderLabels(matrixStack: MatrixStack, x: Int, y: Int) {
+    override fun renderLabels(matrixStack: PoseStack, x: Int, y: Int) {
         font.draw(matrixStack, title, this.xSize / 2f - mc.font.width(getTitle()) / 2f, titleLabelY.toFloat(), 4210752)
     }
 
-    override fun render(matrixStack: MatrixStack?, mouseX: Int, mouseY: Int, partialTicks: Float) {
+    override fun render(matrixStack: PoseStack?, mouseX: Int, mouseY: Int, partialTicks: Float) {
         this.renderBackground(matrixStack)
         super.render(matrixStack, mouseX, mouseY, partialTicks)
         this.renderTooltip(matrixStack, mouseX, mouseY)
     }
 
-    override fun renderBg(matrixStack: MatrixStack, ticks: Float, x: Int, y: Int) {
-        RenderSystem.color4f(1f, 1f, 1f, 1f)
-        mc.textureManager.bind(getTexture())
+    override fun renderBg(matrixStack: PoseStack, ticks: Float, x: Int, y: Int) {
+        RenderSystem.setShader { GameRenderer.getPositionTexShader() }
+        RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
+        RenderSystem.setShaderTexture(0, this.getTexture())
         val i = this.guiLeft
         val j = this.guiTop
         this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize)

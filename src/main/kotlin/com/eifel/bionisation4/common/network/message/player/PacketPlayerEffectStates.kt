@@ -6,24 +6,24 @@ import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import net.minecraft.client.Minecraft
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.network.PacketBuffer
-import net.minecraftforge.fml.network.NetworkDirection
-import net.minecraftforge.fml.network.NetworkEvent
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraftforge.network.NetworkDirection
+import net.minecraftforge.network.NetworkEvent
 import java.util.function.BiConsumer
 import java.util.function.Function
 import java.util.function.Supplier
 
-class PacketPlayerEffectStates(var nbt: CompoundNBT, var mode: Int) {
+class PacketPlayerEffectStates(var nbt: CompoundTag, var mode: Int) {
 
     companion object {
 
-        val toBytes = BiConsumer<PacketPlayerEffectStates, PacketBuffer> { msg, buffer ->
+        val toBytes = BiConsumer<PacketPlayerEffectStates, FriendlyByteBuf> { msg, buffer ->
             buffer.writeNbt(msg.nbt)
             buffer.writeInt(msg.mode)
         }
 
-        val fromBytes = Function<PacketBuffer, PacketPlayerEffectStates> { buffer ->
+        val fromBytes = Function<FriendlyByteBuf, PacketPlayerEffectStates> { buffer ->
             PacketPlayerEffectStates(buffer.readNbt()!!, buffer.readInt())
         }
 

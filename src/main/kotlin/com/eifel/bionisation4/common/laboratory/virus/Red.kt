@@ -9,9 +9,10 @@ import com.eifel.bionisation4.common.laboratory.gene.species.potion.Weakness
 import com.eifel.bionisation4.common.laboratory.gene.species.type.Aggressive
 import com.eifel.bionisation4.common.laboratory.gene.species.type.AirSpread
 import com.eifel.bionisation4.common.laboratory.gene.species.type.AttackSpread
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.monster.SpiderEntity
-import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.monster.Spider
+import net.minecraft.world.entity.player.Player
+
 
 class Red(): AbstractEffect(InternalConstants.VIRUS_RED_ID, "Red", EffectType.VIRUS) {
 
@@ -33,12 +34,12 @@ class Red(): AbstractEffect(InternalConstants.VIRUS_RED_ID, "Red", EffectType.VI
         super.onTick(entity, isLastTick)
         if(timeTicker == 10){
             when(entity){
-                is PlayerEntity -> {
+                is Player -> {
                     activateGene(InternalConstants.GENE_JUMP_ID)
                     activateGene(InternalConstants.GENE_WEAKNESS_ID)
                 }
                 is LivingEntity -> {
-                    if(entity !is SpiderEntity)
+                    if(entity !is Spider)
                         activateGene(InternalConstants.GENE_POISON_ID)
                 }
             }

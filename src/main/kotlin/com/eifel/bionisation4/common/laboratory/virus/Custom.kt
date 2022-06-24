@@ -6,8 +6,8 @@ import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.config.ConfigProperties
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
 
 class Custom(): AbstractEffect(InternalConstants.VIRUS_CUSTOM_ID, "Custom", EffectType.VIRUS) {
 
@@ -43,7 +43,7 @@ class Custom(): AbstractEffect(InternalConstants.VIRUS_CUSTOM_ID, "Custom", Effe
         putInt(InternalConstants.EFFECT_SHOWTIME_KEY, showTime)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.showTime = nbtData.getInt(InternalConstants.EFFECT_SHOWTIME_KEY)
     }

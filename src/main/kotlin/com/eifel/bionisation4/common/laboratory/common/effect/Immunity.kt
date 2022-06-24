@@ -4,7 +4,7 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.extensions.modifyImmunity
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 
 class Immunity(): AbstractEffect(InternalConstants.EFFECT_IMMUNITY_ID, "Immunity", EffectType.COMMON) {
 

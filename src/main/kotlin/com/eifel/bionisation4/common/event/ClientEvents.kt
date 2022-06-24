@@ -11,19 +11,20 @@ import com.eifel.bionisation4.common.extensions.getEffects
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import com.mojang.blaze3d.systems.RenderSystem
+import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
-import net.minecraft.client.resources.I18n
-import net.minecraft.entity.LivingEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.StringTextComponent
-import net.minecraft.util.text.TextFormatting
+import net.minecraft.client.renderer.GameRenderer
+import net.minecraft.client.resources.language.I18n
+import net.minecraft.network.chat.TextComponent
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.ItemStack
 import net.minecraftforge.client.event.RenderGameOverlayEvent
+import net.minecraftforge.client.gui.GuiUtils.drawTexturedModalRect
 import net.minecraftforge.event.TickEvent.PlayerTickEvent
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.client.gui.GuiUtils.drawTexturedModalRect
 
 
 object ClientEvents {
@@ -39,15 +40,15 @@ object ClientEvents {
     @SubscribeEvent
     fun onRenderTooltip(event: ItemTooltipEvent){
         EffectRegistry.getDrops().filterValues { ItemStack.isSame(it.second, event.itemStack) }.forEach { key, value ->
-            event.toolTip.add(StringTextComponent(""))
+            event.toolTip.add(TextComponent(""))
             event.toolTip.add(TranslationUtils.getText(TranslationUtils.getTranslatedText("item", "drop", "tooltip1") + " §e${I18n.get(key.toString())} " + TranslationUtils.getTranslatedText("item", "drop", "tooltip2") + "§b${value.first}%"))
         }
         val data = EffectRegistry.getGeneVials().filter { ItemStack.isSame(it.value, event.itemStack) }
         if(data.isNotEmpty()) {
-            event.toolTip.add(StringTextComponent(""))
+            event.toolTip.add(TextComponent(""))
             event.toolTip.add(TranslationUtils.getTranslatedTextComponent("item", "gene", "tooltip"))
             data.forEach { (gene, stack) ->
-                event.toolTip.add(StringTextComponent("§7" +  EffectRegistry.getGeneInstance(gene).getTranslationName()))
+                event.toolTip.add(TextComponent("§7" +  EffectRegistry.getGeneInstance(gene).getTranslationName()))
             }
         }
     }
@@ -61,7 +62,8 @@ object ClientEvents {
                 val ms = event.matrixStack
                 val x = event.window.guiScaledWidth - t_width - 30
                 val y = event.window.guiScaledHeight - 20
-                mc.textureManager.bind(BLOOD_BAR_TEXTURE)
+                RenderSystem.setShader { GameRenderer.getPositionTexShader() }
+                RenderSystem.setShaderTexture(0, BLOOD_BAR_TEXTURE)
                 RenderSystem.enableBlend()
                 drawTexturedModalRect(ms, x, y, 0, 0, t_width, t_height, 0f)
                 drawTexturedModalRect(ms, x, y, 0, 12, (level.toFloat() / 100 * t_width).toInt(), t_height - 1, 0f)
@@ -92,14 +94,14 @@ object ClientEvents {
         VersionChecker.checker?.let { checker ->
             if (ConfigProperties.showUpdates.get() && !VersionChecker.wasWarned && !checker.isLatestVersion) {
                 if (checker.latestVersion.isEmpty() || checker.newVersionURL.isEmpty() || checker.changes.isEmpty()) {
-                    event.player.sendMessage(TranslationUtils.getText("${TextFormatting.RED}${TranslationUtils.getTranslatedText("checker", "message", "cant")}"), null)
+                    event.player.sendMessage(TranslationUtils.getText("${ChatFormatting.RED}${TranslationUtils.getTranslatedText("checker", "message", "cant")}"), null)
                     VersionChecker.wasWarned = true
                 } else {
-                    event.player.sendMessage(TranslationUtils.getText("${TextFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker","message","version")} ${TextFormatting.AQUA}${checker.latestVersion} ${TextFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message", "av")} ${TextFormatting.BLUE}${checker.newVersionURL}"), null)
+                    event.player.sendMessage(TranslationUtils.getText("${ChatFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker","message","version")} ${ChatFormatting.AQUA}${checker.latestVersion} ${ChatFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message", "av")} ${ChatFormatting.BLUE}${checker.newVersionURL}"), null)
                     event.player.sendMessage(TranslationUtils.getText(" "), null)
-                    event.player.sendMessage(TranslationUtils.getText("${TextFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message","changes")}"), null)
+                    event.player.sendMessage(TranslationUtils.getText("${ChatFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message","changes")}"), null)
                     checker.changes.forEach { change ->
-                        event.player.sendMessage(TranslationUtils.getText("${TextFormatting.GRAY}$change"), null)
+                        event.player.sendMessage(TranslationUtils.getText("${ChatFormatting.GRAY}$change"), null)
                     }
                     VersionChecker.wasWarned = true
                 }

@@ -9,9 +9,9 @@ import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.getEffects
 import com.eifel.bionisation4.util.nbt.NBTUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.util.DamageSource
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.LivingEntity
 
 class Vaccine(): AbstractEffect(InternalConstants.EFFECT_VACCINE_ID, "Vaccine", EffectType.COMMON) {
 
@@ -47,7 +47,7 @@ class Vaccine(): AbstractEffect(InternalConstants.EFFECT_VACCINE_ID, "Vaccine", 
         NBTUtils.objectsToNBT(this, against, InternalConstants.VACCINE_VIRUS)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.against.clear()
         NBTUtils.nbtToObjects(nbtData, against, InternalConstants.VACCINE_VIRUS, EffectEntry::class.java)

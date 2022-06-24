@@ -5,9 +5,11 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.MovementSpeed
 import com.eifel.bionisation4.common.laboratory.gene.species.type.ImmunityDamage
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Items
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+
 
 class Bone(): AbstractEffect(InternalConstants.BACTERIA_BONE_ID, "Bone", EffectType.BACTERIA) {
 
@@ -23,8 +25,10 @@ class Bone(): AbstractEffect(InternalConstants.BACTERIA_BONE_ID, "Bone", EffectT
 
     override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         super.onTick(entity, isLastTick)
-        if(entity is PlayerEntity && entity.mainHandItem.item == Items.BOW)
-            entity.drop(true)
+        if(entity is Player && entity.inventory.getSelected().item == Items.BOW) {
+            entity.drop(entity.inventory.getSelected(), true)
+            entity.inventory.setItem(entity.inventory.selected, ItemStack.EMPTY)
+        }
     }
 
     override fun getCopy() = Bone()

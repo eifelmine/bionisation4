@@ -5,17 +5,19 @@ import com.eifel.bionisation4.api.jei.recipes.VirusReplicatorRecipe
 import com.eifel.bionisation4.common.block.BlockRegistry
 import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import com.mojang.blaze3d.matrix.MatrixStack
+import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
 import net.minecraft.client.Minecraft
-import net.minecraft.client.resources.I18n
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.resources.language.I18n
+import net.minecraft.network.chat.TextComponent
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+
 
 class VirusReplicatorRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<VirusReplicatorRecipe> {
 
@@ -28,7 +30,7 @@ class VirusReplicatorRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<Vi
 
     override fun getUid() = UUID
     override fun getRecipeClass() = VirusReplicatorRecipe::class.java
-    override fun getTitle() = TranslationUtils.getTranslatedText("jei", "title", "virus_replicator")
+    override fun getTitle() = TextComponent(TranslationUtils.getTranslatedText("jei", "title", "virus_replicator"))
     override fun getBackground() = GUI
     override fun getIcon() = ICON
 
@@ -46,7 +48,7 @@ class VirusReplicatorRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<Vi
         isg[3] = ItemStack(Items.COAL)
     }
 
-    override fun draw(recipe: VirusReplicatorRecipe, matrixStack: MatrixStack, mouseX: Double, mouseY: Double) {
+    override fun draw(recipe: VirusReplicatorRecipe, matrixStack: PoseStack, mouseX: Double, mouseY: Double) {
         super.draw(recipe, matrixStack, mouseX, mouseY)
         Minecraft.getInstance().font.draw(matrixStack, I18n.get("gui.jei.category.smelting.time.seconds", ConfigProperties.defaultVirusReplicatorProcessTime.get() / 20), 88f, 8f, 0x000000)
     }

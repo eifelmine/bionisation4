@@ -9,8 +9,8 @@ import com.eifel.bionisation4.common.network.message.mob.PacketMobSimpleEffectSt
 import com.eifel.bionisation4.common.network.message.player.PacketPlayerEffectStates
 import com.eifel.bionisation4.common.network.message.player.PacketPlayerPropertySync
 import com.eifel.bionisation4.common.network.message.player.PacketPlayerSimpleEffectStates
-import net.minecraft.util.ResourceLocation
-import net.minecraftforge.fml.network.NetworkRegistry
+import net.minecraft.resources.ResourceLocation
+import net.minecraftforge.network.NetworkRegistry
 
 
 object NetworkManager {

@@ -1,18 +1,18 @@
 package com.eifel.bionisation4.client.particle.particles
 
+import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.*
-import net.minecraft.client.world.ClientWorld
-import net.minecraft.particles.BasicParticleType
+import net.minecraft.core.particles.SimpleParticleType
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class BlackParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
+class BlackParticle(worldIn: ClientLevel, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
 
 @OnlyIn(Dist.CLIENT)
-class BlackParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<BasicParticleType> {
+class BlackParticleFactory(val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
 
-    override fun createParticle(typeIn: BasicParticleType, worldIn: ClientWorld, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
+    override fun createParticle(typeIn: SimpleParticleType, worldIn: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
         val black = BlackParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
         black.setColor(1.0f, 1.0f, 1.0f)
         black.pickSprite(spriteSet)
@@ -21,7 +21,7 @@ class BlackParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<Ba
 }
 
 @OnlyIn(Dist.CLIENT)
-class BloodParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): SpriteTexturedParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn) {
+class BloodParticle(worldIn: ClientLevel, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): TextureSheetParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn) {
 
     init {
         this.setLifetime(100)
@@ -31,13 +31,13 @@ class BloodParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zC
         this.hasPhysics = true
     }
 
-    override fun getRenderType() = IParticleRenderType.PARTICLE_SHEET_OPAQUE
+    override fun getRenderType() = ParticleRenderType.PARTICLE_SHEET_OPAQUE
 }
 
 @OnlyIn(Dist.CLIENT)
-class BloodParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<BasicParticleType> {
+class BloodParticleFactory(val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
 
-    override fun createParticle(typeIn: BasicParticleType, worldIn: ClientWorld, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
+    override fun createParticle(typeIn: SimpleParticleType, worldIn: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
         val blood = BloodParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
         blood.setColor(1.0f, 1.0f, 1.0f)
         blood.pickSprite(spriteSet)
@@ -46,12 +46,12 @@ class BloodParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<Ba
 }
 
 @OnlyIn(Dist.CLIENT)
-class BrownParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
+class BrownParticle(worldIn: ClientLevel, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
 
 @OnlyIn(Dist.CLIENT)
-class BrownParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<BasicParticleType> {
+class BrownParticleFactory(val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
 
-    override fun createParticle(typeIn: BasicParticleType, worldIn: ClientWorld, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
+    override fun createParticle(typeIn: SimpleParticleType, worldIn: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
         val brown = BrownParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
         brown.setColor(1.0f, 1.0f, 1.0f)
         brown.pickSprite(spriteSet)
@@ -60,12 +60,12 @@ class BrownParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<Ba
 }
 
 @OnlyIn(Dist.CLIENT)
-class EnderParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
+class EnderParticle(worldIn: ClientLevel, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
 
 @OnlyIn(Dist.CLIENT)
-class EnderParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<BasicParticleType> {
+class EnderParticleFactory(val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
 
-    override fun createParticle(typeIn: BasicParticleType, worldIn: ClientWorld, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
+    override fun createParticle(typeIn: SimpleParticleType, worldIn: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
         val ender = EnderParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
         ender.setColor(1.0f, 1.0f, 1.0f)
         ender.pickSprite(spriteSet)
@@ -74,12 +74,12 @@ class EnderParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<Ba
 }
 
 @OnlyIn(Dist.CLIENT)
-class GiantParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
+class GiantParticle(worldIn: ClientLevel, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
 
 @OnlyIn(Dist.CLIENT)
-class GiantParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<BasicParticleType> {
+class GiantParticleFactory(val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
 
-    override fun createParticle(typeIn: BasicParticleType, worldIn: ClientWorld, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
+    override fun createParticle(typeIn: SimpleParticleType, worldIn: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
         val giant = GiantParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
         giant.setColor(1.0f, 1.0f, 1.0f)
         giant.pickSprite(spriteSet)
@@ -88,12 +88,12 @@ class GiantParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<Ba
 }
 
 @OnlyIn(Dist.CLIENT)
-class GrayParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
+class GrayParticle(worldIn: ClientLevel, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
 
 @OnlyIn(Dist.CLIENT)
-class GrayParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<BasicParticleType> {
+class GrayParticleFactory(val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
 
-    override fun createParticle(typeIn: BasicParticleType, worldIn: ClientWorld, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
+    override fun createParticle(typeIn: SimpleParticleType, worldIn: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
         val gray = GrayParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
         gray.setColor(1.0f, 1.0f, 1.0f)
         gray.pickSprite(spriteSet)
@@ -102,12 +102,12 @@ class GrayParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<Bas
 }
 
 @OnlyIn(Dist.CLIENT)
-class GreenParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
+class GreenParticle(worldIn: ClientLevel, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
 
 @OnlyIn(Dist.CLIENT)
-class GreenParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<BasicParticleType> {
+class GreenParticleFactory(val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
 
-    override fun createParticle(typeIn: BasicParticleType, worldIn: ClientWorld, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
+    override fun createParticle(typeIn: SimpleParticleType, worldIn: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
         val green = GreenParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
         green.setColor(1.0f, 1.0f, 1.0f)
         green.pickSprite(spriteSet)
@@ -116,12 +116,12 @@ class GreenParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<Ba
 }
 
 @OnlyIn(Dist.CLIENT)
-class RedParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
+class RedParticle(worldIn: ClientLevel, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): BasicVirusParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn)
 
 @OnlyIn(Dist.CLIENT)
-class RedParticleFactory(val spriteSet: IAnimatedSprite) : IParticleFactory<BasicParticleType> {
+class RedParticleFactory(val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
 
-    override fun createParticle(typeIn: BasicParticleType, worldIn: ClientWorld, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
+    override fun createParticle(typeIn: SimpleParticleType, worldIn: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double): Particle {
         val red = RedParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
         red.setColor(1.0f, 1.0f, 1.0f)
         red.pickSprite(spriteSet)

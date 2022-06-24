@@ -6,10 +6,11 @@ import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.extensions.expire
 import com.eifel.bionisation4.common.extensions.getBioTicker
 import com.eifel.bionisation4.common.extensions.getImmunity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 
 class Fatigue(): AbstractEffect(InternalConstants.EFFECT_FATIGUE_ID, "Fatigue", EffectType.COMMON) {
 
@@ -21,10 +22,12 @@ class Fatigue(): AbstractEffect(InternalConstants.EFFECT_FATIGUE_ID, "Fatigue", 
 
     override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         super.onTick(entity, isLastTick)
-        entity.addEffect(EffectInstance(Effects.WEAKNESS, 100, effectPower))
-        if(entity is PlayerEntity) {
-            if (entity.getBioTicker() % 100 == 0)
-                entity.drop(true)
+        entity.addEffect(MobEffectInstance(MobEffects.WEAKNESS, 100, effectPower))
+        if(entity is Player) {
+            if (entity.getBioTicker() % 100 == 0) {
+                entity.drop(entity.inventory.getSelected(), true)
+                entity.inventory.setItem(entity.inventory.selected, ItemStack.EMPTY)
+            }
         }
         if(entity.getImmunity() > 30)
             entity.expire(this.effectID)

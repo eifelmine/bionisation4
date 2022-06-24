@@ -5,24 +5,24 @@ import com.eifel.bionisation4.common.core.BionisationTab
 import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.laboratory.common.effect.Immunity
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.client.util.ITooltipFlag
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.BlockItem
-import net.minecraft.item.Food
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Rarity
-import net.minecraft.util.text.ITextComponent
-import net.minecraft.util.text.TextFormatting
-import net.minecraft.world.World
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.food.FoodProperties
+import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.level.Level
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-class GarlicBulb(): BlockItem(BlockRegistry.GARLIC.get(), Properties().stacksTo(64).rarity(Rarity.UNCOMMON).tab(BionisationTab.BIONISATION_TAB).food(Food.Builder().alwaysEat().fast().build())) {
+class GarlicBulb(): BlockItem(BlockRegistry.GARLIC.get(), Properties().stacksTo(64).rarity(Rarity.UNCOMMON).tab(BionisationTab.BIONISATION_TAB).food(FoodProperties.Builder().alwaysEat().fast().build())) {
 
-    override fun finishUsingItem(stack: ItemStack, world: World?, entity: LivingEntity?): ItemStack {
+    override fun finishUsingItem(stack: ItemStack, world: Level?, entity: LivingEntity?): ItemStack {
         val itemStack = super.finishUsingItem(stack, world, entity)
-        (entity as? PlayerEntity)?.let { player ->
+        (entity as? Player)?.let { player ->
             if(!player.level.isClientSide) {
                 player.addEffect(Immunity())
                 itemStack.shrink(1)
@@ -32,9 +32,9 @@ class GarlicBulb(): BlockItem(BlockRegistry.GARLIC.get(), Properties().stacksTo(
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun appendHoverText(stack: ItemStack, world: World?, info: MutableList<ITextComponent>, flag: ITooltipFlag) {
+    override fun appendHoverText(stack: ItemStack, world: Level?, info: MutableList<Component>, flag: TooltipFlag) {
         super.appendHoverText(stack, world, info, flag)
         info.add(TranslationUtils.getText(" "))
-        info.add(TranslationUtils.getText("${TextFormatting.GOLD}${TranslationUtils.getTranslatedText("garlic", "usage", "desc")}"))
+        info.add(TranslationUtils.getText("${ChatFormatting.GOLD}${TranslationUtils.getTranslatedText("garlic", "usage", "desc")}"))
     }
 }

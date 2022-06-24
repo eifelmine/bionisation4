@@ -3,11 +3,11 @@ package com.eifel.bionisation4.common.laboratory.gene.species.type
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
-import net.minecraft.entity.CreatureEntity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.MobEntity
-import net.minecraft.entity.ai.goal.HurtByTargetGoal
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.Mob
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal
+import net.minecraft.world.entity.monster.Monster
 import kotlin.streams.toList
 
 class Peaceful(): Gene(InternalConstants.GENE_PEACEFUL_ID, "Peaceful", true) {
@@ -18,10 +18,10 @@ class Peaceful(): Gene(InternalConstants.GENE_PEACEFUL_ID, "Peaceful", true) {
         super.perform(entity, effect)
         if(!wasAIReplaced){
             when(entity){
-                is CreatureEntity -> {
+                is Monster -> {
                     applier(entity)
                 }
-                is MobEntity -> {
+                is Mob -> {
                     applier(entity)
                 }
             }
@@ -29,7 +29,7 @@ class Peaceful(): Gene(InternalConstants.GENE_PEACEFUL_ID, "Peaceful", true) {
         }
     }
 
-    private val applier: (MobEntity) -> Unit = { entity ->
+    private val applier: (Mob) -> Unit = { entity ->
         entity.targetSelector.runningGoals.toList().filter { it is NearestAttackableTargetGoal<*> || it is HurtByTargetGoal }.forEach {
             entity.targetSelector.removeGoal(it)
         }

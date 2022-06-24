@@ -5,7 +5,7 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.MovementSpeed
 import com.eifel.bionisation4.common.laboratory.gene.species.type.ImmunityDamage
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 
 class Sea(): AbstractEffect(InternalConstants.BACTERIA_SEA_ID, "Sea", EffectType.BACTERIA) {
 

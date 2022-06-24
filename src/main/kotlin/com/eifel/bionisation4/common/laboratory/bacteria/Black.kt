@@ -5,9 +5,9 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.Blindness
 import com.eifel.bionisation4.common.laboratory.gene.species.type.ImmunityDamage
-import net.minecraft.entity.LivingEntity
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 
 class Black(): AbstractEffect(InternalConstants.BACTERIA_BLACK_ID, "Black", EffectType.BACTERIA) {
@@ -25,7 +25,7 @@ class Black(): AbstractEffect(InternalConstants.BACTERIA_BLACK_ID, "Black", Effe
 
     override fun onAttack(event: LivingAttackEvent, victim: LivingEntity, attacker: LivingEntity) {
         super.onAttack(event, victim, attacker)
-        victim.addEffect(EffectInstance(Effects.POISON, 100, 2))
+        victim.addEffect(MobEffectInstance(MobEffects.POISON, 100, 2))
     }
 
     override fun getCopy() = Black()

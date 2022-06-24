@@ -4,8 +4,8 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.common.item.armor.BioArmor
 import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatProvider
-import net.minecraft.entity.LivingEntity
-import net.minecraft.world.biome.Biome
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.level.biome.Biome
 
 inline fun LivingEntity.doWithCap(crossinline action: (BioStat) -> Unit)  = this.getCapability(BioStatProvider.BIO_STAT_CAPABILITY).ifPresent { cap ->
     action(cap as BioStat)
@@ -79,7 +79,7 @@ inline fun LivingEntity.getDiscoveredEffects() = this.getCapability(BioStatProvi
     (it as BioStat).discoveredEffects
 } ?: mutableListOf()
 
-inline fun LivingEntity.isInBiome(type: Biome.Category) = this.level.getBiome(this.blockPosition()).biomeCategory == type
+inline fun LivingEntity.isInBiome(type: Biome.BiomeCategory) = Biome.getBiomeCategory(this.level.getBiome(this.blockPosition())) == type
 
 inline fun LivingEntity.hasArmor(isFull: Boolean) = if(isFull) this.armorSlots.all { !it.isEmpty } else this.armorSlots.any { !it.isEmpty }
 

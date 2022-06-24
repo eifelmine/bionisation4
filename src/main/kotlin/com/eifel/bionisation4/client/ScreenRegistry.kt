@@ -5,14 +5,14 @@ import com.eifel.bionisation4.common.block.machine.cure_station.ScreenCureStatio
 import com.eifel.bionisation4.common.block.machine.dna_modifier.ScreenDNAModifier
 import com.eifel.bionisation4.common.block.machine.vaccine_creator.ScreenVaccineCreator
 import com.eifel.bionisation4.common.block.machine.virus_replicator.ScreenVirusReplicator
-import net.minecraft.client.gui.ScreenManager
+import net.minecraft.client.gui.screens.MenuScreens
 
 object ScreenRegistry {
 
     fun registerScreens(){
-        ScreenManager.register(ContainerRegistry.VACCINE_CREATOR_CONTAINER.get(), ::ScreenVaccineCreator)
-        ScreenManager.register(ContainerRegistry.DNA_MODIFIER_CONTAINER.get(), ::ScreenDNAModifier)
-        ScreenManager.register(ContainerRegistry.CURE_STATION_CONTAINER.get(), ::ScreenCureStation)
-        ScreenManager.register(ContainerRegistry.VIRUS_REPLICATOR_CONTAINER.get(), ::ScreenVirusReplicator)
+        MenuScreens.register(ContainerRegistry.VACCINE_CREATOR_CONTAINER.get(), ::ScreenVaccineCreator)
+        MenuScreens.register(ContainerRegistry.DNA_MODIFIER_CONTAINER.get(), ::ScreenDNAModifier)
+        MenuScreens.register(ContainerRegistry.CURE_STATION_CONTAINER.get(), ::ScreenCureStation)
+        MenuScreens.register(ContainerRegistry.VIRUS_REPLICATOR_CONTAINER.get(), ::ScreenVirusReplicator)
     }
 }

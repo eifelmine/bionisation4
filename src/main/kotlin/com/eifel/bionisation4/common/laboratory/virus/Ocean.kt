@@ -5,10 +5,10 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.laboratory.gene.species.type.AttackSpread
 import com.eifel.bionisation4.common.laboratory.gene.species.type.Ground
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 
 class Ocean(): AbstractEffect(InternalConstants.VIRUS_OCEAN_ID, "Ocean", EffectType.VIRUS) {
 
@@ -24,12 +24,12 @@ class Ocean(): AbstractEffect(InternalConstants.VIRUS_OCEAN_ID, "Ocean", EffectT
 
     override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         super.onTick(entity, isLastTick)
-        if(entity is PlayerEntity) {
+        if(entity is Player) {
             if (timeTicker == 10)
                 activateGenes()
             if(entity.isInWater) {
-                entity.addEffect(EffectInstance(Effects.MOVEMENT_SPEED, 100, 2))
-                entity.addEffect(EffectInstance(Effects.REGENERATION, 100, 2))
+                entity.addEffect(MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2))
+                entity.addEffect(MobEffectInstance(MobEffects.REGENERATION, 100, 2))
             }
         }
     }

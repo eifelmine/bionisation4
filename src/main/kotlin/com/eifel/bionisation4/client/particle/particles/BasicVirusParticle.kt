@@ -1,13 +1,13 @@
 package com.eifel.bionisation4.client.particle.particles
 
-import net.minecraft.client.particle.IParticleRenderType
-import net.minecraft.client.particle.SpriteTexturedParticle
-import net.minecraft.client.world.ClientWorld
+import net.minecraft.client.multiplayer.ClientLevel
+import net.minecraft.client.particle.ParticleRenderType
+import net.minecraft.client.particle.TextureSheetParticle
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-abstract class BasicVirusParticle(worldIn: ClientWorld, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): SpriteTexturedParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn) {
+abstract class BasicVirusParticle(worldIn: ClientLevel, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double): TextureSheetParticle(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn) {
 
     private var xStart = 0.0
     private var yStart = 0.0
@@ -38,5 +38,5 @@ abstract class BasicVirusParticle(worldIn: ClientWorld, xCoordIn: Double, yCoord
         }
     }
 
-    override fun getRenderType() = IParticleRenderType.PARTICLE_SHEET_OPAQUE
+    override fun getRenderType() = ParticleRenderType.PARTICLE_SHEET_OPAQUE
 }

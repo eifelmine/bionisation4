@@ -5,17 +5,19 @@ import com.eifel.bionisation4.api.jei.recipes.VaccineCreatorRecipe
 import com.eifel.bionisation4.common.block.BlockRegistry
 import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import com.mojang.blaze3d.matrix.MatrixStack
+import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
 import net.minecraft.client.Minecraft
-import net.minecraft.client.resources.I18n
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.resources.language.I18n
+import net.minecraft.network.chat.TextComponent
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+
 
 class VaccineCreatorRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<VaccineCreatorRecipe> {
 
@@ -28,7 +30,7 @@ class VaccineCreatorRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<Vac
 
     override fun getUid() = UUID
     override fun getRecipeClass() = VaccineCreatorRecipe::class.java
-    override fun getTitle() = TranslationUtils.getTranslatedText("jei", "title", "vaccine_creator")
+    override fun getTitle() = TextComponent(TranslationUtils.getTranslatedText("jei", "title", "vaccine_creator"))
     override fun getBackground() = GUI
     override fun getIcon() = ICON
 
@@ -48,7 +50,7 @@ class VaccineCreatorRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<Vac
         isg[3] = ItemStack(Items.COAL)
     }
 
-    override fun draw(recipe: VaccineCreatorRecipe, matrixStack: MatrixStack, mouseX: Double, mouseY: Double) {
+    override fun draw(recipe: VaccineCreatorRecipe, matrixStack: PoseStack, mouseX: Double, mouseY: Double) {
         super.draw(recipe, matrixStack, mouseX, mouseY)
         Minecraft.getInstance().font.draw(matrixStack, I18n.get("gui.jei.category.smelting.time.seconds", ConfigProperties.defaultVaccineCreatorProcessTime.get() / 20), 88f, 8f, 0x000000)
     }

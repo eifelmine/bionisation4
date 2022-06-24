@@ -1,6 +1,6 @@
 package com.eifel.bionisation4.api.laboratory.util
 
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 
 interface IGenePotion : INBTSerializable {
 

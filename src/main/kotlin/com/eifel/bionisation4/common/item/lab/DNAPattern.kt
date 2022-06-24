@@ -8,20 +8,20 @@ import com.eifel.bionisation4.common.item.CommonItem
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.client.util.ITooltipFlag
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Rarity
-import net.minecraft.util.NonNullList
-import net.minecraft.util.text.ITextComponent
-import net.minecraft.util.text.TextFormatting
-import net.minecraft.world.World
+import net.minecraft.ChatFormatting
+import net.minecraft.core.NonNullList
+import net.minecraft.network.chat.Component
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.level.Level
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
 class DNAPattern(): CommonItem(desc = listOf(Triple("dna_pattern", "usage", "desc")), rarity = Rarity.RARE, size = 1) {
 
-    override fun fillItemCategory(group: ItemGroup, list: NonNullList<ItemStack>) {
+    override fun fillItemCategory(group: CreativeModeTab, list: NonNullList<ItemStack>) {
         if(group == BionisationTab.BIONISATION_TAB) {
             EffectRegistry.getGenes().forEach { (id, clazz) ->
                 val pattern = ItemStack(ItemRegistry.DNA_PATTERN.get())
@@ -34,7 +34,7 @@ class DNAPattern(): CommonItem(desc = listOf(Triple("dna_pattern", "usage", "des
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun appendHoverText(stack: ItemStack, world: World?, info: MutableList<ITextComponent>, flag: ITooltipFlag) {
+    override fun appendHoverText(stack: ItemStack, world: Level?, info: MutableList<Component>, flag: TooltipFlag) {
         val data = NBTUtils.getNBT(stack)
         var noGenes = true
         if(data.contains(InternalConstants.PATTERN_GENES)) {
@@ -45,7 +45,7 @@ class DNAPattern(): CommonItem(desc = listOf(Triple("dna_pattern", "usage", "des
                 info.add(TranslationUtils.getText(" "))
                 info.add(TranslationUtils.getTranslatedTextComponent("dna_pattern", "info", "genes"))
                 genes.forEach { gene ->
-                    info.add(TranslationUtils.getText("    ${TextFormatting.GRAY}-${TextFormatting.YELLOW} ${TranslationUtils.getTranslatedText("gene", gene.unlocName, "name")}"))
+                    info.add(TranslationUtils.getText("    ${ChatFormatting.GRAY}-${ChatFormatting.YELLOW} ${TranslationUtils.getTranslatedText("gene", gene.unlocName, "name")}"))
                 }
             }
         }

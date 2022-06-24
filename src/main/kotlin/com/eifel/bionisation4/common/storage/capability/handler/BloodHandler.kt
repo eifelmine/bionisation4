@@ -1,6 +1,7 @@
 package com.eifel.bionisation4.common.storage.capability.handler
 
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
+
 
 object BloodHandler {
 

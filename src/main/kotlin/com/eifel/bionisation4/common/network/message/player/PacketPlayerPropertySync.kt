@@ -3,9 +3,9 @@ package com.eifel.bionisation4.common.network.message.player
 import com.eifel.bionisation4.common.extensions.setBlood
 import com.eifel.bionisation4.common.extensions.setImmunity
 import net.minecraft.client.Minecraft
-import net.minecraft.network.PacketBuffer
-import net.minecraftforge.fml.network.NetworkDirection
-import net.minecraftforge.fml.network.NetworkEvent
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraftforge.network.NetworkDirection
+import net.minecraftforge.network.NetworkEvent
 import java.util.function.BiConsumer
 import java.util.function.Function
 import java.util.function.Supplier
@@ -14,12 +14,12 @@ class PacketPlayerPropertySync(var value: Int, var id: Int) {
 
     companion object {
 
-        val toBytes = BiConsumer<PacketPlayerPropertySync, PacketBuffer> { msg, buffer ->
+        val toBytes = BiConsumer<PacketPlayerPropertySync, FriendlyByteBuf> { msg, buffer ->
             buffer.writeInt(msg.value)
             buffer.writeInt(msg.id)
         }
 
-        val fromBytes = Function<PacketBuffer, PacketPlayerPropertySync> { buffer ->
+        val fromBytes = Function<FriendlyByteBuf, PacketPlayerPropertySync> { buffer ->
             PacketPlayerPropertySync(buffer.readInt(), buffer.readInt())
         }
 

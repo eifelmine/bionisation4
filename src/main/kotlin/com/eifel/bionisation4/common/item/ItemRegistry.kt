@@ -5,7 +5,7 @@ import com.eifel.bionisation4.common.item.armor.BioArmor
 import com.eifel.bionisation4.common.item.armor.BioMaterial
 import com.eifel.bionisation4.common.item.lab.*
 import com.eifel.bionisation4.common.item.utility.*
-import net.minecraft.inventory.EquipmentSlotType
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 
@@ -17,10 +17,10 @@ object ItemRegistry {
     val GARLIC_BULB = ITEMS.register("garlicbulb") { GarlicBulb() }
 
     val CLOTH = ITEMS.register("cloth") { CommonItem() }
-    val BIO_BOOTS = ITEMS.register("bioarmor_boots") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.FEET, ) }
-    val BIO_LEGGINGS = ITEMS.register("bioarmor_leggings") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.LEGS) }
-    val BIO_CHEST = ITEMS.register("bioarmor_chest") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.CHEST) }
-    val BIO_HELMET = ITEMS.register("bioarmor_helmet") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlotType.HEAD) }
+    val BIO_BOOTS = ITEMS.register("bioarmor_boots") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlot.FEET, ) }
+    val BIO_LEGGINGS = ITEMS.register("bioarmor_leggings") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlot.LEGS) }
+    val BIO_CHEST = ITEMS.register("bioarmor_chest") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlot.CHEST) }
+    val BIO_HELMET = ITEMS.register("bioarmor_helmet") { BioArmor(BioMaterial.BIO_ARMOR, EquipmentSlot.HEAD) }
 
     val BANDAGE = ITEMS.register("bandage") { Bandage() }
     val SPLINT = ITEMS.register("splint") { Splint() }

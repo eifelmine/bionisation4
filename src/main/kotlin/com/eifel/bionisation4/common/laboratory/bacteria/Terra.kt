@@ -6,8 +6,8 @@ import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.DigSpeed
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.MovementSlowdown
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.MovementSpeed
-import net.minecraft.block.Blocks
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.level.block.Blocks
 
 class Terra(): AbstractEffect(InternalConstants.BACTERIA_TERRA_ID, "Terra", EffectType.BACTERIA) {
 

@@ -14,15 +14,15 @@ import com.eifel.bionisation4.common.storage.capability.handler.BloodHandler
 import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.util.ResourceLocation
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.LivingEntity
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.fml.network.PacketDistributor
+import net.minecraftforge.network.PacketDistributor
 
-class BioStat(): IBioStat {
+class BioStat {
 
     companion object StaticInit {
         val PROP = ResourceLocation("${Info.MOD_ID}_modstatdata")
@@ -41,7 +41,7 @@ class BioStat(): IBioStat {
         if(pending.isNotEmpty()) {
             effects.addAll(pending)
             if(!entity.level.isClientSide) {
-                if (entity is ServerPlayerEntity)
+                if (entity is ServerPlayer)
                     NetworkManager.INSTANCE.send(
                         PacketDistributor.PLAYER.with { entity }, PacketPlayerSimpleEffectStates(
                             pending.map { it.effectID }.toIntArray(), 1
@@ -62,7 +62,7 @@ class BioStat(): IBioStat {
                         )
                     )
             }
-            if(entity is ServerPlayerEntity) {
+            if(entity is ServerPlayer) {
                 pending.filter { eff -> !discoveredEffects.contains(eff.effectID) }.forEach { effect ->
                     discoveredEffects.add(effect.effectID)
                     entity.sendMessage(TranslationUtils.getCommonTranslation("discover", "message", "info").append(effect.getCommonTranslationName()), entity.uuid)
@@ -78,7 +78,7 @@ class BioStat(): IBioStat {
                 val effect = it.next()
                 if(effect.isExpired || OverrideHandler.DISABLED_EFFECTS.contains(effect.effectName)){
                     it.remove()
-                    if(entity is ServerPlayerEntity)
+                    if(entity is ServerPlayer)
                         NetworkManager.INSTANCE.send(PacketDistributor.PLAYER.with{ entity }, PacketPlayerSimpleEffectStates(
                             intArrayOf(effect.effectID), 0)
                         )
@@ -91,7 +91,7 @@ class BioStat(): IBioStat {
                     effect.perform(entity)
             }
             if(entity.tickCount % ConfigProperties.defaultEffectSyncPeriod.get() == 0){
-                if(entity is ServerPlayerEntity)
+                if(entity is ServerPlayer)
                     NetworkManager.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(entity.x, entity.y, entity.z, 25.0, entity.level.dimension())), PacketPlayerSimpleEffectStates(
                         effects.filter { it.isSyncable && !it.isHidden }.map { it.effectID }.toIntArray(), 1)
                     )
@@ -110,7 +110,7 @@ class BioStat(): IBioStat {
 
     fun sendAllEffects(entity: LivingEntity) {
         if(!entity.level.isClientSide) {
-            if(entity is ServerPlayerEntity) {
+            if(entity is ServerPlayer) {
                 NetworkManager.INSTANCE.send(
                     PacketDistributor.PLAYER.with { entity }, PacketPlayerSimpleEffectStates(
                         effects.map { it.effectID }.toIntArray(), 1
@@ -210,7 +210,7 @@ class BioStat(): IBioStat {
             immunity < 0 -> immunity = 0
         }
         if(!entity.level.isClientSide) {
-            if(entity is ServerPlayerEntity)
+            if(entity is ServerPlayer)
                 NetworkManager.INSTANCE.send(
                     PacketDistributor.PLAYER.with { entity },
                     PacketPlayerPropertySync(immunity, 0)
@@ -230,7 +230,7 @@ class BioStat(): IBioStat {
             blood < 0 -> blood = 0
         }
         if(!entity.level.isClientSide) {
-            if(entity is ServerPlayerEntity)
+            if(entity is ServerPlayer)
                 NetworkManager.INSTANCE.send(
                     PacketDistributor.PLAYER.with { entity },
                     PacketPlayerPropertySync(blood, 1)
@@ -250,7 +250,7 @@ class BioStat(): IBioStat {
             immunity < 0 -> immunity = 0
         }
         if(!entity.level.isClientSide) {
-            if(entity is ServerPlayerEntity)
+            if(entity is ServerPlayer)
                 NetworkManager.INSTANCE.send(
                     PacketDistributor.PLAYER.with { entity },
                     PacketPlayerPropertySync(immunity, 0)
@@ -270,7 +270,7 @@ class BioStat(): IBioStat {
             blood < 0 -> blood = 0
         }
         if(!entity.level.isClientSide) {
-            if(entity is ServerPlayerEntity)
+            if(entity is ServerPlayer)
                 NetworkManager.INSTANCE.send(
                     PacketDistributor.PLAYER.with { entity },
                     PacketPlayerPropertySync(blood, 1)
@@ -283,7 +283,7 @@ class BioStat(): IBioStat {
         }
     }
 
-    override fun writeToNBT() = CompoundNBT().apply {
+    fun writeToNBT() = CompoundTag().apply {
         putInt(InternalConstants.PROP_IMMUNITY_KEY, immunity)
         putInt(InternalConstants.PROP_BLOOD_KEY, blood)
         putInt(InternalConstants.PROP_TICKER_KEY, ticker)
@@ -291,7 +291,7 @@ class BioStat(): IBioStat {
         putIntArray(InternalConstants.DISCOVERED_EFFECTS, discoveredEffects.toMutableList())
     }
 
-    override fun readFromNBT(nbtBase: CompoundNBT) {
+    fun readFromNBT(nbtBase: CompoundTag) {
         immunity = nbtBase.getInt(InternalConstants.PROP_IMMUNITY_KEY)
         blood = nbtBase.getInt(InternalConstants.PROP_BLOOD_KEY)
         ticker = nbtBase.getInt(InternalConstants.PROP_TICKER_KEY)

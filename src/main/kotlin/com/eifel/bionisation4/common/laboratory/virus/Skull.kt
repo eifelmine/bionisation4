@@ -6,8 +6,8 @@ import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.Hunger
 import com.eifel.bionisation4.common.laboratory.gene.species.type.ArrowImmunity
 import com.eifel.bionisation4.common.laboratory.gene.species.type.AttackSpread
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 
 class Skull(): AbstractEffect(InternalConstants.VIRUS_SKULL_ID, "Skull", EffectType.VIRUS) {
 
@@ -24,7 +24,7 @@ class Skull(): AbstractEffect(InternalConstants.VIRUS_SKULL_ID, "Skull", EffectT
 
     override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         super.onTick(entity, isLastTick)
-        if(entity is PlayerEntity) {
+        if(entity is Player) {
             if (timeTicker == 12000)
                 activateGenes()
         }

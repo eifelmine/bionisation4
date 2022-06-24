@@ -4,9 +4,9 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.util.DamageSource
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.LivingEntity
 
 class HealthDamage(): Gene(InternalConstants.GENE_HEALTH_DAMAGE_ID, "Health damage", true) {
 
@@ -34,7 +34,7 @@ class HealthDamage(): Gene(InternalConstants.GENE_HEALTH_DAMAGE_ID, "Health dama
         putInt(InternalConstants.GENE_DELAY_KEY, delay)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.amount = nbtData.getFloat(InternalConstants.GENE_HEALTH_KEY)
         this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)

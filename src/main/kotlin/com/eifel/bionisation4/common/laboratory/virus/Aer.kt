@@ -5,7 +5,7 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.Confusion
 import com.eifel.bionisation4.common.laboratory.gene.species.potion.Weakness
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 
 class Aer(): AbstractEffect(InternalConstants.VIRUS_AER_ID, "Aer", EffectType.VIRUS) {
 

@@ -5,9 +5,9 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.extensions.getBioTicker
 import com.eifel.bionisation4.common.extensions.modifyBlood
-import net.minecraft.entity.LivingEntity
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
 
 class Bleeding(): AbstractEffect(InternalConstants.EFFECT_BLEEDING_ID, "Bleeding", EffectType.COMMON) {
 
@@ -20,8 +20,8 @@ class Bleeding(): AbstractEffect(InternalConstants.EFFECT_BLEEDING_ID, "Bleeding
 
     override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         super.onTick(entity, isLastTick)
-        entity.addEffect(EffectInstance(Effects.WEAKNESS, 100, effectPower))
-        entity.addEffect(EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, effectPower))
+        entity.addEffect(MobEffectInstance(MobEffects.WEAKNESS, 100, effectPower))
+        entity.addEffect(MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, effectPower))
         if(entity.getBioTicker() % 300 == 0)
             entity.modifyBlood(-2)
     }

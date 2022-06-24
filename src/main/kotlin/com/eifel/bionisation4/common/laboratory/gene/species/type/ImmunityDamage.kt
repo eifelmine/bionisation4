@@ -5,8 +5,8 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
 import com.eifel.bionisation4.common.extensions.modifyImmunity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
 
 class ImmunityDamage(): Gene(InternalConstants.GENE_IMMUNITY_DAMAGE_ID, "Immunity damage", true) {
 
@@ -34,7 +34,7 @@ class ImmunityDamage(): Gene(InternalConstants.GENE_IMMUNITY_DAMAGE_ID, "Immunit
         putInt(InternalConstants.GENE_DELAY_KEY, delay)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.amount = nbtData.getInt(InternalConstants.GENE_IMMUNITY_KEY)
         this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)

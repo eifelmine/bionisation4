@@ -7,32 +7,32 @@ import com.eifel.bionisation4.common.item.CommonItem
 import com.eifel.bionisation4.common.laboratory.treat.Vaccine
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.client.util.ITooltipFlag
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Rarity
-import net.minecraft.util.ActionResult
-import net.minecraft.util.ActionResultType
-import net.minecraft.util.Hand
-import net.minecraft.util.text.ITextComponent
-import net.minecraft.util.text.TextFormatting
-import net.minecraft.world.World
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.level.Level
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
 class VaccineInjector(): CommonItem(desc = listOf(Triple("vaccine_injector", "usage", "desc")), rarity = Rarity.RARE, size = 1) {
 
-    override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
+    override fun use(world: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack = player.getItemInHand(hand)
         if(!player.level.isClientSide && !player.isShiftKeyDown) {
             compareGenes(stack, player)
             player.sendMessage(TranslationUtils.getCommonTranslation("vaccine_injector", "usage", "injected"), player.uuid)
         }
-        return ActionResult.pass(stack)
+        return InteractionResultHolder.pass(stack)
     }
 
-    override fun interactLivingEntity(stack: ItemStack, player: PlayerEntity, target: LivingEntity, hand: Hand): ActionResultType {
+    override fun interactLivingEntity(stack: ItemStack, player: Player, target: LivingEntity, hand: InteractionHand): InteractionResult {
         val stack = player.getItemInHand(hand)
         if(!player.level.isClientSide && player.isShiftKeyDown) {
             target?.let { entity ->
@@ -40,7 +40,7 @@ class VaccineInjector(): CommonItem(desc = listOf(Triple("vaccine_injector", "us
                 player.sendMessage(TranslationUtils.getCommonTranslation("vaccine_injector", "usage", "injected"), player.uuid)
             }
         }
-        return ActionResultType.SUCCESS
+        return InteractionResult.SUCCESS
     }
 
     private fun compareGenes(injector: ItemStack, entity: LivingEntity){
@@ -56,7 +56,7 @@ class VaccineInjector(): CommonItem(desc = listOf(Triple("vaccine_injector", "us
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun appendHoverText(stack: ItemStack, world: World?, info: MutableList<ITextComponent>, flag: ITooltipFlag) {
+    override fun appendHoverText(stack: ItemStack, world: Level?, info: MutableList<Component>, flag: TooltipFlag) {
         val data = NBTUtils.getNBT(stack)
         var noGenes = true
         if(data.contains(InternalConstants.VACCINE_INJECTOR_GENES)) {
@@ -67,7 +67,7 @@ class VaccineInjector(): CommonItem(desc = listOf(Triple("vaccine_injector", "us
                 info.add(TranslationUtils.getText(" "))
                 info.add(TranslationUtils.getTranslatedTextComponent("vaccine_injector", "info", "genes"))
                 genes.forEach { gene ->
-                    info.add(TranslationUtils.getText("    ${TextFormatting.GRAY}-${TextFormatting.YELLOW} ${TranslationUtils.getTranslatedText("gene", gene.unlocName, "name")}"))
+                    info.add(TranslationUtils.getText("    ${ChatFormatting.GRAY}-${ChatFormatting.YELLOW} ${TranslationUtils.getTranslatedText("gene", gene.unlocName, "name")}"))
                 }
             }
         }

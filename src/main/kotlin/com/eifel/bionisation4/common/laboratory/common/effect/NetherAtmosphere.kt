@@ -5,7 +5,7 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
 import com.eifel.bionisation4.common.extensions.expire
 import com.eifel.bionisation4.common.extensions.getBioTicker
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 
 class NetherAtmosphere(): AbstractEffect(InternalConstants.EFFECT_NETHER_ATMOSPHERE_ID, "Nether atmosphere", EffectType.COMMON) {
 

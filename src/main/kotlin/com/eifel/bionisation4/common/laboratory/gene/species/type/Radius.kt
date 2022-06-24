@@ -4,9 +4,9 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.util.lab.EffectUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.util.DamageSource
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.LivingEntity
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 
 class Radius(): Gene(InternalConstants.GENE_RADIUS_ID, "Radius", true) {
@@ -35,7 +35,7 @@ class Radius(): Gene(InternalConstants.GENE_RADIUS_ID, "Radius", true) {
         putFloat(InternalConstants.GENE_AMOUNT_KEY, amount)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.radius = nbtData.getDouble(InternalConstants.GENE_RADIUS_KEY)
         this.amount = nbtData.getFloat(InternalConstants.GENE_AMOUNT_KEY)

@@ -5,9 +5,9 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
 import com.eifel.bionisation4.util.lab.EffectUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.passive.AnimalEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.animal.Animal
 
 class Hostile(): Gene(InternalConstants.GENE_HOSTILE_ID, "Hostile", true) {
 
@@ -17,7 +17,7 @@ class Hostile(): Gene(InternalConstants.GENE_HOSTILE_ID, "Hostile", true) {
     override fun perform(entity: LivingEntity, effect: AbstractEffect) {
         super.perform(entity, effect)
         if(entity.getBioTicker() % 300 == 0)
-            EffectUtils.applyToEntities(entity.level, entity.blockPosition(), radius, {e ->  e is AnimalEntity }, {e ->
+            EffectUtils.applyToEntities(entity.level, entity.blockPosition(), radius, {e ->  e is Animal }, { e ->
                 e.setSecondsOnFire(duration)
             })
     }
@@ -37,7 +37,7 @@ class Hostile(): Gene(InternalConstants.GENE_HOSTILE_ID, "Hostile", true) {
         putInt(InternalConstants.GENE_DURATION_KEY, duration)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.radius = nbtData.getDouble(InternalConstants.GENE_RADIUS_KEY)
         this.duration = nbtData.getInt(InternalConstants.GENE_DURATION_KEY)

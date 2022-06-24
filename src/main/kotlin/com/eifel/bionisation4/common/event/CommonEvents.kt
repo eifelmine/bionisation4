@@ -8,9 +8,10 @@ import com.eifel.bionisation4.common.extensions.*
 import com.eifel.bionisation4.common.laboratory.virus.Wild
 import com.eifel.bionisation4.common.storage.capability.entity.BioStat
 import com.eifel.bionisation4.common.storage.capability.entity.BioStatProvider
-import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.inventory.InventoryHelper
+import net.minecraft.world.Containers
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent
 import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.player.PlayerEvent
@@ -21,6 +22,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 object CommonEvents {
 
     var spawnedEntities = 1
+
+
+    @JvmStatic
+    @SubscribeEvent
+    fun onRegisterCapabilities(event: RegisterCapabilitiesEvent) {
+        event.register(BioStat::class.java)
+    }
 
     @JvmStatic
     @SubscribeEvent
@@ -53,7 +61,7 @@ object CommonEvents {
                 val data = occasionsDefault[event.entityLiving.type]!!
                 data.forEach { (t, u) ->
                     if(Utils.chance(u))
-                        event.entityLiving.addEffect(EffectRegistry.getEffectInstance(t).getCopy())
+                        event.entityLiving.addEffect(EffectRegistry.getMobEffectInstance(t).getCopy())
                 }
             }
             val occasionsClass = EffectRegistry.getOccasionsClass()
@@ -61,7 +69,7 @@ object CommonEvents {
                 val data = occasionsClass[it]!!
                 data.forEach { (t, u) ->
                     if(Utils.chance(u))
-                        event.entityLiving.addEffect(EffectRegistry.getEffectInstance(t).getCopy())
+                        event.entityLiving.addEffect(EffectRegistry.getMobEffectInstance(t).getCopy())
                 }
             }
             if(spawnedEntities % ConfigProperties.randomVirusMobCount.get() == 0 && ConfigProperties.randomVirusCreation.get()){
@@ -171,7 +179,7 @@ object CommonEvents {
                 if(EffectRegistry.getDrops().containsKey(victim.type)){
                     val data = EffectRegistry.getDrops()[victim.type]!!
                     if(Utils.chance(data.first))
-                        InventoryHelper.dropItemStack(victim.level, victim.x, victim.y, victim.z, data.second.copy())
+                        Containers.dropItemStack(victim.level, victim.x, victim.y, victim.z, data.second.copy())
                 }
             }
         }

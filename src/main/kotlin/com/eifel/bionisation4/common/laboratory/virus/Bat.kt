@@ -7,8 +7,8 @@ import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.laboratory.gene.species.type.AttackSpread
 import com.eifel.bionisation4.common.laboratory.gene.species.type.Shadow
 import com.eifel.bionisation4.common.laboratory.gene.species.type.Sunburn
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 
 class Bat(): AbstractEffect(InternalConstants.VIRUS_BAT_ID, "Bat", EffectType.VIRUS) {

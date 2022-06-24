@@ -8,9 +8,9 @@ import com.eifel.bionisation4.common.laboratory.gene.species.type.AirSpread
 import com.eifel.bionisation4.common.laboratory.gene.species.type.AttackSpread
 import com.eifel.bionisation4.common.laboratory.gene.species.type.ImmunityDamage
 import com.eifel.bionisation4.util.lab.EffectUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
 
 class Wither(): AbstractEffect(InternalConstants.VIRUS_WITHER_ID, "Wither", EffectType.VIRUS) {
 
@@ -29,7 +29,7 @@ class Wither(): AbstractEffect(InternalConstants.VIRUS_WITHER_ID, "Wither", Effe
         super.onTick(entity, isLastTick)
         if(entity.getBioTicker() % 300 == 0){
             EffectUtils.applyToEntities(entity.level, entity.blockPosition(), 5.0, action = {
-                (it as LivingEntity).addEffect(EffectInstance(Effects.WITHER, 100, effectPower))
+                (it as LivingEntity).addEffect(MobEffectInstance(MobEffects.WITHER, 100, effectPower))
             })
         }
     }

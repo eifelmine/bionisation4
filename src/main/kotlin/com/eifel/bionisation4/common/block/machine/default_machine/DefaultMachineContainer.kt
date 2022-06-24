@@ -1,24 +1,20 @@
 package com.eifel.bionisation4.common.block.machine.default_machine
 
-import net.minecraft.block.Block
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.inventory.container.Container
-import net.minecraft.inventory.container.ContainerType
-import net.minecraft.inventory.container.Slot
-import net.minecraft.item.ItemStack
-import net.minecraft.util.IIntArray
-import net.minecraft.util.IWorldPosCallable
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.*
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.wrapper.InvWrapper
 
-abstract class DefaultMachineContainer <T: DefaultMachineTile> (type: ContainerType<*>, val block: Block, val world: World, val pos: BlockPos, val pInv: PlayerInventory, window: Int, val inputData: IIntArray): Container(
+abstract class DefaultMachineContainer <T: DefaultMachineTile> (type: MenuType<*>, val block: Block, val world: Level, val pos: BlockPos, val pInv: Inventory, window: Int, val inputData: ContainerData): AbstractContainerMenu(
     type, window) {
 
     var tileEntity: T = world.getBlockEntity(pos) as T
-    var player: PlayerEntity = pInv.player
+    var player: Player = pInv.player
     var playerInventory: IItemHandler = InvWrapper(pInv)
 
     init {
@@ -41,8 +37,8 @@ abstract class DefaultMachineContainer <T: DefaultMachineTile> (type: ContainerT
 
     abstract fun addCustomSlots(tile: T?)
 
-    override fun stillValid(player: PlayerEntity) = stillValid(
-        IWorldPosCallable.create(tileEntity.level, tileEntity.blockPos),
+    override fun stillValid(player: Player) = stillValid(
+        ContainerLevelAccess.create(tileEntity.level, tileEntity.blockPos),
         player, block)
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -54,7 +50,7 @@ abstract class DefaultMachineContainer <T: DefaultMachineTile> (type: ContainerT
     private val VANILLA_FIRST_SLOT_INDEX = 0
     private val TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT
 
-    override fun quickMoveStack(playerIn: PlayerEntity?, index: Int): ItemStack {
+    override fun quickMoveStack(playerIn: Player?, index: Int): ItemStack {
         val sourceSlot: Slot = slots[index]
         if (sourceSlot == null || !sourceSlot.hasItem())
             return ItemStack.EMPTY

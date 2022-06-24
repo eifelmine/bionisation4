@@ -9,15 +9,14 @@ import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntityType
+import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.items.ItemStackHandler
 
-class TileDNAModifier(type: TileEntityType<*>, size: Int): DefaultMachineTile(type, size) {
-
-    constructor(): this(TileRegistry.DNA_MODIFIER.get(), 3)
+class TileDNAModifier(pos: BlockPos, state: BlockState, size: Int): DefaultMachineTile(TileRegistry.DNA_MODIFIER.get(), pos, state, size) {
 
     override fun getProcessTime(stack: ItemStack?) = ConfigProperties.defaultDNAModifierProcessTime.get()
 
@@ -48,6 +47,6 @@ class TileDNAModifier(type: TileEntityType<*>, size: Int): DefaultMachineTile(ty
         setChanged()
     }
 
-    override fun createMenu(p0: Int, p1: PlayerInventory, p2: PlayerEntity) = ContainerDNAModifier(p2.level, this.blockPos, p1, p0, this.dataAccess)
+    override fun createMenu(p0: Int, p1: Inventory, p2: Player) = ContainerDNAModifier(p2.level, this.blockPos, p1, p0, this.dataAccess)
     override fun getDisplayName() = TranslationUtils.getTranslatedTextComponent("block", "bionisation4", "dna_modifier")
 }

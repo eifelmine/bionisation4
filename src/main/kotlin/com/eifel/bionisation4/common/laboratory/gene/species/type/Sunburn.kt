@@ -4,10 +4,10 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
 
 class Sunburn(): Gene(InternalConstants.GENE_SUNBURN_ID, "Sunburn", true) {
 
@@ -17,9 +17,9 @@ class Sunburn(): Gene(InternalConstants.GENE_SUNBURN_ID, "Sunburn", true) {
         super.perform(entity, effect)
         if(entity.getBioTicker() % 50 == 0 && entity.level.isDay && entity.level.canSeeSky(entity.blockPosition())){
             entity.setSecondsOnFire(duration)
-            entity.addEffect(EffectInstance(Effects.WEAKNESS, 100, 1))
-            entity.addEffect(EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 2))
-            entity.addEffect(EffectInstance(Effects.BLINDNESS, 300, 1))
+            entity.addEffect(MobEffectInstance(MobEffects.WEAKNESS, 100, 1))
+            entity.addEffect(MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2))
+            entity.addEffect(MobEffectInstance(MobEffects.BLINDNESS, 300, 1))
         }
     }
 
@@ -32,7 +32,7 @@ class Sunburn(): Gene(InternalConstants.GENE_SUNBURN_ID, "Sunburn", true) {
         putInt(InternalConstants.GENE_DURATION_KEY, duration)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.duration = nbtData.getInt(InternalConstants.GENE_DURATION_KEY)
     }

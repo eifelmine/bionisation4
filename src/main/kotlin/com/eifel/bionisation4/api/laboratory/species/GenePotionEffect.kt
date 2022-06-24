@@ -2,10 +2,11 @@ package com.eifel.bionisation4.api.laboratory.species
 
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.util.IGenePotion
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.potion.Effect
-import net.minecraft.potion.EffectInstance
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.effect.MobEffect
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.entity.LivingEntity
+
 
 class GenePotionEffect(var potion: Int, var duration: Int, var power: Int): IGenePotion {
 
@@ -15,12 +16,12 @@ class GenePotionEffect(var potion: Int, var duration: Int, var power: Int): IGen
 
     override fun perform(entity: LivingEntity, power: Int) {
         if(!entity.level.isClientSide) {
-            Effect.byId(this.potion)?.let {
+            MobEffect.byId(this.potion)?.let {
                 if(canReplaceExisting) {
-                    entity.addEffect(EffectInstance(it, this.duration, if (power >= 0) power else this.power))
+                    entity.addEffect(MobEffectInstance(it, this.duration, if (power >= 0) power else this.power))
                     return@let
-                }else if(!entity.hasEffect(Effect.byId(this.potion)))
-                    entity.addEffect(EffectInstance(it, this.duration, if (power >= 0) power else this.power))
+                }else if(!entity.hasEffect(MobEffect.byId(this.potion)))
+                    entity.addEffect(MobEffectInstance(it, this.duration, if (power >= 0) power else this.power))
             }
         }
     }
@@ -30,14 +31,14 @@ class GenePotionEffect(var potion: Int, var duration: Int, var power: Int): IGen
         return this
     }
 
-    override fun toNBT() = CompoundNBT().apply {
+    override fun toNBT() = CompoundTag().apply {
         putInt(InternalConstants.GENE_POT_ID_KEY, potion)
         putInt(InternalConstants.GENE_POT_DUR_KEY, duration)
         putInt(InternalConstants.GENE_POT_POW_KEY, power)
         putBoolean(InternalConstants.GENE_POT_REPL_KEY, canReplaceExisting)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         this.potion = nbtData.getInt(InternalConstants.GENE_POT_ID_KEY)
         this.duration = nbtData.getInt(InternalConstants.GENE_POT_DUR_KEY)
         this.power = nbtData.getInt(InternalConstants.GENE_POT_POW_KEY)
@@ -46,7 +47,7 @@ class GenePotionEffect(var potion: Int, var duration: Int, var power: Int): IGen
 
     override fun clear(entity: LivingEntity) {
         if(!entity.level.isClientSide) {
-            Effect.byId(this.potion)?.let {
+            MobEffect.byId(this.potion)?.let {
                 if (entity.hasEffect(it))
                     entity.removeEffect(it)
             }

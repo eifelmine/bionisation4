@@ -5,10 +5,10 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.util.Utils.random
 import com.eifel.bionisation4.common.extensions.getBioTicker
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.util.SoundEvents
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 
 class RandomTeleport(): Gene(InternalConstants.GENE_RANDOM_TELEPORT_ID, "Random teleport", true) {
 
@@ -22,7 +22,7 @@ class RandomTeleport(): Gene(InternalConstants.GENE_RANDOM_TELEPORT_ID, "Random 
             val d2 = entity.z + (random.nextDouble() - 0.5) * 64.0
             repeat(10){
                 if (entity.randomTeleport(d0, d1, d2, true)) {
-                    entity.level.playSound(null as PlayerEntity?, entity.x, entity.y, entity.z, SoundEvents.ENDERMAN_TELEPORT, entity.soundSource, 1.0f, 1.0f)
+                    entity.level.playSound(null as Player?, entity.x, entity.y, entity.z, SoundEvents.ENDERMAN_TELEPORT, entity.soundSource, 1.0f, 1.0f)
                     entity.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0f, 1.0f)
                     return@repeat
                 }
@@ -39,7 +39,7 @@ class RandomTeleport(): Gene(InternalConstants.GENE_RANDOM_TELEPORT_ID, "Random 
         putInt(InternalConstants.GENE_DELAY_KEY, delay)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)
     }

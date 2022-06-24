@@ -4,17 +4,18 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.common.extensions.expire
 import com.eifel.bionisation4.common.extensions.isEffectActive
 import com.eifel.bionisation4.common.item.CommonItem
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.util.ActionResult
-import net.minecraft.util.ActionResultType
-import net.minecraft.util.Hand
-import net.minecraft.world.World
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
+
 
 class Bandage(): CommonItem(desc = listOf(Triple("bandage", "usage", "desc"))) {
 
-    override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
+    override fun use(world: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack = player.getItemInHand(hand)
         if(!player.level.isClientSide) {
             if(player.isEffectActive(InternalConstants.EFFECT_BLEEDING_ID)) {
@@ -22,10 +23,10 @@ class Bandage(): CommonItem(desc = listOf(Triple("bandage", "usage", "desc"))) {
                 stack.shrink(1)
             }
         }
-        return ActionResult.pass(stack)
+        return InteractionResultHolder.pass(stack)
     }
 
-    override fun interactLivingEntity(stack: ItemStack, player: PlayerEntity, target: LivingEntity, hand: Hand): ActionResultType {
+    override fun interactLivingEntity(stack: ItemStack, player: Player, target: LivingEntity, hand: InteractionHand): InteractionResult {
         val stack = player.getItemInHand(hand)
         if(!player.level.isClientSide && player.isShiftKeyDown) {
             target?.let { entity ->
@@ -35,6 +36,6 @@ class Bandage(): CommonItem(desc = listOf(Triple("bandage", "usage", "desc"))) {
                 }
             }
         }
-        return ActionResultType.SUCCESS
+        return InteractionResult.SUCCESS
     }
 }

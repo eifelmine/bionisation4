@@ -10,7 +10,7 @@ import com.eifel.bionisation4.common.laboratory.gene.species.type.Aggressive
 import com.eifel.bionisation4.common.laboratory.gene.species.type.AttackSpread
 import com.eifel.bionisation4.common.laboratory.gene.species.type.Sunburn
 import com.eifel.bionisation4.common.laboratory.gene.species.type.WaterFear
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 
 class Rabies(): AbstractEffect(InternalConstants.VIRUS_RABIES_ID, "Rabies", EffectType.VIRUS) {
 

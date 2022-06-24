@@ -1,52 +1,78 @@
 package com.eifel.bionisation4.world.generation.flower
 
 import com.eifel.bionisation4.common.block.BlockRegistry
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.world.gen.GenerationStage
-import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer
-import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider
-import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider
-import net.minecraft.world.gen.feature.*
-import net.minecraft.world.gen.placement.Placement
+import net.minecraft.core.Holder
+import net.minecraft.data.worldgen.features.FeatureUtils
+import net.minecraft.data.worldgen.placement.PlacementUtils
+import net.minecraft.util.random.SimpleWeightedRandomList
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.levelgen.GenerationStep
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.configurations.NetherForestVegetationConfig
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
+import net.minecraft.world.level.levelgen.placement.*
 import net.minecraftforge.common.BiomeDictionary
 
 
 object FlowerFeatures {
 
-    val FEATURES = mutableMapOf<ConfiguredFeature<*, *>, Pair<List<BiomeDictionary.Type>, GenerationStage.Decoration>>()
-    //extra features
-    val FIRE_LILY = Feature.NETHER_FOREST_VEGETATION.configured(BlockStateProvidingFeatureConfig((WeightedBlockStateProvider()).add(BlockRegistry.FIRE_LILY.get().defaultBlockState(), 51)))
-            .decorated(Placement.COUNT_MULTILAYER.configured(FeatureSpreadConfig(4)))
-    val NETHER_AMBER = Feature.NETHER_FOREST_VEGETATION.configured(BlockStateProvidingFeatureConfig((WeightedBlockStateProvider()).add(BlockRegistry.NETHER_AMBER.get().defaultBlockState(), 61)))
-        .decorated(Placement.COUNT_MULTILAYER.configured(FeatureSpreadConfig(6)))
+    val FEATURES = mutableMapOf<Holder<PlacedFeature>, Pair<List<BiomeDictionary.Type>, GenerationStep.Decoration>>()
 
     fun loadFlowerFeatures(){
         addFlowerFeature(BlockRegistry.GARLIC.get().getStateForAge(7))
-        addFlowerFeature(FIRE_LILY, biomes = listOf(BiomeDictionary.Type.NETHER), type = GenerationStage.Decoration.VEGETAL_DECORATION)
-        addFlowerFeature(NETHER_AMBER, biomes = listOf(BiomeDictionary.Type.NETHER), type = GenerationStage.Decoration.VEGETAL_DECORATION)
-        addFlowerFeature(BlockRegistry.WITHER_EYE.get().defaultBlockState(), tries = 11, chance = 35,  whitelist = setOf(Blocks.GRASS_BLOCK),   biomes = listOf(BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.DEAD, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.DRY, BiomeDictionary.Type.WASTELAND))
-        addFlowerFeature(BlockRegistry.CREEPER_SOUL.get().defaultBlockState(), tries = 12, chance = 100, whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS))
-        addFlowerFeature(BlockRegistry.ENDER_FLOWER.get().defaultBlockState(), tries = 6, chance = 50  , whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.MOUNTAIN))
-        addFlowerFeature(BlockRegistry.SNOW_WARDEN.get().defaultBlockState(), whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.COLD, BiomeDictionary.Type.SNOWY))
-        addFlowerFeature(BlockRegistry.DESERT_BONE.get().defaultBlockState(), whitelist = setOf(Blocks.SAND),  biomes = listOf(BiomeDictionary.Type.MESA, BiomeDictionary.Type.DRY, BiomeDictionary.Type.HOT, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY))
-        addFlowerFeature(BlockRegistry.SPIDER_EYE.get().defaultBlockState(), tries = 10, chance = 40  , whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.PLATEAU))
-        addFlowerFeature(BlockRegistry.SPECTRAL_LILY.get().defaultBlockState(), biomes = listOf(BiomeDictionary.Type.WATER, BiomeDictionary.Type.SWAMP), whitelist = setOf(Blocks.WATER))
-        addFlowerFeature(BlockRegistry.RED_FLOWER.get().defaultBlockState(), tries = 8, chance = 35,  whitelist = setOf(Blocks.GRASS_BLOCK),  biomes = listOf(BiomeDictionary.Type.MUSHROOM, BiomeDictionary.Type.HILLS))
-        addFlowerFeature(BlockRegistry.CAVE_LANTERN.get().defaultBlockState(), tries = 10, chance = 100,  biomes = listOf(*BiomeDictionary.Type.getAll().toTypedArray()), whitelist = setOf(Blocks.STONE))
+        addFlowerFeature(BlockRegistry.WITHER_EYE.get().defaultBlockState(), tries = 11, chance = 35,   biomes = listOf(BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.DEAD, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.DRY, BiomeDictionary.Type.WASTELAND))
+        addFlowerFeature(BlockRegistry.CREEPER_SOUL.get().defaultBlockState(), tries = 12, chance = 100,  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS))
+        addFlowerFeature(BlockRegistry.ENDER_FLOWER.get().defaultBlockState(), tries = 6, chance = 50,  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.MOUNTAIN))
+        addFlowerFeature(BlockRegistry.SNOW_WARDEN.get().defaultBlockState(),  biomes = listOf(BiomeDictionary.Type.COLD, BiomeDictionary.Type.SNOWY))
+        addFlowerFeature(BlockRegistry.DESERT_BONE.get().defaultBlockState(),  biomes = listOf(BiomeDictionary.Type.MESA, BiomeDictionary.Type.DRY, BiomeDictionary.Type.HOT, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY))
+        addFlowerFeature(BlockRegistry.SPIDER_EYE.get().defaultBlockState(), tries = 10, chance = 40,  biomes = listOf(BiomeDictionary.Type.FOREST, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.PLATEAU))
+        addFlowerFeature(BlockRegistry.SPECTRAL_LILY.get().defaultBlockState(), biomes = listOf(BiomeDictionary.Type.WATER, BiomeDictionary.Type.SWAMP))
+        addFlowerFeature(BlockRegistry.RED_FLOWER.get().defaultBlockState(), tries = 8, chance = 35,  biomes = listOf(BiomeDictionary.Type.MUSHROOM, BiomeDictionary.Type.HILLS))
+        addFlowerFeature(BlockRegistry.CAVE_LANTERN.get().defaultBlockState(), tries = 10, chance = 100,  biomes = listOf(*BiomeDictionary.Type.getAll().toTypedArray()))
+
+        addFlowerFeaturesAdditional()
     }
 
-    fun addFlowerFeature(state: BlockState, tries: Int = 12, blackList: Set<BlockState> = setOf(), whitelist: Set<Block> = setOf(
-        Blocks.GRASS_BLOCK), count: Int = 5, chance: Int = 45, biomes: List<BiomeDictionary.Type> = listOf(BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS), type: GenerationStage.Decoration = GenerationStage.Decoration.VEGETAL_DECORATION){
-        FEATURES[Feature.FLOWER.configured(
-            BlockClusterFeatureConfig.Builder(SimpleBlockStateProvider(state), SimpleBlockPlacer.INSTANCE).tries(tries)
-                .whitelist(whitelist).blacklist(blackList).canReplace()
-                .build()
-        ).decorated(Features.Placements.HEIGHTMAP).countRandom(count).chance(chance)] = Pair(biomes, type)
+    fun addFlowerFeature(state: BlockState, tries: Int = 12, count: Int = 5, chance: Int = 45, biomes: List<BiomeDictionary.Type> = listOf(BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS), type: GenerationStep.Decoration = GenerationStep.Decoration.VEGETAL_DECORATION){
+        val feature = FeatureUtils.register(state.block.registryName.toString(), Feature.FLOWER,
+            RandomPatchConfiguration(tries, count, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                    SimpleBlockConfiguration(BlockStateProvider.simple(state)))))
+        val holder = PlacementUtils.register(
+            state.block.registryName.toString() + "_placed",
+            feature, RarityFilter.onAverageOnceEvery(chance),
+            InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome())
+        FEATURES[holder] = Pair(biomes, type)
     }
 
-    fun addFlowerFeature(feature: ConfiguredFeature<*, *>, biomes: List<BiomeDictionary.Type> = listOf(BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS), type: GenerationStage.Decoration = GenerationStage.Decoration.VEGETAL_DECORATION){
-        FEATURES[feature] = Pair(biomes, type)
+    val AMBER_VEGETATION_PROVIDER = WeightedStateProvider(
+        SimpleWeightedRandomList.builder<BlockState>().add(BlockRegistry.FIRE_LILY.get().defaultBlockState(), 87)
+    )
+
+    val LILY_VEGETATION_PROVIDER = WeightedStateProvider(
+        SimpleWeightedRandomList.builder<BlockState>().add(BlockRegistry.NETHER_AMBER.get().defaultBlockState(), 11)
+    )
+
+    fun addFlowerFeaturesAdditional(){
+        //fire lily
+        val fire_lily = FeatureUtils.register("bf_fire_lily", Feature.NETHER_FOREST_VEGETATION,
+            NetherForestVegetationConfig(LILY_VEGETATION_PROVIDER, 15, 4)
+        )
+        val fire_lily_holder = PlacementUtils.register(
+            "bf_fire_lily_placed",
+            fire_lily, CountPlacement.of(10),
+            InSquarePlacement.spread(), PlacementUtils.FULL_RANGE, BiomeFilter.biome())
+        FEATURES[fire_lily_holder] = Pair(listOf(BiomeDictionary.Type.NETHER), GenerationStep.Decoration.VEGETAL_DECORATION)
+        //nether amber
+        val nether_amber = FeatureUtils.register("bf_nether_amber", Feature.NETHER_FOREST_VEGETATION,
+            NetherForestVegetationConfig(AMBER_VEGETATION_PROVIDER, 15, 4)
+        )
+        val nether_amber_holder = PlacementUtils.register(
+            "bf_nether_amber_placed",
+            nether_amber, CountPlacement.of(10),
+            InSquarePlacement.spread(), PlacementUtils.FULL_RANGE, BiomeFilter.biome())
+        FEATURES[nether_amber_holder] = Pair(listOf(BiomeDictionary.Type.NETHER), GenerationStep.Decoration.VEGETAL_DECORATION)
     }
 }

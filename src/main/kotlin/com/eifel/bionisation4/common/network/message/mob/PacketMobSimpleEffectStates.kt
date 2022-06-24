@@ -4,10 +4,10 @@ import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
 import net.minecraft.client.Minecraft
-import net.minecraft.entity.LivingEntity
-import net.minecraft.network.PacketBuffer
-import net.minecraftforge.fml.network.NetworkDirection
-import net.minecraftforge.fml.network.NetworkEvent
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.world.entity.LivingEntity
+import net.minecraftforge.network.NetworkDirection
+import net.minecraftforge.network.NetworkEvent
 import java.util.function.BiConsumer
 import java.util.function.Function
 import java.util.function.Supplier
@@ -16,13 +16,13 @@ class PacketMobSimpleEffectStates(var effects: IntArray, var mode: Int, var entI
 
     companion object {
 
-        val toBytes = BiConsumer<PacketMobSimpleEffectStates, PacketBuffer> { msg, buffer ->
+        val toBytes = BiConsumer<PacketMobSimpleEffectStates, FriendlyByteBuf> { msg, buffer ->
             buffer.writeVarIntArray(msg.effects)
             buffer.writeInt(msg.mode)
             buffer.writeInt(msg.entId)
         }
 
-        val fromBytes = Function<PacketBuffer, PacketMobSimpleEffectStates> { buffer ->
+        val fromBytes = Function<FriendlyByteBuf, PacketMobSimpleEffectStates> { buffer ->
             PacketMobSimpleEffectStates(buffer.readVarIntArray(), buffer.readInt(), buffer.readInt())
         }
 

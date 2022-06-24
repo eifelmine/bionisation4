@@ -1,13 +1,15 @@
 package com.eifel.bionisation4.common.block.plant
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.CropsBlock
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.shapes.ISelectionContext
-import net.minecraft.world.IBlockReader
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.CropBlock
+import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.shapes.CollisionContext
 
-open class CommonPlant (): CropsBlock(Properties.copy(Blocks.WHEAT)) {
+
+open class CommonPlant (): CropBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT)) {
 
     private val SHAPE_BY_AGE = arrayOf(
         box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
@@ -20,5 +22,5 @@ open class CommonPlant (): CropsBlock(Properties.copy(Blocks.WHEAT)) {
         box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
     )
 
-    override fun getShape(state: BlockState, worldIn: IBlockReader?, pos: BlockPos?, context: ISelectionContext?) = SHAPE_BY_AGE[state.getValue(this.ageProperty)]
+    override fun getShape(state: BlockState, worldIn: BlockGetter?, pos: BlockPos?, context: CollisionContext?) = SHAPE_BY_AGE[state.getValue(this.ageProperty)]
 }

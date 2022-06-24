@@ -22,13 +22,14 @@ import com.eifel.bionisation4.common.laboratory.treat.VaccineImmunity
 import com.eifel.bionisation4.common.laboratory.virus.*
 import com.eifel.bionisation4.common.laboratory.virus.Ender
 import com.eifel.bionisation4.common.laboratory.virus.Wither
-import net.minecraft.block.Blocks
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.monster.MonsterEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.monster.Monster
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.world.level.block.Blocks
+
 
 object EffectRegistry {
 
@@ -138,14 +139,14 @@ object EffectRegistry {
         registerEffectOccasion(EntityType.FOX, InternalConstants.VIRUS_RABIES_ID, 30)
         registerEffectOccasion(EntityType.WOLF, InternalConstants.VIRUS_RABIES_ID, 10)
         registerEffectOccasion(EntityType.POLAR_BEAR, InternalConstants.VIRUS_RABIES_ID, 10)
-        registerEffectOccasion(MonsterEntity::class.java, InternalConstants.VIRUS_GIANT_ID, 10)
-        registerEffectOccasion(MonsterEntity::class.java, InternalConstants.BACTERIA_CLONE_ID, 10)
+        registerEffectOccasion(Monster::class.java, InternalConstants.VIRUS_GIANT_ID, 10)
+        registerEffectOccasion(Monster::class.java, InternalConstants.BACTERIA_CLONE_ID, 10)
         registerEffectOccasion(EntityType.ENDERMAN, InternalConstants.VIRUS_ENDER_ID, 35)
         registerEffectOccasion(EntityType.ZOMBIE, InternalConstants.VIRUS_BRAIN_ID, 15)
         registerEffectOccasion(EntityType.ZOMBIE_VILLAGER, InternalConstants.VIRUS_BRAIN_ID, 15)
         registerEffectOccasion(EntityType.HUSK, InternalConstants.VIRUS_BRAIN_ID, 15)
         registerEffectOccasion(EntityType.WITHER_SKELETON, InternalConstants.VIRUS_WITHER_ID, 25)
-        registerEffectOccasion(MonsterEntity::class.java, InternalConstants.VIRUS_BAT_ID, 5)
+        registerEffectOccasion(Monster::class.java, InternalConstants.VIRUS_BAT_ID, 5)
         registerEffectOccasion(EntityType.CREEPER, InternalConstants.VIRUS_CREEPER_ID, 15)
         registerEffectOccasion(EntityType.SPIDER, InternalConstants.VIRUS_RED_ID, 10)
         registerEffectOccasion(EntityType.GUARDIAN, InternalConstants.VIRUS_OCEAN_ID, 25)
@@ -319,7 +320,8 @@ object EffectRegistry {
         registerBacteriaCure(InternalConstants.BACTERIA_CACTUS_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.DESERT_BONE.get()), ItemStack(Blocks.CACTUS)))
         registerBacteriaCure(InternalConstants.BACTERIA_BONE_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.RED_FLOWER.get()), ItemStack(ItemRegistry.WOLF_TOOTH.get())))
         registerBacteriaCure(InternalConstants.BACTERIA_TERRA_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.CAVE_LANTERN.get()), ItemStack(Items.BEETROOT)))
-        registerBacteriaCure(InternalConstants.BACTERIA_MYCELIUM_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.CREEPER_SOUL.get()), ItemStack(Blocks.MYCELIUM)))
+        registerBacteriaCure(InternalConstants.BACTERIA_MYCELIUM_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.CREEPER_SOUL.get()), ItemStack(
+            Blocks.MYCELIUM)))
         registerBacteriaCure(InternalConstants.BACTERIA_SEA_ID, Triple(ItemStack(Items.POTION), ItemStack(BlockRegistry.FIRE_LILY.get()), ItemStack(Items.TROPICAL_FISH)))
     }
 
@@ -448,7 +450,7 @@ object EffectRegistry {
     fun getDrops() = DROPS
     fun getCleanTypes() = CLEAN_ENTITIES
 
-    fun getEffectInstance(id: Int): AbstractEffect {
+    fun getMobEffectInstance(id: Int): AbstractEffect {
         if(EFFECT_INSTANCES.containsKey(id))
             return EFFECT_INSTANCES[id]!!
         val effect = getEffectClassById(id).newInstance()

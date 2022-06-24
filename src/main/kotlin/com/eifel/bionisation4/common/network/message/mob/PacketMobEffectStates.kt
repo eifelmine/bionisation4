@@ -6,26 +6,26 @@ import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import net.minecraft.client.Minecraft
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.network.PacketBuffer
-import net.minecraftforge.fml.network.NetworkDirection
-import net.minecraftforge.fml.network.NetworkEvent
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.world.entity.LivingEntity
+import net.minecraftforge.network.NetworkDirection
+import net.minecraftforge.network.NetworkEvent
 import java.util.function.BiConsumer
 import java.util.function.Function
 import java.util.function.Supplier
 
-class PacketMobEffectStates(var nbt: CompoundNBT, var mode: Int, var entId: Int) {
+class PacketMobEffectStates(var nbt: CompoundTag, var mode: Int, var entId: Int) {
 
     companion object {
 
-        val toBytes = BiConsumer<PacketMobEffectStates, PacketBuffer> { msg, buffer ->
+        val toBytes = BiConsumer<PacketMobEffectStates, FriendlyByteBuf> { msg, buffer ->
             buffer.writeNbt(msg.nbt)
             buffer.writeInt(msg.mode)
             buffer.writeInt(msg.entId)
         }
 
-        val fromBytes = Function<PacketBuffer, PacketMobEffectStates> { buffer ->
+        val fromBytes = Function<FriendlyByteBuf, PacketMobEffectStates> { buffer ->
             PacketMobEffectStates(buffer.readNbt()!!, buffer.readInt(), buffer.readInt())
         }
 

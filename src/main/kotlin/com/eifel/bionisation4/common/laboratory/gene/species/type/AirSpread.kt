@@ -6,8 +6,8 @@ import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
 import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
 
 class AirSpread(): Gene(InternalConstants.GENE_AIR_SPREAD_ID, "Air spread", true) {
 
@@ -42,7 +42,7 @@ class AirSpread(): Gene(InternalConstants.GENE_AIR_SPREAD_ID, "Air spread", true
         NBTUtils.stringsToNBT(this, predicate, InternalConstants.GENE_PREDICATE_KEY)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.radius = nbtData.getDouble(InternalConstants.GENE_RADIUS_KEY)
         this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)

@@ -7,8 +7,8 @@ import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.common.extensions.expire
 import com.eifel.bionisation4.common.extensions.modifyImmunity
 import com.eifel.bionisation4.util.nbt.NBTUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
 
 class Antibiotic(): AbstractEffect(InternalConstants.EFFECT_ANTIBIOTIC_ID, "Antibiotic", EffectType.COMMON) {
 
@@ -41,7 +41,7 @@ class Antibiotic(): AbstractEffect(InternalConstants.EFFECT_ANTIBIOTIC_ID, "Anti
         NBTUtils.stringsToNBT(this, against, InternalConstants.ANTIBIOTIC_AGAINST_KEY)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.against.clear()
         NBTUtils.nbtToStrings(nbtData, against, InternalConstants.ANTIBIOTIC_AGAINST_KEY)

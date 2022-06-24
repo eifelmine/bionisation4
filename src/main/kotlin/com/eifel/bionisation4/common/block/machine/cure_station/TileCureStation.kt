@@ -10,15 +10,14 @@ import com.eifel.bionisation4.common.extensions.getAllItems
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntityType
+import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.items.ItemStackHandler
 
-class TileCureStation(type: TileEntityType<*>, size: Int): DefaultMachineTile(type, size) {
-
-    constructor(): this(TileRegistry.CURE_STATION.get(), 5)
+class TileCureStation(pos: BlockPos, state: BlockState, size: Int): DefaultMachineTile(TileRegistry.CURE_STATION.get(), pos, state, size) {
 
     override fun getProcessTime(stack: ItemStack?) = ConfigProperties.defaultCureStationProcessTime.get()
 
@@ -44,7 +43,7 @@ class TileCureStation(type: TileEntityType<*>, size: Int): DefaultMachineTile(ty
             ItemStack.isSame(t.first, items.getStackInSlot(1)) &&
             ItemStack.isSame(t.second, items.getStackInSlot(2)) &&
             ItemStack.isSame(t.third, items.getStackInSlot(3)) }.forEach { (key, value) ->
-                val effect = EffectRegistry.getEffectInstance(key)
+                val effect = EffectRegistry.getMobEffectInstance(key)
                 effects.add(EffectEntry(effect.effectID, effect.effectName, mutableListOf()))
                 items.getStackInSlot(1).shrink(value.first.count)
                 items.getStackInSlot(2).shrink(value.second.count)
@@ -54,6 +53,6 @@ class TileCureStation(type: TileEntityType<*>, size: Int): DefaultMachineTile(ty
         setChanged()
     }
 
-    override fun createMenu(p0: Int, p1: PlayerInventory, p2: PlayerEntity) = ContainerCureStation(p2.level, this.blockPos, p1, p0, this.dataAccess)
+    override fun createMenu(p0: Int, p1: Inventory, p2: Player) = ContainerCureStation(p2.level, this.blockPos, p1, p0, this.dataAccess)
     override fun getDisplayName() = TranslationUtils.getTranslatedTextComponent("block", "bionisation4", "cure_station")
 }

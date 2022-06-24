@@ -3,10 +3,10 @@ package com.eifel.bionisation4.common.network.message.mob
 import com.eifel.bionisation4.common.extensions.setBlood
 import com.eifel.bionisation4.common.extensions.setImmunity
 import net.minecraft.client.Minecraft
-import net.minecraft.entity.LivingEntity
-import net.minecraft.network.PacketBuffer
-import net.minecraftforge.fml.network.NetworkDirection
-import net.minecraftforge.fml.network.NetworkEvent
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.world.entity.LivingEntity
+import net.minecraftforge.network.NetworkDirection
+import net.minecraftforge.network.NetworkEvent
 import java.util.function.BiConsumer
 import java.util.function.Function
 import java.util.function.Supplier
@@ -15,13 +15,13 @@ class PacketMobPropertySync(var value: Int, var id: Int, var entId: Int) {
 
     companion object {
 
-        val toBytes = BiConsumer<PacketMobPropertySync, PacketBuffer> { msg, buffer ->
+        val toBytes = BiConsumer<PacketMobPropertySync, FriendlyByteBuf> { msg, buffer ->
             buffer.writeInt(msg.value)
             buffer.writeInt(msg.id)
             buffer.writeInt(msg.entId)
         }
 
-        val fromBytes = Function<PacketBuffer, PacketMobPropertySync> { buffer ->
+        val fromBytes = Function<FriendlyByteBuf, PacketMobPropertySync> { buffer ->
             PacketMobPropertySync(buffer.readInt(), buffer.readInt(), buffer.readInt())
         }
 

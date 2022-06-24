@@ -4,30 +4,31 @@ import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.extensions.getImmunity
 import com.eifel.bionisation4.common.item.CommonItem
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.item.UseAction
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
-import net.minecraft.world.World
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.UseAnim
+import net.minecraft.world.level.Level
+
 
 class ImmunityChecker(): CommonItem(desc = listOf(Triple("checker", "usage", "desc")), size = 1) {
 
     override fun getUseDuration(stack: ItemStack) = 72000
-    override fun getUseAnimation(stack: ItemStack) = UseAction.BOW
+    override fun getUseAnimation(stack: ItemStack) = UseAnim.BOW
 
-    override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
+    override fun use(world: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack = player.getItemInHand(hand)
         if (!player.level.isClientSide) {
             player.startUsingItem(hand)
-            return ActionResult.consume(stack)
+            return InteractionResultHolder.consume(stack)
         }
-        return ActionResult.pass(stack)
+        return InteractionResultHolder.pass(stack)
     }
 
-    override fun releaseUsing(stack: ItemStack, world: World, entity: LivingEntity, duration: Int) {
-        (entity as? PlayerEntity)?.let { player ->
+    override fun releaseUsing(stack: ItemStack, world: Level, entity: LivingEntity, duration: Int) {
+        (entity as? Player)?.let { player ->
             if(!player.level.isClientSide && (getUseDuration(stack) - duration) >= 20) {
                 val immunity = player.getImmunity()
                 player.sendMessage(TranslationUtils.getCommonTranslation("checker", "usage", "result").append("${Utils.getColorFromValue(immunity)}$immunity%"), entity.uuid)

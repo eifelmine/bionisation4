@@ -1,9 +1,9 @@
 package com.eifel.bionisation4.api.laboratory.util
 
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
 
 interface INBTSerializable {
 
-    fun toNBT() : CompoundNBT
-    fun fromNBT(nbtData : CompoundNBT)
+    fun toNBT() : CompoundTag
+    fun fromNBT(nbtData : CompoundTag)
 }

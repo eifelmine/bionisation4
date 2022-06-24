@@ -11,9 +11,9 @@ import com.eifel.bionisation4.common.extensions.getImmunity
 import com.eifel.bionisation4.util.lab.EffectUtils
 import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
@@ -49,7 +49,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
 
     constructor() : this(0)
 
-    override fun toNBT() = CompoundNBT().apply {
+    override fun toNBT() = CompoundTag().apply {
         putInt(InternalConstants.EFFECT_ID_KEY, effectID)
         putString(InternalConstants.EFFECT_NAME_KEY, effectName)
 
@@ -84,7 +84,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
         putBoolean(InternalConstants.EFFECT_SYNCABLE_KEY, isSyncable)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
 
         effectID = nbtData.getInt(InternalConstants.EFFECT_ID_KEY)
         effectName = nbtData.getString(InternalConstants.EFFECT_NAME_KEY)
@@ -160,7 +160,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     open fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         recalculatePower(entity)
         mutate()
-        effectGenes.filter { it.isActive() && (if(it.playerOnly) entity is PlayerEntity else true ) }.filter { if(it.cyclicDelay > 0) entity.getBioTicker() % it.cyclicDelay == 0 else true }.forEach { gene ->
+        effectGenes.filter { it.isActive() && (if(it.playerOnly) entity is Player else true ) }.filter { if(it.cyclicDelay > 0) entity.getBioTicker() % it.cyclicDelay == 0 else true }.forEach { gene ->
             try {
                 gene.perform(entity, this)
             }catch (e: Exception){
@@ -190,7 +190,7 @@ abstract class AbstractEffect(var effectID: Int, var effectName: String = "Defau
     }
 
     open fun onDeath(event: LivingDeathEvent, entity: LivingEntity) {
-        effectGenes.filter { it.isActive() && (if(it.playerOnly) entity is PlayerEntity else true ) }.forEach { gene ->
+        effectGenes.filter { it.isActive() && (if(it.playerOnly) entity is Player else true ) }.forEach { gene ->
             gene.onDeath(event, entity, this)
             if(gene.deactivateAfter)
                 gene.isGeneActive = false

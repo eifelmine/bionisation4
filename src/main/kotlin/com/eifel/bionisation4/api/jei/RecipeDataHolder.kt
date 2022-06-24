@@ -9,7 +9,7 @@ import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.util.EffectEntry
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.util.nbt.NBTUtils
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 
 object RecipeDataHolder {
 
@@ -23,7 +23,7 @@ object RecipeDataHolder {
         EffectRegistry.getBacteriaCures().forEach { (id, inputs) ->
             val ant = ItemStack(ItemRegistry.ANTIBIOTIC_VIAL.get())
             val data = NBTUtils.getNBT(ant)
-            val effect = EffectRegistry.getEffectInstance(id)
+            val effect = EffectRegistry.getMobEffectInstance(id)
             NBTUtils.objectsToNBT(data, mutableListOf(EffectEntry(effect.effectID, effect.effectName, mutableListOf())), InternalConstants.VIAL_BACTERIA)
             CURE_STATION_RECIPES.add(CureStationRecipe(Triple(inputs.first.copy(), inputs.second.copy(), inputs.third.copy()), ant))
         }

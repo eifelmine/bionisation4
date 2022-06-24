@@ -3,7 +3,7 @@ package com.eifel.bionisation4.common.laboratory.common.effect
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 
 class Nightmares(): AbstractEffect(InternalConstants.EFFECT_NIGHTMARES_ID, "Nightmares", EffectType.COMMON) {
 

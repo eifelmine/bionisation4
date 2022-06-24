@@ -8,8 +8,8 @@ import com.eifel.bionisation4.common.laboratory.gene.species.potion.MovementSpee
 import com.eifel.bionisation4.common.laboratory.gene.species.type.AirSpread
 import com.eifel.bionisation4.common.laboratory.gene.species.type.Explosion
 import com.eifel.bionisation4.common.laboratory.gene.species.type.ImmunityDamage
-import net.minecraft.entity.CreatureEntity
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.monster.Monster
 
 class Creeper(): AbstractEffect(InternalConstants.VIRUS_CREEPER_ID, "Creeper", EffectType.VIRUS) {
 
@@ -28,7 +28,7 @@ class Creeper(): AbstractEffect(InternalConstants.VIRUS_CREEPER_ID, "Creeper", E
 
     override fun onTick(entity: LivingEntity, isLastTick: Boolean) {
         super.onTick(entity, isLastTick)
-        if(entity is CreatureEntity && timeTicker == 10)
+        if(entity is Monster && timeTicker == 10)
             activateGene(InternalConstants.GENE_MOVEMENT_SPEED_ID)
     }
 

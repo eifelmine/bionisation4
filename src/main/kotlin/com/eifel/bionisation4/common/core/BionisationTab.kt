@@ -1,12 +1,12 @@
 package com.eifel.bionisation4.common.core
 
 import com.eifel.bionisation4.common.item.ItemRegistry
-import net.minecraft.item.BlockItem
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
-import net.minecraft.util.NonNullList
+import net.minecraft.core.NonNullList
+import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.ItemStack
 
-class BionisationTab(index: Int, label: String?): ItemGroup(index, label) {
+class BionisationTab(index: Int, label: String?): CreativeModeTab(index, label) {
 
     companion object {
         val BIONISATION_TAB: BionisationTab = BionisationTab(TABS.size, "tab_bionisation4")

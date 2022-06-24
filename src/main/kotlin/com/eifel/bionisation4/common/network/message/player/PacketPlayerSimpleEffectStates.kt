@@ -4,9 +4,9 @@ import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.doWithCap
 import com.eifel.bionisation4.common.laboratory.common.DefaultStateEffect
 import net.minecraft.client.Minecraft
-import net.minecraft.network.PacketBuffer
-import net.minecraftforge.fml.network.NetworkDirection
-import net.minecraftforge.fml.network.NetworkEvent
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraftforge.network.NetworkDirection
+import net.minecraftforge.network.NetworkEvent
 import java.util.function.BiConsumer
 import java.util.function.Function
 import java.util.function.Supplier
@@ -15,12 +15,12 @@ class PacketPlayerSimpleEffectStates(var effects: IntArray, var mode: Int) {
 
     companion object {
 
-        val toBytes = BiConsumer<PacketPlayerSimpleEffectStates, PacketBuffer> { msg, buffer ->
+        val toBytes = BiConsumer<PacketPlayerSimpleEffectStates, FriendlyByteBuf> { msg, buffer ->
             buffer.writeVarIntArray(msg.effects)
             buffer.writeInt(msg.mode)
         }
 
-        val fromBytes = Function<PacketBuffer, PacketPlayerSimpleEffectStates> { buffer ->
+        val fromBytes = Function<FriendlyByteBuf, PacketPlayerSimpleEffectStates> { buffer ->
             PacketPlayerSimpleEffectStates(buffer.readVarIntArray(), buffer.readInt())
         }
 

@@ -4,11 +4,12 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 
 class HandWeakness(): Gene(InternalConstants.GENE_HAND_WEAKNESS_ID, "Hand weakness", true) {
 
@@ -16,9 +17,11 @@ class HandWeakness(): Gene(InternalConstants.GENE_HAND_WEAKNESS_ID, "Hand weakne
 
     override fun perform(entity: LivingEntity, effect: AbstractEffect) {
         super.perform(entity, effect)
-        entity.addEffect(EffectInstance(Effects.WEAKNESS, 100, 3))
-        if(entity is PlayerEntity && entity.getBioTicker() % delay == 0)
-            entity.drop(true)
+        entity.addEffect(MobEffectInstance(MobEffects.WEAKNESS, 100, 3))
+        if(entity is Player && entity.getBioTicker() % delay == 0) {
+            entity.drop(entity.inventory.getSelected(), true)
+            entity.inventory.setItem(entity.inventory.selected, ItemStack.EMPTY)
+        }
     }
 
     fun setDelay(delay: Int): HandWeakness {
@@ -30,7 +33,7 @@ class HandWeakness(): Gene(InternalConstants.GENE_HAND_WEAKNESS_ID, "Hand weakne
         putInt(InternalConstants.GENE_DELAY_KEY, delay)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)
     }

@@ -5,8 +5,8 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.getBioTicker
 import com.eifel.bionisation4.common.extensions.modifyBlood
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
 
 class BloodDamage(): Gene(InternalConstants.GENE_BLOOD_DAMAGE_ID, "Blood damage", true) {
 
@@ -34,7 +34,7 @@ class BloodDamage(): Gene(InternalConstants.GENE_BLOOD_DAMAGE_ID, "Blood damage"
         putInt(InternalConstants.GENE_DELAY_KEY, delay)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.amount = nbtData.getInt(InternalConstants.GENE_BLOOD_KEY)
         this.delay = nbtData.getInt(InternalConstants.GENE_DELAY_KEY)

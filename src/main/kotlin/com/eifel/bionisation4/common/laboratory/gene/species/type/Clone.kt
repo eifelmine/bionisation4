@@ -4,8 +4,8 @@ import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.util.Utils
-import net.minecraft.entity.LivingEntity
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.LivingEntity
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 
 class Clone(): Gene(InternalConstants.GENE_CLONE_ID, "Clone", true) {
@@ -31,7 +31,7 @@ class Clone(): Gene(InternalConstants.GENE_CLONE_ID, "Clone", true) {
         putInt(InternalConstants.GENE_COUNT_KEY, count)
     }
 
-    override fun fromNBT(nbtData: CompoundNBT) {
+    override fun fromNBT(nbtData: CompoundTag) {
         super.fromNBT(nbtData)
         this.count = nbtData.getInt(InternalConstants.GENE_COUNT_KEY)
     }

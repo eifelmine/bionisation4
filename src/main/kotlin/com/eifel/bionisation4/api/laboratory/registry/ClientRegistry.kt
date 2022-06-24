@@ -3,8 +3,8 @@ package com.eifel.bionisation4.api.laboratory.registry
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.client.particle.ParticleRegistry
-import net.minecraft.entity.LivingEntity
-import net.minecraft.particles.IParticleData
+import net.minecraft.core.particles.ParticleOptions
+import net.minecraft.world.entity.LivingEntity
 
 object ClientRegistry {
 
@@ -60,7 +60,7 @@ object ClientRegistry {
     fun getParticleGenerators() = PARTICLE_GENERATORS
     fun getGeneratorById(id: Int) = PARTICLE_GENERATORS.getOrDefault(id) {}
 
-    private val defaultSpawner: (LivingEntity, IParticleData) -> Unit = { entity, data ->
+    private val defaultSpawner: (LivingEntity, ParticleOptions) -> Unit = { entity, data ->
         if(entity.tickCount % 5 == 0)
             entity.level.addParticle(data,  entity.x + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, entity.y + Utils.random.nextFloat(), entity.z + Utils.random.nextFloat() * entity.bbWidth * 2.0F - entity.bbWidth, 0.1, 0.1, 0.1)
     }

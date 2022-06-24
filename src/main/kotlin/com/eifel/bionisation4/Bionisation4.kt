@@ -21,12 +21,8 @@ import com.eifel.bionisation4.common.event.CommonEvents
 import com.eifel.bionisation4.common.event.GenerationEvents
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.network.NetworkManager
-import com.eifel.bionisation4.common.storage.capability.entity.BioStat
-import com.eifel.bionisation4.common.storage.capability.entity.BioStatStorage
-import com.eifel.bionisation4.common.storage.capability.entity.IBioStat
 import com.eifel.bionisation4.world.generation.flower.FlowerFeatures
 import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
@@ -83,8 +79,6 @@ object Bionisation4 {
             OverrideHandler.loadOverrides()
             //network
             NetworkManager.init()
-            //init capability
-            CapabilityManager.INSTANCE.register(IBioStat::class.java, BioStatStorage(), ::BioStat)
             //features
             FlowerFeatures.loadFlowerFeatures()
             //events

@@ -5,7 +5,7 @@ import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.common.extensions.addEffect
 import com.eifel.bionisation4.common.extensions.isEffectActive
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 
 class AttackSpread(): Gene(InternalConstants.GENE_ATTACK_SPREAD_ID, "Attack spread", true) {

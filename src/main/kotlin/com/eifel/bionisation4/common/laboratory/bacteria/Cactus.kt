@@ -3,8 +3,8 @@ package com.eifel.bionisation4.common.laboratory.bacteria
 import com.eifel.bionisation4.api.constant.InternalConstants
 import com.eifel.bionisation4.api.laboratory.species.AbstractEffect
 import com.eifel.bionisation4.api.laboratory.util.EffectType
-import net.minecraft.entity.LivingEntity
-import net.minecraft.util.DamageSource
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.LivingEntity
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 
 class Cactus(): AbstractEffect(InternalConstants.BACTERIA_CACTUS_ID, "Cactus", EffectType.BACTERIA) {

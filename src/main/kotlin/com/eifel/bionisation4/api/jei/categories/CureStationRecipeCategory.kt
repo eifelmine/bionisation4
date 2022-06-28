@@ -7,52 +7,40 @@ import com.eifel.bionisation4.common.config.ConfigProperties
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
-import mezz.jei.api.gui.IRecipeLayout
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView
 import mezz.jei.api.helpers.IGuiHelper
-import mezz.jei.api.ingredients.IIngredients
+import mezz.jei.api.recipe.IFocusGroup
+import mezz.jei.api.recipe.RecipeIngredientRole
+import mezz.jei.api.recipe.RecipeType
 import mezz.jei.api.recipe.category.IRecipeCategory
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.language.I18n
-import net.minecraft.network.chat.TextComponent
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
-class CureStationRecipeCategory(val helper: IGuiHelper) : IRecipeCategory<CureStationRecipe> {
-
-    companion object {
-        val UUID = ResourceLocation(Info.MOD_ID, "jei_cure_station")
-    }
+class CureStationRecipeCategory(val helper: IGuiHelper, val cureStationRecipeType: RecipeType<CureStationRecipe>) : IRecipeCategory<CureStationRecipe> {
 
     private var GUI = helper.createDrawable(ResourceLocation(Info.MOD_ID, "textures/gui/gui_curestation.png"), 49, 14, 124, 69)
-    private var ICON = helper.createDrawableIngredient(ItemStack(BlockRegistry.CURE_STATION.get()))
+    private var ICON = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, ItemStack(BlockRegistry.CURE_STATION.get()))
 
-    override fun getUid() = UUID
-    override fun getRecipeClass() = CureStationRecipe::class.java
-    override fun getTitle() = TextComponent(TranslationUtils.getTranslatedText("jei", "title", "cure_station"))
+    override fun getRecipeType() = cureStationRecipeType
+    override fun getTitle() = Component.literal(TranslationUtils.getTranslatedText("jei", "title", "cure_station"))
     override fun getBackground() = GUI
     override fun getIcon() = ICON
 
-    override fun setIngredients(recipe: CureStationRecipe, ingredients: IIngredients) {
-        ingredients.setInputs(VanillaTypes.ITEM, recipe.input.toList())
+    override fun setRecipe(recipeLayout: IRecipeLayoutBuilder, recipeWrapper: CureStationRecipe, ingredients: IFocusGroup) {
+        recipeLayout.addSlot(RecipeIngredientRole.INPUT, 9, 3).addItemStack(recipeWrapper.input.first)
+        recipeLayout.addSlot(RecipeIngredientRole.INPUT, 31, 3).addItemStack(recipeWrapper.input.second)
+        recipeLayout.addSlot(RecipeIngredientRole.INPUT, 53, 3).addItemStack(recipeWrapper.input.third)
+        recipeLayout.addSlot(RecipeIngredientRole.OUTPUT, 31, 47).addItemStack(recipeWrapper.output)
+        recipeLayout.addSlot(RecipeIngredientRole.RENDER_ONLY, 103, 47).addItemStack(ItemStack(Items.COAL))
     }
 
-    override fun setRecipe(recipeLayout: IRecipeLayout, recipeWrapper: CureStationRecipe, ingredients: IIngredients) {
-        val isg = recipeLayout.itemStacks
-        isg.init(0, true, 8, 2)
-        isg[0] = recipeWrapper.input.first
-        isg.init(1, true, 30, 2)
-        isg[1] = recipeWrapper.input.second
-        isg.init(2, true, 52, 2)
-        isg[2] = recipeWrapper.input.third
-        isg.init(3, false, 30, 46)
-        isg[3] = recipeWrapper.output
-        isg.init(4, true, 102, 46)
-        isg[4] = ItemStack(Items.COAL)
-    }
-
-    override fun draw(recipe: CureStationRecipe, matrixStack: PoseStack, mouseX: Double, mouseY: Double) {
-        super.draw(recipe, matrixStack, mouseX, mouseY)
+    override fun draw(recipe: CureStationRecipe, view: IRecipeSlotsView, matrixStack: PoseStack, mouseX: Double, mouseY: Double) {
+        super.draw(recipe, view, matrixStack, mouseX, mouseY)
         Minecraft.getInstance().font.draw(matrixStack, I18n.get("gui.jei.category.smelting.time.seconds", ConfigProperties.defaultCureStationProcessTime.get() / 20), 88f, 8f, 0x000000)
     }
 }

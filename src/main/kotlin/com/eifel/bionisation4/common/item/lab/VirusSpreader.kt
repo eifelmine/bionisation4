@@ -40,7 +40,7 @@ class VirusSpreader(): CommonItem(desc = listOf(Triple("virus_spreader", "usage"
                     player.addEffect(effect)
             }
             data.remove(InternalConstants.SPREADER_GENES)
-            player.sendMessage(TranslationUtils.getCommonTranslation("virus_spreader", "usage", "spread"), player.uuid)
+            player.sendSystemMessage(TranslationUtils.getCommonTranslation("virus_spreader", "usage", "spread"))
         }
         return InteractionResultHolder.pass(stack)
     }

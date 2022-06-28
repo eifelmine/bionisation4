@@ -73,7 +73,7 @@ object BlockRegistry {
         15.0
     ), placing = {state, reader, pos ->
         val block = state.block
-        block == Blocks.GRASS_BLOCK
+        block != Blocks.GRASS_BLOCK
     })}
     val SNOW_WARDEN = registerBlock("snowwarden") {CommonFlower(MobEffects.MOVEMENT_SLOWDOWN, shape = FlowerBlock.box(
         3.0,

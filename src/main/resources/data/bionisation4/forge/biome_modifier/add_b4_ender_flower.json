@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_dry",
+  "features": [
+    "bionisation4:b4_ender_flower"
+  ],
+  "step": "vegetal_decoration"
+}

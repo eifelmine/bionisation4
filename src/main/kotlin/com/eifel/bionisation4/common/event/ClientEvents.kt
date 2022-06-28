@@ -15,7 +15,7 @@ import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GameRenderer
 import net.minecraft.client.resources.language.I18n
-import net.minecraft.network.chat.TextComponent
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
@@ -40,15 +40,15 @@ object ClientEvents {
     @SubscribeEvent
     fun onRenderTooltip(event: ItemTooltipEvent){
         EffectRegistry.getDrops().filterValues { ItemStack.isSame(it.second, event.itemStack) }.forEach { key, value ->
-            event.toolTip.add(TextComponent(""))
+            event.toolTip.add(Component.empty())
             event.toolTip.add(TranslationUtils.getText(TranslationUtils.getTranslatedText("item", "drop", "tooltip1") + " §e${I18n.get(key.toString())} " + TranslationUtils.getTranslatedText("item", "drop", "tooltip2") + "§b${value.first}%"))
         }
         val data = EffectRegistry.getGeneVials().filter { ItemStack.isSame(it.value, event.itemStack) }
         if(data.isNotEmpty()) {
-            event.toolTip.add(TextComponent(""))
+            event.toolTip.add(Component.empty())
             event.toolTip.add(TranslationUtils.getTranslatedTextComponent("item", "gene", "tooltip"))
             data.forEach { (gene, stack) ->
-                event.toolTip.add(TextComponent("§7" +  EffectRegistry.getGeneInstance(gene).getTranslationName()))
+                event.toolTip.add(Component.literal("§7" +  EffectRegistry.getGeneInstance(gene).getTranslationName()))
             }
         }
     }
@@ -59,7 +59,7 @@ object ClientEvents {
         if(!event.isCancelable && event.type == RenderGameOverlayEvent.ElementType.ALL) {
             mc.player?.let { player ->
                 val level = player.getBlood()
-                val ms = event.matrixStack
+                val ms = event.poseStack
                 val x = event.window.guiScaledWidth - t_width - 30
                 val y = event.window.guiScaledHeight - 20
                 RenderSystem.setShader { GameRenderer.getPositionTexShader() }
@@ -94,14 +94,14 @@ object ClientEvents {
         VersionChecker.checker?.let { checker ->
             if (ConfigProperties.showUpdates.get() && !VersionChecker.wasWarned && !checker.isLatestVersion) {
                 if (checker.latestVersion.isEmpty() || checker.newVersionURL.isEmpty() || checker.changes.isEmpty()) {
-                    event.player.sendMessage(TranslationUtils.getText("${ChatFormatting.RED}${TranslationUtils.getTranslatedText("checker", "message", "cant")}"), null)
+                    event.player.displayClientMessage(TranslationUtils.getText("${ChatFormatting.RED}${TranslationUtils.getTranslatedText("checker", "message", "cant")}"), true)
                     VersionChecker.wasWarned = true
                 } else {
-                    event.player.sendMessage(TranslationUtils.getText("${ChatFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker","message","version")} ${ChatFormatting.AQUA}${checker.latestVersion} ${ChatFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message", "av")} ${ChatFormatting.BLUE}${checker.newVersionURL}"), null)
-                    event.player.sendMessage(TranslationUtils.getText(" "), null)
-                    event.player.sendMessage(TranslationUtils.getText("${ChatFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message","changes")}"), null)
+                    event.player.displayClientMessage(TranslationUtils.getText("${ChatFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker","message","version")} ${ChatFormatting.AQUA}${checker.latestVersion} ${ChatFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message", "av")} ${ChatFormatting.BLUE}${checker.newVersionURL}"), true)
+                    event.player.displayClientMessage(TranslationUtils.getText(" "), true)
+                    event.player.displayClientMessage(TranslationUtils.getText("${ChatFormatting.YELLOW}${TranslationUtils.getTranslatedText("checker", "message","changes")}"), true)
                     checker.changes.forEach { change ->
-                        event.player.sendMessage(TranslationUtils.getText("${ChatFormatting.GRAY}$change"), null)
+                        event.player.displayClientMessage(TranslationUtils.getText("${ChatFormatting.GRAY}$change"), true)
                     }
                     VersionChecker.wasWarned = true
                 }

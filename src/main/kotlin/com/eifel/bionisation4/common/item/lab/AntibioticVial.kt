@@ -44,7 +44,7 @@ class AntibioticVial(): CommonItem(desc = listOf(Triple("antibiotic_vial", "usag
         val stack = player.getItemInHand(hand)
         if(!player.level.isClientSide && !player.isShiftKeyDown) {
             addBacteriaCure(stack, player)
-            player.sendMessage(TranslationUtils.getCommonTranslation("antibiotic_vial", "usage", "injected"), player.uuid)
+            player.sendSystemMessage(TranslationUtils.getCommonTranslation("antibiotic_vial", "usage", "injected"))
         }
         return InteractionResultHolder.pass(stack)
     }
@@ -54,7 +54,7 @@ class AntibioticVial(): CommonItem(desc = listOf(Triple("antibiotic_vial", "usag
         if(!player.level.isClientSide && player.isShiftKeyDown) {
             target?.let { entity ->
                 addBacteriaCure(stack, entity)
-                player.sendMessage(TranslationUtils.getCommonTranslation("antibiotic_vial", "usage", "injected"), player.uuid)
+                player.sendSystemMessage(TranslationUtils.getCommonTranslation("antibiotic_vial", "usage", "injected"))
             }
         }
         return InteractionResult.SUCCESS

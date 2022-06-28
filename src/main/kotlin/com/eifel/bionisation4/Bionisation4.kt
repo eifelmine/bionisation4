@@ -1,6 +1,5 @@
 package com.eifel.bionisation4
 
-import com.eifel.bionisation4.api.jei.RecipeDataHolder
 import com.eifel.bionisation4.api.laboratory.registry.ClientRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectRegistry
 import com.eifel.bionisation4.api.laboratory.registry.EffectTriggers
@@ -18,7 +17,6 @@ import com.eifel.bionisation4.common.core.VersionChecker
 import com.eifel.bionisation4.common.event.ClientEvents
 import com.eifel.bionisation4.common.event.ClientModLoadingEvents
 import com.eifel.bionisation4.common.event.CommonEvents
-import com.eifel.bionisation4.common.event.GenerationEvents
 import com.eifel.bionisation4.common.item.ItemRegistry
 import com.eifel.bionisation4.common.network.NetworkManager
 import com.eifel.bionisation4.world.generation.flower.FlowerFeatures
@@ -55,6 +53,8 @@ object Bionisation4 {
         ItemRegistry.ITEMS.register(bus)
         ParticleRegistry.PARTICLES.register(bus)
 
+        FlowerFeatures.PLACED_FEATURES.register(bus)
+
         callWhenOn(Dist.CLIENT){
             bus.register(ClientModLoadingEvents.javaClass)
         }
@@ -79,11 +79,8 @@ object Bionisation4 {
             OverrideHandler.loadOverrides()
             //network
             NetworkManager.init()
-            //features
-            FlowerFeatures.loadFlowerFeatures()
             //events
             FORGE_BUS.register(CommonEvents.javaClass)
-            FORGE_BUS.register(GenerationEvents.javaClass)
             callWhenOn(Dist.CLIENT){
                 FORGE_BUS.register(ClientEvents.javaClass)
             }
@@ -98,8 +95,6 @@ object Bionisation4 {
             ClientRegistry.loadDefaultParticleGenerators()
             //render layers
             BlockShapes.setupRenderLayers()
-            //recipes
-            RecipeDataHolder.initRecipes()
             //guis
             ScreenRegistry.registerScreens()
             if (ConfigProperties.showUpdates.get()) {

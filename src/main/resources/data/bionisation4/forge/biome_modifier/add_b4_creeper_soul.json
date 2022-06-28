@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_plains",
+  "features": [
+    "bionisation4:b4_creeper_soul"
+  ],
+  "step": "vegetal_decoration"
+}

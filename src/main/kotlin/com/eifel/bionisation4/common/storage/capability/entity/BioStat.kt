@@ -65,7 +65,7 @@ class BioStat {
             if(entity is ServerPlayer) {
                 pending.filter { eff -> !discoveredEffects.contains(eff.effectID) }.forEach { effect ->
                     discoveredEffects.add(effect.effectID)
-                    entity.sendMessage(TranslationUtils.getCommonTranslation("discover", "message", "info").append(effect.getCommonTranslationName()), entity.uuid)
+                    entity.sendSystemMessage(TranslationUtils.getCommonTranslation("discover", "message", "info").append(effect.getCommonTranslationName()))
                 }
             }
             pending.clear()

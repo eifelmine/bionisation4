@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_overworld",
+  "features": [
+    "bionisation4:b4_garlic"
+  ],
+  "step": "vegetal_decoration"
+}

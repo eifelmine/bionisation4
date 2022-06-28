@@ -31,7 +31,7 @@ class ImmunityChecker(): CommonItem(desc = listOf(Triple("checker", "usage", "de
         (entity as? Player)?.let { player ->
             if(!player.level.isClientSide && (getUseDuration(stack) - duration) >= 20) {
                 val immunity = player.getImmunity()
-                player.sendMessage(TranslationUtils.getCommonTranslation("checker", "usage", "result").append("${Utils.getColorFromValue(immunity)}$immunity%"), entity.uuid)
+                player.sendSystemMessage(TranslationUtils.getCommonTranslation("checker", "usage", "result").append("${Utils.getColorFromValue(immunity)}$immunity%"))
             }
         }
     }

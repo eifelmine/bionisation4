@@ -6,7 +6,10 @@ import com.eifel.bionisation4.api.laboratory.species.Gene
 import com.eifel.bionisation4.api.util.Utils
 import com.eifel.bionisation4.common.extensions.getBioTicker
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.network.chat.TextComponent
+import net.minecraft.network.chat.ChatSender
+import net.minecraft.network.chat.ChatType
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.PlayerChatMessage
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.LivingEntity
 import net.minecraftforge.server.ServerLifecycleHooks
@@ -26,7 +29,7 @@ class RandomWords(): Gene(InternalConstants.GENE_RANDOM_WORDS_ID, "Random words"
                     .map(charPool::get)
                     .joinToString("")
             }
-            ServerLifecycleHooks.getCurrentServer().playerList.players.forEach { it.sendMessage(TextComponent("<${entity.name.contents}>: §6${text.joinToString(" ")}"), it.uuid) }
+            ServerLifecycleHooks.getCurrentServer().playerList.players.forEach { it.sendChatMessage(PlayerChatMessage.unsigned(Component.literal("<${entity.name.contents}>: §6${text.joinToString(" ")}")), ChatSender(it.uuid, it.name), ChatType.CHAT) }
         }
     }
 

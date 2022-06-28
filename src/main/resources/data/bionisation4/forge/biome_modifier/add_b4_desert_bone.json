@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_sandy",
+  "features": [
+    "bionisation4:b4_desert_bone"
+  ],
+  "step": "vegetal_decoration"
+}

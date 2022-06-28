@@ -27,7 +27,7 @@ class VaccineInjector(): CommonItem(desc = listOf(Triple("vaccine_injector", "us
         val stack = player.getItemInHand(hand)
         if(!player.level.isClientSide && !player.isShiftKeyDown) {
             compareGenes(stack, player)
-            player.sendMessage(TranslationUtils.getCommonTranslation("vaccine_injector", "usage", "injected"), player.uuid)
+            player.sendSystemMessage(TranslationUtils.getCommonTranslation("vaccine_injector", "usage", "injected"))
         }
         return InteractionResultHolder.pass(stack)
     }
@@ -37,7 +37,7 @@ class VaccineInjector(): CommonItem(desc = listOf(Triple("vaccine_injector", "us
         if(!player.level.isClientSide && player.isShiftKeyDown) {
             target?.let { entity ->
                 compareGenes(stack, entity)
-                player.sendMessage(TranslationUtils.getCommonTranslation("vaccine_injector", "usage", "injected"), player.uuid)
+                player.sendSystemMessage(TranslationUtils.getCommonTranslation("vaccine_injector", "usage", "injected"))
             }
         }
         return InteractionResult.SUCCESS

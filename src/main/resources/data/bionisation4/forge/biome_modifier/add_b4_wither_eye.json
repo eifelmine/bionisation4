@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_savanna",
+  "features": [
+    "bionisation4:b4_wither_eye"
+  ],
+  "step": "vegetal_decoration"
+}

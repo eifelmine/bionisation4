@@ -13,8 +13,8 @@ import net.minecraft.world.entity.monster.*
 import net.minecraft.world.entity.monster.piglin.Piglin
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Blocks
+import net.minecraftforge.common.Tags
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
@@ -36,7 +36,7 @@ object EffectTriggers {
                     is Player -> {
                         val player = event.entityLiving as Player
                         //sunstroke
-                        if (player.getBioTicker() % 600 == 0 && player.isInBiome(Biome.BiomeCategory.DESERT) && player.level.isDay && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID)))
+                        if (player.getBioTicker() % 600 == 0 && player.isInBiome(Tags.Biomes.IS_HOT) && player.level.isDay && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID)))
                             if(player.inventory.armor[3].isEmpty)
                                 player.addEffect(Sunstroke())
 
@@ -52,13 +52,13 @@ object EffectTriggers {
                 if(event.entityLiving.getBlood() < 40)
                     event.entityLiving.addEffect(LackOfBlood())
                 //cold
-                if ((event.entityLiving.isInBiome(Biome.BiomeCategory.ICY) || event.entityLiving.isInBiome(Biome.BiomeCategory.TAIGA)) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_COLD_ID)) && !event.entityLiving.hasArmor(true) && event.entityLiving.getImmunity() < 80)
+                if (event.entityLiving.isInBiome(Tags.Biomes.IS_COLD) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_COLD_ID)) && !event.entityLiving.hasArmor(true) && event.entityLiving.getImmunity() < 80)
                     event.entityLiving.addEffect(Cold())
                 //aer
                 if(event.entityLiving.getImmunity() < 40 && event.entityLiving.getBioTicker() % 1200 == 0 && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.VIRUS_AER_ID)))
                     event.entityLiving.addEffect(Aer())
                 //swamp
-                if(event.entityLiving.getBioTicker() % 3600 == 0 && event.entityLiving.isInBiome(Biome.BiomeCategory.SWAMP) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_SWAMP_ID)) && !event.entityLiving.hasBioArmor(true))
+                if(event.entityLiving.getBioTicker() % 3600 == 0 && event.entityLiving.isInBiome(Tags.Biomes.IS_SWAMP) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_SWAMP_ID)) && !event.entityLiving.hasBioArmor(true))
                     event.entityLiving.addEffect(Swamp())
                 //water
                 if(event.entityLiving.getImmunity() < 80 && event.entityLiving.getBioTicker() % 1200 == 0 && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_WATER_ID)))

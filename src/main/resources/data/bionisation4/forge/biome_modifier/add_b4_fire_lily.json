@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_hot",
+  "features": [
+    "bionisation4:b4_fire_lily"
+  ],
+  "step": "vegetal_decoration"
+}

@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_swamp",
+  "features": [
+    "bionisation4:b4_red_flower"
+  ],
+  "step": "vegetal_decoration"
+}

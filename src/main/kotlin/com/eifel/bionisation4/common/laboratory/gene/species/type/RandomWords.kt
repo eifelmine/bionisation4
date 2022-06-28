@@ -26,7 +26,7 @@ class RandomWords(): Gene(InternalConstants.GENE_RANDOM_WORDS_ID, "Random words"
                     .map(charPool::get)
                     .joinToString("")
             }
-            ServerLifecycleHooks.getCurrentServer().playerList.players.forEach { it.sendMessage(TextComponent("<${entity.name.contents}>: §6${text.joinToString(" ")}"), null) }
+            ServerLifecycleHooks.getCurrentServer().playerList.players.forEach { it.sendMessage(TextComponent("<${entity.name.contents}>: §6${text.joinToString(" ")}"), it.uuid) }
         }
     }
 

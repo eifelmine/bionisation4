@@ -1,1 +1,1 @@
-1.0.0.1_https://www.curseforge.com/minecraft/mc-mods/bionisation-4/files_Beta-release for Minecraft 1.18.2
+1.0.0.2_https://www.curseforge.com/minecraft/mc-mods/bionisation-4/files_Fixed Brain virus causing server crash

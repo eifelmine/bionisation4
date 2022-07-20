@@ -71,12 +71,12 @@ abstract class DefaultMachineTile(type: BlockEntityType<*>, val pos: BlockPos, v
                 if (!this.isProcessing() && this.getProcessConditions(this.itemHandler)) {
                     this.machineProcessTime = this.getItemBurnTime(stack)
                     this.currentProcessTime = this.machineProcessTime
-                    if (stack.hasContainerItem())
-                        this.itemHandler.setStackInSlot(0, stack.containerItem)
+                    if (stack.hasCraftingRemainingItem())
+                        this.itemHandler.setStackInSlot(0, stack.craftingRemainingItem)
                     else if (!stack.isEmpty) {
                         stack.shrink(1)
                         if (stack.isEmpty)
-                            this.itemHandler.setStackInSlot(0, stack.containerItem)
+                            this.itemHandler.setStackInSlot(0, stack.craftingRemainingItem)
                     }
                 }
                 //item processing

@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries
 
 object ContainerRegistry {
 
-    var CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Info.MOD_ID)
+    var CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Info.MOD_ID)
 
     val VACCINE_CREATOR_CONTAINER = CONTAINERS.register<MenuType<ContainerVaccineCreator>>("vaccine_creator_container") { IForgeMenuType.create { windowId: Int, pInv: Inventory, data: FriendlyByteBuf ->
         ContainerVaccineCreator(pInv.player.level, data.readBlockPos(), pInv, windowId, SimpleContainerData(4)) }

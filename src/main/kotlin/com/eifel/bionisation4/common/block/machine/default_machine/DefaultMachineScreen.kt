@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.GameRenderer
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
-import net.minecraftforge.client.gui.GuiUtils
+import net.minecraftforge.client.gui.ScreenUtils
 
 
 abstract class DefaultMachineScreen <T: DefaultMachineContainer<*>> (val container: T, playerInv: Inventory, title: Component): AbstractContainerScreen<T>(container, playerInv, title) {
@@ -36,11 +36,11 @@ abstract class DefaultMachineScreen <T: DefaultMachineContainer<*>> (val contain
         this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize)
         if (this.container.tileEntity.isProcessing(this.container.inputData)) {
             val k: Int = this.getBurnLeftScaled(13)
-            GuiUtils.drawTexturedModalRect(matrixStack, i + 153, j + 37 + 19 - k, 176, 12 - k, 14, k + 1, 1f)
+            ScreenUtils.drawTexturedModalRect(matrixStack, i + 153, j + 37 + 19 - k, 176, 12 - k, 14, k + 1, 1f)
             val i1 = (62 * (this.container.inputData.get(2).toDouble() / this.container.inputData.get(3))).toInt()
-            GuiUtils.drawTexturedModalRect(matrixStack, i + 37, j + 16, 176, 14, 7, 62 - i1, 1f)
+            ScreenUtils.drawTexturedModalRect(matrixStack, i + 37, j + 16, 176, 14, 7, 62 - i1, 1f)
         } else
-            GuiUtils.drawTexturedModalRect(matrixStack, i + 37, j + 16, 176, 14, 7, 62, 1f)
+            ScreenUtils.drawTexturedModalRect(matrixStack, i + 37, j + 16, 176, 14, 7, 62, 1f)
     }
 
     private fun getBurnLeftScaled(pixels: Int): Int {

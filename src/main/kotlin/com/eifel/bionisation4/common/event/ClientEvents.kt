@@ -19,8 +19,8 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
-import net.minecraftforge.client.event.RenderGameOverlayEvent
-import net.minecraftforge.client.gui.GuiUtils.drawTexturedModalRect
+import net.minecraftforge.client.event.RenderGuiOverlayEvent
+import net.minecraftforge.client.gui.ScreenUtils.drawTexturedModalRect
 import net.minecraftforge.event.TickEvent.PlayerTickEvent
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
@@ -55,8 +55,8 @@ object ClientEvents {
 
     @JvmStatic
     @SubscribeEvent
-    fun onRenderOverlay(event: RenderGameOverlayEvent){
-        if(!event.isCancelable && event.type == RenderGameOverlayEvent.ElementType.ALL) {
+    fun onRenderOverlay(event: RenderGuiOverlayEvent.Post){
+        if(!event.isCancelable) {
             mc.player?.let { player ->
                 val level = player.getBlood()
                 val ms = event.poseStack
@@ -73,10 +73,10 @@ object ClientEvents {
 
     @JvmStatic
     @SubscribeEvent
-    fun onClientPlayerTick(event: LivingEvent.LivingUpdateEvent){
+    fun onClientPlayerTick(event: LivingEvent.LivingTickEvent){
         when (event.entity) {
             is LivingEntity -> {
-                val entity = event.entityLiving
+                val entity = event.entity
                 entity.doWithCap { cap ->
                     cap.onUpdate(entity)
                 }

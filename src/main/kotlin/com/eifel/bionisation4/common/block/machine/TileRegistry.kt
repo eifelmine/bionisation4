@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries
 
 object TileRegistry {
 
-    var TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Info.MOD_ID)
+    var TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Info.MOD_ID)
 
     var VACCINE_CREATOR = TILE_ENTITIES.register("vaccine_creator_tile") { BlockEntityType.Builder.of({ pos, state -> TileVaccineCreator(pos, state, 4) }, BlockRegistry.VACCINE_CREATOR.get()).build(null) }
 

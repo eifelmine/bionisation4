@@ -36,7 +36,7 @@ abstract class DefaultMachineBlock(): BaseEntityBlock(Properties.of(Material.MET
             InteractionResult.SUCCESS
         else {
             (world.getBlockEntity(pos) as? IBioMachine)?.let { tile ->
-                NetworkHooks.openGui(playerEntity as ServerPlayer, tile as MenuProvider, pos)
+                NetworkHooks.openScreen(playerEntity as ServerPlayer, tile as MenuProvider, pos)
             }
             InteractionResult.CONSUME
         }

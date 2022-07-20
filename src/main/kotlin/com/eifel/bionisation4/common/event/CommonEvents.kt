@@ -16,13 +16,12 @@ import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.player.PlayerEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
-import net.minecraftforge.event.world.BlockEvent
+import net.minecraftforge.event.level.BlockEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 
 object CommonEvents {
 
     var spawnedEntities = 1
-
 
     @JvmStatic
     @SubscribeEvent
@@ -40,9 +39,9 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onPlayerClone(event: PlayerEvent.Clone) {
-        if (!event.player.level.isClientSide) {
+        if (!event.entity.level.isClientSide) {
             if (!event.isWasDeath || (event.isWasDeath && ConfigProperties.saveAfterDeath.get())) {
-                event.player.doWithCap { newCap ->
+                event.entity.doWithCap { newCap ->
                     event.original.doWithCap { oldCap ->
                         newCap.readFromNBT(oldCap.writeToNBT())
                     }
@@ -54,29 +53,29 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onEntitySpawn(event: LivingSpawnEvent.SpecialSpawn) {
-        if(!event.entityLiving.level.isClientSide){
+        if(!event.entity.level.isClientSide){
             spawnedEntities++
             val occasionsDefault = EffectRegistry.getOccasions()
-            if(occasionsDefault.containsKey(event.entityLiving.type)){
-                val data = occasionsDefault[event.entityLiving.type]!!
+            if(occasionsDefault.containsKey(event.entity.type)){
+                val data = occasionsDefault[event.entity.type]!!
                 data.forEach { (t, u) ->
                     if(Utils.chance(u))
-                        event.entityLiving.addEffect(EffectRegistry.getMobEffectInstance(t).getCopy())
+                        event.entity.addEffect(EffectRegistry.getMobEffectInstance(t).getCopy())
                 }
             }
             val occasionsClass = EffectRegistry.getOccasionsClass()
-            occasionsClass.keys.filter { it.isAssignableFrom(event.entityLiving.javaClass) }.forEach {
+            occasionsClass.keys.filter { it.isAssignableFrom(event.entity.javaClass) }.forEach {
                 val data = occasionsClass[it]!!
                 data.forEach { (t, u) ->
                     if(Utils.chance(u))
-                        event.entityLiving.addEffect(EffectRegistry.getMobEffectInstance(t).getCopy())
+                        event.entity.addEffect(EffectRegistry.getMobEffectInstance(t).getCopy())
                 }
             }
             if(spawnedEntities % ConfigProperties.randomVirusMobCount.get() == 0 && ConfigProperties.randomVirusCreation.get()){
                 if(Utils.chance(ConfigProperties.randomVirusSpawnChance.get())) {
                     val wild = Wild().apply { loadRandomProperties() }
                     if(wild.effectGenes.isNotEmpty())
-                        event.entityLiving.addEffect(wild)
+                        event.entity.addEffect(wild)
                 }
             }
         }
@@ -85,24 +84,24 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onPlayerLogIn(event: PlayerEvent.PlayerLoggedInEvent) {
-        if(!event.player.level.isClientSide)
-            event.player.updateToClient()
+        if(!event.entity.level.isClientSide)
+            event.entity.updateToClient()
     }
 
     @JvmStatic
     @SubscribeEvent
     fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
-        if(!event.player.level.isClientSide) {
-            event.player.setBlood(100)
-            event.player.setImmunity(100)
-            event.player.updateToClient()
+        if(!event.entity.level.isClientSide) {
+            event.entity.setBlood(100)
+            event.entity.setImmunity(100)
+            event.entity.updateToClient()
         }
     }
 
     @JvmStatic
     @SubscribeEvent
     fun onEntityBeingHurt(event: LivingHurtEvent) {
-        val target = event.entityLiving
+        val target = event.entity
         target?.let { victim ->
             if(!victim.level.isClientSide) {
                 EffectTriggers.getTriggers<LivingHurtEvent>().forEach { it.trigger(event) }
@@ -118,7 +117,7 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onEntityBeingHurt(event: LivingAttackEvent) {
-        val target = event.entityLiving
+        val target = event.entity
         target?.let { victim ->
             if(!victim.level.isClientSide) {
                 EffectTriggers.getTriggers<LivingAttackEvent>().forEach { it.trigger(event) }
@@ -137,7 +136,7 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onEntityAttack(event: LivingAttackEvent) {
-        val target = event.entityLiving
+        val target = event.entity
         target?.let { victim ->
             if(!victim.level.isClientSide)
                 EffectTriggers.getTriggers<LivingAttackEvent>().forEach { it.trigger(event) }
@@ -157,7 +156,7 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onPlayerInteractEntity(event: PlayerInteractEvent.EntityInteract) {
-        val source = event.player
+        val source = event.entity
         source?.let { player ->
             if(!player.level.isClientSide)
                 EffectTriggers.getTriggers<PlayerInteractEvent.EntityInteract>().forEach { it.trigger(event) }
@@ -167,7 +166,7 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onEntityDeath(event: LivingDeathEvent) {
-        val target = event.entityLiving
+        val target = event.entity
         target?.let { victim ->
             if(!victim.level.isClientSide) {
                 EffectTriggers.getTriggers<LivingDeathEvent>().forEach { it.trigger(event) }
@@ -188,18 +187,18 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onPlayerChangedDimension(event: PlayerEvent.PlayerChangedDimensionEvent) {
-        if(!event.player.level.isClientSide)
-            event.player.updateToClient()
+        if(!event.entity.level.isClientSide)
+            event.entity.updateToClient()
     }
 
     @JvmStatic
     @SubscribeEvent
-    fun onEntityTick(event: LivingEvent.LivingUpdateEvent) {
+    fun onEntityTick(event: LivingEvent.LivingTickEvent) {
         if(!event.entity.level.isClientSide) {
-            EffectTriggers.getTriggers<LivingEvent.LivingUpdateEvent>().forEach { it.trigger(event) }
+            EffectTriggers.getTriggers<LivingEvent.LivingTickEvent>().forEach { it.trigger(event) }
             when (event.entity) {
                 is LivingEntity -> {
-                    val entity = event.entityLiving
+                    val entity = event.entity
                     entity.doWithCap { cap ->
                         cap.onUpdate(entity)
                         if (cap.ticker % 12000 == 0)
@@ -217,7 +216,7 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onItemUse(event: LivingEntityUseItemEvent.Start) {
-        val source = event.entityLiving
+        val source = event.entity
         source?.let { entity ->
             if (!entity.level.isClientSide)
                 EffectTriggers.getTriggers<LivingEntityUseItemEvent.Start>().forEach { it.trigger(event) }
@@ -227,7 +226,7 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onItemUse(event: LivingEntityUseItemEvent.Stop) {
-        val source = event.entityLiving
+        val source = event.entity
         source?.let { entity ->
             if (!entity.level.isClientSide)
                 EffectTriggers.getTriggers<LivingEntityUseItemEvent.Stop>().forEach { it.trigger(event) }
@@ -237,7 +236,7 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onItemUse(event: LivingEntityUseItemEvent.Finish) {
-        val source = event.entityLiving
+        val source = event.entity
         source?.let { entity ->
             if (!entity.level.isClientSide)
                 EffectTriggers.getTriggers<LivingEntityUseItemEvent.Finish>().forEach { it.trigger(event) }
@@ -247,7 +246,7 @@ object CommonEvents {
     @JvmStatic
     @SubscribeEvent
     fun onItemUse(event: LivingEntityUseItemEvent.Tick) {
-        val source = event.entityLiving
+        val source = event.entity
         source?.let { entity ->
             if (!entity.level.isClientSide)
                 EffectTriggers.getTriggers<LivingEntityUseItemEvent.Tick>().forEach { it.trigger(event) }

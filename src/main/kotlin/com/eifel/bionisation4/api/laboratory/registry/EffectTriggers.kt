@@ -18,7 +18,7 @@ import net.minecraftforge.common.Tags
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
-import net.minecraftforge.event.world.BlockEvent
+import net.minecraftforge.event.level.BlockEvent
 import net.minecraftforge.eventbus.api.Event
 import kotlin.reflect.KClass
 
@@ -27,14 +27,14 @@ object EffectTriggers {
     val REGISTERED_TRIGGERS = mutableListOf<IEffectTrigger<out Event>>()
 
     fun init() {
-        addTrigger(object: IEffectTrigger<LivingEvent.LivingUpdateEvent>{
+        addTrigger(object: IEffectTrigger<LivingEvent.LivingTickEvent>{
 
             override fun getId() = 0
-            override fun getEventClass(): KClass<LivingEvent.LivingUpdateEvent> = LivingEvent.LivingUpdateEvent::class
-            override fun trigger(event: LivingEvent.LivingUpdateEvent) {
-                when(event.entityLiving){
+            override fun getEventClass(): KClass<LivingEvent.LivingTickEvent> = LivingEvent.LivingTickEvent::class
+            override fun trigger(event: LivingEvent.LivingTickEvent) {
+                when(event.entity){
                     is Player -> {
-                        val player = event.entityLiving as Player
+                        val player = event.entity as Player
                         //sunstroke
                         if (player.getBioTicker() % 600 == 0 && player.isInBiome(Tags.Biomes.IS_HOT) && player.level.isDay && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_SUNSTROKE_ID)))
                             if(player.inventory.armor[3].isEmpty)
@@ -46,23 +46,23 @@ object EffectTriggers {
                     }
                 }
                 //fatigue
-                if(event.entityLiving.getImmunity() < 30)
-                    event.entityLiving.addEffect(Fatigue())
+                if(event.entity.getImmunity() < 30)
+                    event.entity.addEffect(Fatigue())
                 //lack of blood
-                if(event.entityLiving.getBlood() < 40)
-                    event.entityLiving.addEffect(LackOfBlood())
+                if(event.entity.getBlood() < 40)
+                    event.entity.addEffect(LackOfBlood())
                 //cold
-                if (event.entityLiving.isInBiome(Tags.Biomes.IS_COLD) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_COLD_ID)) && !event.entityLiving.hasArmor(true) && event.entityLiving.getImmunity() < 80)
-                    event.entityLiving.addEffect(Cold())
+                if (event.entity.isInBiome(Tags.Biomes.IS_COLD) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_COLD_ID)) && !event.entity.hasArmor(true) && event.entity.getImmunity() < 80)
+                    event.entity.addEffect(Cold())
                 //aer
-                if(event.entityLiving.getImmunity() < 40 && event.entityLiving.getBioTicker() % 1200 == 0 && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.VIRUS_AER_ID)))
-                    event.entityLiving.addEffect(Aer())
+                if(event.entity.getImmunity() < 40 && event.entity.getBioTicker() % 1200 == 0 && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.VIRUS_AER_ID)))
+                    event.entity.addEffect(Aer())
                 //swamp
-                if(event.entityLiving.getBioTicker() % 3600 == 0 && event.entityLiving.isInBiome(Tags.Biomes.IS_SWAMP) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_SWAMP_ID)) && !event.entityLiving.hasBioArmor(true))
-                    event.entityLiving.addEffect(Swamp())
+                if(event.entity.getBioTicker() % 3600 == 0 && event.entity.isInBiome(Tags.Biomes.IS_SWAMP) && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_SWAMP_ID)) && !event.entity.hasBioArmor(true))
+                    event.entity.addEffect(Swamp())
                 //water
-                if(event.entityLiving.getImmunity() < 80 && event.entityLiving.getBioTicker() % 1200 == 0 && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_WATER_ID)))
-                    event.entityLiving.addEffect(Water())
+                if(event.entity.getImmunity() < 80 && event.entity.getBioTicker() % 1200 == 0 && Utils.chance(EffectRegistry.getEffectChance(InternalConstants.BACTERIA_WATER_ID)))
+                    event.entity.addEffect(Water())
             }
         })
         addTrigger(object: IEffectTrigger<LivingEntityUseItemEvent.Finish>{
@@ -70,9 +70,9 @@ object EffectTriggers {
             override fun getId() = 1
             override fun getEventClass(): KClass<LivingEntityUseItemEvent.Finish> = LivingEntityUseItemEvent.Finish::class
             override fun trigger(event: LivingEntityUseItemEvent.Finish) {
-                when(event.entityLiving){
+                when(event.entity){
                     is Player -> {
-                        val player = event.entityLiving as Player
+                        val player = event.entity as Player
                         when(event.item.item){
                             //sunstroke
                             Items.GLASS_BOTTLE -> player.expire(InternalConstants.EFFECT_SUNSTROKE_ID)
@@ -103,9 +103,9 @@ object EffectTriggers {
             override fun getId() = 2
             override fun getEventClass(): KClass<LivingEntityUseItemEvent.Tick> = LivingEntityUseItemEvent.Tick::class
             override fun trigger(event: LivingEntityUseItemEvent.Tick) {
-                when(event.entityLiving){
+                when(event.entity){
                     is Player -> {
-                        val player = event.entityLiving as Player
+                        val player = event.entity as Player
                         //skull virus
                         if(player.isEffectActive(InternalConstants.VIRUS_SKULL_ID))
                             event.isCanceled = true
@@ -118,7 +118,7 @@ object EffectTriggers {
             override fun getId() = 3
             override fun getEventClass(): KClass<LivingHurtEvent> = LivingHurtEvent::class
             override fun trigger(event: LivingHurtEvent) {
-                event.entityLiving?.let { victim ->
+                event.entity?.let { victim ->
                     //bleeding
                     if(Utils.chance(EffectRegistry.getEffectChance(InternalConstants.EFFECT_BLEEDING_ID)))
                         victim.addEffect(Bleeding())
@@ -193,15 +193,3 @@ interface IEffectTrigger<T: Event> {
     fun getEventClass(): KClass<T>
     fun trigger(event: T)
 }
-
-//LivingEvent.LivingUpdateEvent
-//LivingHurtEvent
-//LivingAttackEvent
-//LivingEntityUseItemEvent.Start
-//LivingEntityUseItemEvent.Stop
-//LivingEntityUseItemEvent.Finish
-//LivingEntityUseItemEvent.Tick
-//LivingAttackEvent
-//LivingDeathEvent
-//PlayerInteractEvent.EntityInteract
-//BlockEvent.BreakEvent

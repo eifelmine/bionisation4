@@ -4,7 +4,7 @@ license="All rights reserved"
 issueTrackerURL="https://github.com/eifelmine/bionisation4/issues"
 [[mods]]
 modId="bionisation4"
-version="1.0.0.2"
+version="1.0.0.1"
 displayName="Bionisation 4"
 displayURL="https://github.com/eifelmine/bionisation4"
 logoFile="examplemod.png"

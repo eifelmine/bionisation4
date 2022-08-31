@@ -15,8 +15,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.common.capabilities.Capability
+import net.minecraftforge.common.capabilities.ForgeCapabilities
 import net.minecraftforge.common.util.LazyOptional
-import net.minecraftforge.items.CapabilityItemHandler
 import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.ItemStackHandler
 import javax.annotation.Nonnull
@@ -145,7 +145,7 @@ abstract class DefaultMachineTile(type: BlockEntityType<*>, val pos: BlockPos, v
     }
 
     @Nonnull
-    override fun <T> getCapability(@Nonnull cap: Capability<T>, @Nullable side: Direction?): LazyOptional<T> = if (cap === CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) this.handler.cast()
+    override fun <T> getCapability(@Nonnull cap: Capability<T>, @Nullable side: Direction?): LazyOptional<T> = if (cap === ForgeCapabilities.ITEM_HANDLER) this.handler.cast()
          else super.getCapability(cap, side)
 
 }

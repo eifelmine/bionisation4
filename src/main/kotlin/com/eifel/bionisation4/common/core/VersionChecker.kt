@@ -20,7 +20,7 @@ class VersionChecker : Runnable {
 
     override fun run() {
         try {
-            URL("https://raw.githubusercontent.com/eifelmine/bionisation4/1.19.0/1.19.0.txt").openStream()
+            URL("https://raw.githubusercontent.com/eifelmine/bionisation4/1.19.2/1.19.2.txt").openStream()
                 .use { ins ->
                     val version = IOUtils.readLines(ins)[0].split("_").toTypedArray()
                     latestVersion = version[0]

@@ -7,7 +7,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.Level
-import net.minecraftforge.items.CapabilityItemHandler
+import net.minecraftforge.common.capabilities.ForgeCapabilities
 import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.SlotItemHandler
 
@@ -15,7 +15,7 @@ class ContainerDNAModifier(world: Level, pos: BlockPos, pInv: Inventory, window:
 
     override fun addCustomSlots(tile: TileDNAModifier?) {
         tile?.let { tile ->
-            tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent { handler: IItemHandler? ->
+            tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent { handler: IItemHandler? ->
                 addSlot(SlotItemHandler(handler, 1, 80, 17))
                 addSlot(SlotItemHandler(handler, 2, 80, 61))
                 //fuel

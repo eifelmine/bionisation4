@@ -7,8 +7,8 @@ import com.eifel.bionisation4.util.nbt.NBTUtils
 import com.eifel.bionisation4.util.translation.TranslationUtils
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.client.GameNarrator
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.chat.NarratorChatListener
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.renderer.GameRenderer
@@ -17,7 +17,7 @@ import net.minecraft.network.chat.Style
 import net.minecraft.resources.ResourceLocation
 
 
-class GUIAnalyzer(val nbt: CompoundTag): Screen(NarratorChatListener.NO_TITLE) {
+class GUIAnalyzer(val nbt: CompoundTag): Screen(GameNarrator.NO_TITLE) {
 
     companion object {
         private val BACKGROUND = ResourceLocation(Info.MOD_ID, "textures/gui/analyzer_gui.png")
